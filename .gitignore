@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Package manager files
+.npm
+.yarn
+.pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Vercel
+.vercel
