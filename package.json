@@ -1,0 +1,21 @@
+{
+  "name": "meu-site",
+  "version": "1.0.0",
+  "description": "Prime Barber - Barbearia Premium",
+  "type": "module",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for static site'",
+    "lint": "echo 'No linter configured'"
+  },
+  "keywords": [
+    "barbearia",
+    "barber",
+    "static-site"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
