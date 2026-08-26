@@ -31,31 +31,17 @@
             PRIME<span>.</span>
         </a>
 
-        <div class="nav-scroll">
-            <nav class="navigation" id="navigation">
-                <a href="#inicio">Início</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#depoimentos">Avaliações</a>
-                <a href="#contato">Contato</a>
-            </nav>
-        </div>
+        <nav class="navigation" id="navigation">
+            <a href="#inicio">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#depoimentos">Avaliações</a>
+            <a href="#contato">Contato</a>
+        </nav>
 
         <a href="#agendamento" class="button button-small desktop-button">
             Agendar
         </a>
-
-        <button
-            class="menu-button"
-            id="menuButton"
-            type="button"
-            aria-label="Abrir menu"
-            aria-expanded="false"
-        >
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
 
     </div>
 </header>
@@ -83,6 +69,7 @@
         </p>
 
         <div class="hero-buttons">
+
             <a href="#agendamento" class="button">
                 Agendar horário
             </a>
@@ -90,6 +77,7 @@
             <a href="#servicos" class="button button-outline">
                 Conhecer serviços
             </a>
+
         </div>
 
     </div>
@@ -102,6 +90,7 @@
     <div class="container">
 
         <div class="section-heading">
+
             <p class="eyebrow">NOSSOS SERVIÇOS</p>
 
             <h2>Cuidado nos detalhes.</h2>
@@ -110,11 +99,13 @@
                 Tudo o que você precisa para sair daqui
                 se sentindo ainda melhor.
             </p>
+
         </div>
 
         <div class="services-grid">
 
             <article class="service-card">
+
                 <div class="service-number">01</div>
 
                 <h3>Corte masculino</h3>
@@ -125,10 +116,12 @@
                 </p>
 
                 <strong>R$ 60</strong>
+
             </article>
 
 
             <article class="service-card featured">
+
                 <div class="service-number">02</div>
 
                 <h3>Corte + Barba</h3>
@@ -139,10 +132,12 @@
                 </p>
 
                 <strong>R$ 90</strong>
+
             </article>
 
 
             <article class="service-card">
+
                 <div class="service-number">03</div>
 
                 <h3>Barba premium</h3>
@@ -153,6 +148,7 @@
                 </p>
 
                 <strong>R$ 45</strong>
+
             </article>
 
         </div>
@@ -251,7 +247,9 @@
 
             <article class="testimonial">
 
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                    ★★★★★
+                </div>
 
                 <p>
                     “Atendimento excelente e o corte ficou
@@ -265,7 +263,9 @@
 
             <article class="testimonial">
 
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                    ★★★★★
+                </div>
 
                 <p>
                     “Ambiente muito bom, profissionais atenciosos
@@ -279,7 +279,9 @@
 
             <article class="testimonial">
 
-                <div class="stars">★★★★★</div>
+                <div class="stars">
+                    ★★★★★
+                </div>
 
                 <p>
                     “Melhor barbearia que já frequentei.
@@ -356,6 +358,7 @@
         <div class="contact-info">
 
             <div>
+
                 <span>Horário</span>
 
                 <strong>
@@ -363,19 +366,23 @@
                     <br>
                     09:00 — 20:00
                 </strong>
+
             </div>
 
 
             <div>
+
                 <span>WhatsApp</span>
 
                 <strong>
                     (31) 90000-0000
                 </strong>
+
             </div>
 
 
             <div>
+
                 <span>Instagram</span>
 
                 <a
@@ -386,6 +393,7 @@
                 >
                     @primebarber
                 </a>
+
             </div>
 
         </div>
@@ -443,8 +451,6 @@
             ×
         </button>
 
-        <p class="eyebrow">SUA EXPERIÊNCIA</p>
-
         <h2 id="reviewTitle">
             Deixe sua avaliação
         </h2>
@@ -471,15 +477,14 @@
                 <div
                     class="star-picker"
                     id="starPicker"
-                    role="group"
-                    aria-label="Escolha sua nota"
+                    aria-label="Escolha uma nota de 1 a 5 estrelas"
                 >
 
-                    <button type="button" data-rating="1" aria-label="1 estrela">★</button>
-                    <button type="button" data-rating="2" aria-label="2 estrelas">★</button>
-                    <button type="button" data-rating="3" aria-label="3 estrelas">★</button>
-                    <button type="button" data-rating="4" aria-label="4 estrelas">★</button>
-                    <button type="button" data-rating="5" aria-label="5 estrelas">★</button>
+                    <button type="button" data-rating="1">★</button>
+                    <button type="button" data-rating="2">★</button>
+                    <button type="button" data-rating="3">★</button>
+                    <button type="button" data-rating="4">★</button>
+                    <button type="button" data-rating="5">★</button>
 
                 </div>
 
@@ -514,7 +519,7 @@
                 Enviar avaliação
             </button>
 
-            <p id="reviewMessage" role="status"></p>
+            <p id="reviewMessage"></p>
 
         </form>
 
@@ -523,7 +528,10 @@
 </div>
 
 
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="script.js"></script>
 
 </body>
