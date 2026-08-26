@@ -24,9 +24,7 @@ if (year) {
 ========================= */
 
 function updateHeader() {
-    if (!header) {
-        return;
-    }
+    if (!header) return;
 
     if (window.scrollY > 30) {
         header.classList.add("scrolled");
@@ -35,11 +33,9 @@ function updateHeader() {
     }
 }
 
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
+window.addEventListener("scroll", updateHeader, {
+    passive: true
+});
 
 updateHeader();
 
@@ -50,59 +46,46 @@ updateHeader();
 
 if (menuButton && navigation) {
 
-    menuButton.addEventListener(
-        "click",
-        () => {
+    menuButton.addEventListener("click", () => {
 
-            const isOpen =
-                navigation.classList.toggle("active");
+        const isOpen =
+            navigation.classList.toggle("active");
 
-            menuButton.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
 
-            menuButton.setAttribute(
-                "aria-label",
-                isOpen
-                    ? "Fechar menu"
-                    : "Abrir menu"
-            );
-        }
-    );
+        menuButton.setAttribute(
+            "aria-label",
+            isOpen
+                ? "Fechar menu"
+                : "Abrir menu"
+        );
+    });
 
-
-    /* Fecha o menu quando
-       o usuário clica em um link */
 
     const navigationLinks =
         navigation.querySelectorAll("a");
 
-    navigationLinks.forEach(
-        (link) => {
+    navigationLinks.forEach((link) => {
 
-            link.addEventListener(
-                "click",
-                () => {
+        link.addEventListener("click", () => {
 
-                    navigation.classList.remove(
-                        "active"
-                    );
+            navigation.classList.remove("active");
 
-                    menuButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    menuButton.setAttribute(
-                        "aria-label",
-                        "Abrir menu"
-                    );
-                }
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
             );
 
-        }
-    );
+            menuButton.setAttribute(
+                "aria-label",
+                "Abrir menu"
+            );
+        });
+
+    });
 }
 
 
@@ -110,34 +93,29 @@ if (menuButton && navigation) {
    FECHAR MENU AO REDIMENSIONAR
 ========================= */
 
-window.addEventListener(
-    "resize",
-    () => {
+window.addEventListener("resize", () => {
 
-        if (
-            window.innerWidth > 850 &&
-            navigation
-        ) {
+    if (
+        window.innerWidth > 850 &&
+        navigation
+    ) {
 
-            navigation.classList.remove(
-                "active"
+        navigation.classList.remove("active");
+
+        if (menuButton) {
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
             );
 
-            if (menuButton) {
-
-                menuButton.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-                menuButton.setAttribute(
-                    "aria-label",
-                    "Abrir menu"
-                );
-            }
+            menuButton.setAttribute(
+                "aria-label",
+                "Abrir menu"
+            );
         }
     }
-);
+});
 
 
 /* =========================
@@ -145,44 +123,36 @@ window.addEventListener(
 ========================= */
 
 const internalLinks =
-    document.querySelectorAll(
-        'a[href^="#"]'
-    );
+    document.querySelectorAll('a[href^="#"]');
 
-internalLinks.forEach(
-    (link) => {
+internalLinks.forEach((link) => {
 
-        link.addEventListener(
-            "click",
-            (event) => { </input>
+    link.addEventListener("click", (event) => {
 
-                const targetId =
-                    link.getAttribute("href") ;
+        const targetId =
+            link.getAttribute("href");
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
+        if (
+            !targetId ||
+            targetId === "#"
+        ) {
+            return;
+        }
 
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
+        const target =
+            document.querySelector(targetId);
 
-                if (!target) {
-                    return;
-                }
+        if (!target) {
+            return;
+        }
 
-                event.preventDefault();
+        event.preventDefault();
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        );
+        target.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
 
-    }
-);
+    });
+
+});
