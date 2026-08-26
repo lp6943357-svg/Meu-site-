@@ -1,14 +1,14 @@
 "use strict";
 
 /* =====================================================
-   CONFIGURAÇÃO SUPABASE
+   CONFIGURAÇÃO
 ===================================================== */
 
 const SUPABASE_URL =
     "https://kuhdbyjejwhsmaunvupf.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_Hnrie3sbRLN_0YUgjCqzw_Kd2wcori";
+    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
 
 let supabaseClient = null;
 
@@ -27,17 +27,10 @@ if (
    ELEMENTOS
 ===================================================== */
 
-const header =
-    document.getElementById("header");
-
-const menuButton =
-    document.getElementById("menuButton");
-
-const navigation =
-    document.getElementById("navigation");
-
-const year =
-    document.getElementById("year");
+const header = document.getElementById("header");
+const menuButton = document.getElementById("menuButton");
+const navigation = document.getElementById("navigation");
+const year = document.getElementById("year");
 
 const servicesGrid =
     document.getElementById("servicesGrid");
@@ -75,17 +68,13 @@ const reviewsList =
 const averageRating =
     document.getElementById("averageRating");
 
-const whatsappButton =
-    document.getElementById("whatsappButton");
-
 
 /* =====================================================
-   ANO AUTOMÁTICO
+   ANO
 ===================================================== */
 
 if (year) {
-    year.textContent =
-        new Date().getFullYear();
+    year.textContent = new Date().getFullYear();
 }
 
 
@@ -94,7 +83,6 @@ if (year) {
 ===================================================== */
 
 const services = [
-
     {
         number: "01",
         name: "Corte masculino",
@@ -119,7 +107,6 @@ const services = [
             "Modelagem, toalha quente e acabamento para deixar sua barba impecável.",
         price: "R$ 45"
     }
-
 ];
 
 
@@ -131,20 +118,18 @@ function renderServices() {
 
     servicesGrid.innerHTML = "";
 
-    services.forEach(function (service) {
+    services.forEach((service) => {
 
         const card =
             document.createElement("article");
 
-        card.className =
-            "service-card";
+        card.className = "service-card";
 
         if (service.featured) {
             card.classList.add("featured");
         }
 
         card.innerHTML = `
-
             <div class="service-number">
                 ${service.number}
             </div>
@@ -160,11 +145,9 @@ function renderServices() {
             <strong>
                 ${service.price}
             </strong>
-
         `;
 
         servicesGrid.appendChild(card);
-
     });
 }
 
@@ -172,7 +155,7 @@ renderServices();
 
 
 /* =====================================================
-   HEADER AO ROLAR
+   HEADER
 ===================================================== */
 
 function updateHeader() {
@@ -182,23 +165,16 @@ function updateHeader() {
     }
 
     if (window.scrollY > 30) {
-
         header.classList.add("scrolled");
-
     } else {
-
         header.classList.remove("scrolled");
-
     }
 }
-
 
 window.addEventListener(
     "scroll",
     updateHeader,
-    {
-        passive: true
-    }
+    { passive: true }
 );
 
 updateHeader();
@@ -206,31 +182,8 @@ updateHeader();
 
 /* =====================================================
    MENU MOBILE
+   ABRIR / FECHAR PELOS 3 TRACINHOS
 ===================================================== */
-
-function openMenu() {
-
-    if (!navigation) {
-        return;
-    }
-
-    navigation.classList.add("active");
-
-    if (menuButton) {
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        menuButton.setAttribute(
-            "aria-label",
-            "Fechar menu"
-        );
-
-    }
-}
-
 
 function closeMenu() {
 
@@ -241,7 +194,6 @@ function closeMenu() {
     navigation.classList.remove("active");
 
     if (menuButton) {
-
         menuButton.setAttribute(
             "aria-expanded",
             "false"
@@ -251,14 +203,13 @@ function closeMenu() {
             "aria-label",
             "Abrir menu"
         );
-
     }
 }
 
 
 function toggleMenu() {
 
-    if (!navigation) {
+    if (!navigation || !menuButton) {
         return;
     }
 
@@ -266,20 +217,23 @@ function toggleMenu() {
         navigation.classList.contains("active");
 
     if (isOpen) {
-
         closeMenu();
-
     } else {
 
-        openMenu();
+        navigation.classList.add("active");
 
+        menuButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        menuButton.setAttribute(
+            "aria-label",
+            "Fechar menu"
+        );
     }
 }
 
-
-/* =====================================================
-   BOTÃO DOS 3 TRACINHOS
-===================================================== */
 
 if (menuButton) {
 
@@ -291,39 +245,67 @@ if (menuButton) {
             event.stopPropagation();
 
             toggleMenu();
-
         }
     );
-
 }
 
 
 /* =====================================================
-   LINKS DO MENU
+   FECHAR MENU AO CLICAR EM UMA OPÇÃO
 ===================================================== */
 
 if (navigation) {
 
-    navigation
-        .querySelectorAll("a")
-        .forEach(function (link) {
+    const navigationLinks =
+        navigation.querySelectorAll("a");
 
-            link.addEventListener(
-                "click",
-                function () {
+    navigationLinks.forEach((link) => {
 
-                    closeMenu();
+        link.addEventListener(
+            "click",
+            function () {
+                closeMenu();
+            }
+        );
 
-                }
-            );
-
-        });
-
+    });
 }
 
 
 /* =====================================================
-   FECHAR MENU AO REDIMENSIONAR
+   FECHAR MENU AO CLICAR FORA
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        if (!navigation || !menuButton) {
+            return;
+        }
+
+        if (!navigation.classList.contains("active")) {
+            return;
+        }
+
+        const clickedInsideMenu =
+            navigation.contains(event.target);
+
+        const clickedButton =
+            menuButton.contains(event.target);
+
+        if (
+            !clickedInsideMenu &&
+            !clickedButton
+        ) {
+            closeMenu();
+        }
+    }
+);
+
+
+/* =====================================================
+   REDIMENSIONAMENTO
 ===================================================== */
 
 window.addEventListener(
@@ -331,9 +313,7 @@ window.addEventListener(
     function () {
 
         if (window.innerWidth > 850) {
-
             closeMenu();
-
         }
 
     }
@@ -346,7 +326,7 @@ window.addEventListener(
 
 document
     .querySelectorAll('a[href^="#"]')
-    .forEach(function (link) {
+    .forEach((link) => {
 
         link.addEventListener(
             "click",
@@ -377,34 +357,10 @@ document
                     behavior: "smooth",
                     block: "start"
                 });
-
             }
         );
 
     });
-
-
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-if (whatsappButton) {
-
-    const whatsappNumber =
-        "5531900000000";
-
-    const whatsappMessage =
-        "Olá! Gostaria de agendar um horário na barbearia.";
-
-    whatsappButton.href =
-        "https://wa.me/" +
-        whatsappNumber +
-        "?text=" +
-        encodeURIComponent(
-            whatsappMessage
-        );
-
-}
 
 
 /* =====================================================
@@ -428,17 +384,13 @@ function openReviewModal() {
         "review-open"
     );
 
-    setTimeout(
-        function () {
+    setTimeout(() => {
 
-            if (reviewName) {
-                reviewName.focus();
-            }
+        if (reviewName) {
+            reviewName.focus();
+        }
 
-        },
-        250
-    );
-
+    }, 250);
 }
 
 
@@ -458,7 +410,6 @@ function closeReviewModal() {
     document.body.classList.remove(
         "review-open"
     );
-
 }
 
 
@@ -468,7 +419,6 @@ if (openReview) {
         "click",
         openReviewModal
     );
-
 }
 
 
@@ -478,7 +428,6 @@ if (closeReview) {
         "click",
         closeReviewModal
     );
-
 }
 
 
@@ -489,22 +438,18 @@ if (reviewModal) {
         function (event) {
 
             if (
-                event.target ===
-                reviewModal
+                event.target === reviewModal
             ) {
-
                 closeReviewModal();
-
             }
 
         }
     );
-
 }
 
 
 /* =====================================================
-   ESC FECHA MODAL
+   ESC FECHA AVALIAÇÃO
 ===================================================== */
 
 document.addEventListener(
@@ -516,9 +461,7 @@ document.addEventListener(
             reviewModal &&
             reviewModal.classList.contains("active")
         ) {
-
             closeReviewModal();
-
         }
 
     }
@@ -535,7 +478,7 @@ const starButtons =
     );
 
 
-starButtons.forEach(function (button) {
+starButtons.forEach((button) => {
 
     button.addEventListener(
         "click",
@@ -547,27 +490,23 @@ starButtons.forEach(function (button) {
                 );
 
             if (reviewRating) {
-
                 reviewRating.value =
                     String(rating);
-
             }
 
-            starButtons.forEach(
-                function (star) {
+            starButtons.forEach((star) => {
 
-                    const starRating =
-                        Number(
-                            star.dataset.rating
-                        );
-
-                    star.classList.toggle(
-                        "selected",
-                        starRating <= rating
+                const starRating =
+                    Number(
+                        star.dataset.rating
                     );
 
-                }
-            );
+                star.classList.toggle(
+                    "selected",
+                    starRating <= rating
+                );
+
+            });
 
         }
     );
@@ -582,27 +521,11 @@ starButtons.forEach(function (button) {
 function escapeHTML(value) {
 
     return String(value)
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
-
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
 
@@ -621,41 +544,32 @@ async function loadReviews() {
         return;
     }
 
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("reviews")
-                .select(
-                    "id, name, rating, comment, created_at"
-                )
-                .order(
-                    "created_at",
-                    {
-                        ascending: false
-                    }
-                );
-
-        if (error) {
-            throw error;
-        }
-
-        renderReviews(
-            data || []
+    const {
+        data,
+        error
+    } = await supabaseClient
+        .from("reviews")
+        .select(
+            "id, name, rating, comment, created_at"
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
         );
 
-    } catch (error) {
+    if (error) {
 
         console.error(
             "Erro ao carregar avaliações:",
             error
         );
 
+        return;
     }
 
+    renderReviews(data || []);
 }
 
 
@@ -669,65 +583,44 @@ function renderReviews(reviews) {
         return;
     }
 
-    if (
-        reviews.length === 0
-    ) {
+    if (reviews.length === 0) {
 
         reviewsList.innerHTML = `
-
             <p class="no-reviews">
                 Ainda não existem avaliações.
                 Seja o primeiro a avaliar!
             </p>
-
         `;
 
         if (averageRating) {
-
-            averageRating.textContent =
-                "0.0";
-
+            averageRating.textContent = "0.0";
         }
 
         return;
     }
 
-
     reviewsList.innerHTML = "";
 
-
-    reviews.forEach(function (review) {
+    reviews.forEach((review) => {
 
         const article =
-            document.createElement(
-                "article"
-            );
+            document.createElement("article");
 
         article.className =
             "testimonial";
 
-
-        let rating =
-            Number(review.rating);
-
-        if (!Number.isFinite(rating)) {
-            rating = 1;
-        }
-
-        rating =
+        const rating =
             Math.max(
                 1,
                 Math.min(
                     5,
-                    Math.round(rating)
+                    Number(review.rating)
                 )
             );
-
 
         const stars =
             "★".repeat(rating) +
             "☆".repeat(5 - rating);
-
 
         const date =
             review.created_at
@@ -738,9 +631,7 @@ function renderReviews(reviews) {
                 )
                 : "";
 
-
         article.innerHTML = `
-
             <div class="stars">
                 ${stars}
             </div>
@@ -760,26 +651,17 @@ function renderReviews(reviews) {
             <small>
                 ${date}
             </small>
-
         `;
 
-
-        reviewsList.appendChild(
-            article
-        );
-
+        reviewsList.appendChild(article);
     });
 
-
-    updateAverage(
-        reviews
-    );
-
+    updateAverage(reviews);
 }
 
 
 /* =====================================================
-   CALCULAR MÉDIA
+   MÉDIA
 ===================================================== */
 
 function updateAverage(reviews) {
@@ -788,64 +670,27 @@ function updateAverage(reviews) {
         !averageRating ||
         reviews.length === 0
     ) {
-
         return;
     }
-
-
-    const validRatings =
-        reviews
-            .map(function (review) {
-
-                return Number(
-                    review.rating
-                );
-
-            })
-            .filter(function (rating) {
-
-                return (
-                    Number.isFinite(rating) &&
-                    rating >= 1 &&
-                    rating <= 5
-                );
-
-            });
-
-
-    if (
-        validRatings.length === 0
-    ) {
-
-        averageRating.textContent =
-            "0.0";
-
-        return;
-    }
-
 
     const total =
-        validRatings.reduce(
-            function (
-                sum,
-                rating
-            ) {
+        reviews.reduce(
+            (sum, review) => {
 
-                return sum + rating;
+                return (
+                    sum +
+                    Number(review.rating)
+                );
 
             },
             0
         );
 
-
     const average =
-        total /
-        validRatings.length;
-
+        total / reviews.length;
 
     averageRating.textContent =
         average.toFixed(1);
-
 }
 
 
@@ -861,12 +706,10 @@ if (reviewForm) {
 
             event.preventDefault();
 
-
             const name =
                 reviewName
                     ? reviewName.value.trim()
                     : "";
-
 
             const rating =
                 reviewRating
@@ -875,33 +718,22 @@ if (reviewForm) {
                     )
                     : 0;
 
-
             const comment =
                 reviewComment
                     ? reviewComment.value.trim()
                     : "";
 
 
-            /* VALIDAÇÃO DO NOME */
-
             if (!name) {
 
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "Digite seu nome.";
-
-                }
-
-                if (reviewName) {
-                    reviewName.focus();
                 }
 
                 return;
             }
 
-
-            /* VALIDAÇÃO DA NOTA */
 
             if (
                 rating < 1 ||
@@ -909,68 +741,47 @@ if (reviewForm) {
             ) {
 
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "Escolha uma nota de 1 a 5 estrelas.";
-
                 }
 
                 return;
             }
 
-
-            /* VALIDAÇÃO DO COMENTÁRIO */
 
             if (!comment) {
 
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "Digite um comentário.";
-
-                }
-
-                if (reviewComment) {
-                    reviewComment.focus();
                 }
 
                 return;
             }
 
-
-            /* SUPABASE */
 
             if (!supabaseClient) {
 
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "Sistema de avaliações indisponível.";
-
                 }
 
                 return;
             }
 
 
-            /* BOTÃO ENVIANDO */
-
             if (submitReview) {
 
-                submitReview.disabled =
-                    true;
+                submitReview.disabled = true;
 
                 submitReview.textContent =
                     "Enviando...";
-
             }
 
 
             if (reviewMessage) {
-
-                reviewMessage.textContent =
-                    "";
-
+                reviewMessage.textContent = "";
             }
 
 
@@ -978,21 +789,13 @@ if (reviewForm) {
 
                 const {
                     error
-                } =
-                    await supabaseClient
-                        .from("reviews")
-                        .insert({
-
-                            name:
-                                name,
-
-                            rating:
-                                rating,
-
-                            comment:
-                                comment
-
-                        });
+                } = await supabaseClient
+                    .from("reviews")
+                    .insert({
+                        name: name,
+                        rating: rating,
+                        comment: comment
+                    });
 
 
                 if (error) {
@@ -1000,53 +803,34 @@ if (reviewForm) {
                 }
 
 
-                /* SUCESSO */
-
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "⭐ Avaliação enviada com sucesso!";
-
                 }
 
-
-                /* LIMPAR FORMULÁRIO */
 
                 reviewForm.reset();
 
 
                 if (reviewRating) {
-
-                    reviewRating.value =
-                        "0";
-
+                    reviewRating.value = "0";
                 }
 
 
-                starButtons.forEach(
-                    function (star) {
+                starButtons.forEach((star) => {
 
-                        star.classList.remove(
-                            "selected"
-                        );
+                    star.classList.remove(
+                        "selected"
+                    );
 
-                    }
-                );
+                });
 
-
-                /* ATUALIZAR AVALIAÇÕES */
 
                 await loadReviews();
 
 
-                /* FECHAR MODAL */
-
                 setTimeout(
-                    function () {
-
-                        closeReviewModal();
-
-                    },
+                    closeReviewModal,
                     1200
                 );
 
@@ -1058,12 +842,9 @@ if (reviewForm) {
                     error
                 );
 
-
                 if (reviewMessage) {
-
                     reviewMessage.textContent =
                         "Não foi possível enviar. Tente novamente.";
-
                 }
 
             } finally {
@@ -1075,14 +856,12 @@ if (reviewForm) {
 
                     submitReview.textContent =
                         "Enviar avaliação";
-
                 }
 
             }
 
         }
     );
-
 }
 
 
