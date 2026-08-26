@@ -1,717 +1,836 @@
-// ========================================
-// PRIME BARBER — SCRIPT
-// ========================================
+/* =========================
+   RESET
+========================= */
 
-const SUPABASE_URL =
-    "https://kuhdbyjejwhsmaunvupf.supabase.co";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-const SUPABASE_KEY =
-    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
+html {
+    scroll-behavior: smooth;
+}
 
+body {
+    font-family: "DM Sans", sans-serif;
+    background: #0b0b0b;
+    color: #f5f1e8;
+    line-height: 1.6;
+}
 
-// ========================================
-// ANO DO RODAPÉ
-// ========================================
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-const year = document.getElementById("year");
-
-if (year) {
-    year.textContent = new Date().getFullYear();
+button {
+    font: inherit;
 }
 
 
-// ========================================
-// MENU MOBILE
-// ========================================
+/* =========================
+   VARIABLES
+========================= */
 
-const menuButton =
-    document.getElementById("menuButton");
-
-const navigation =
-    document.getElementById("navigation");
-
-
-if (menuButton && navigation) {
-
-    menuButton.addEventListener("click", function () {
-
-        navigation.classList.toggle("active");
-
-        const isOpen =
-            navigation.classList.contains("active");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            isOpen
-        );
-
-    });
-
-
-    navigation
-        .querySelectorAll("a")
-        .forEach(function (link) {
-
-            link.addEventListener(
-                "click",
-                function () {
-
-                    navigation.classList.remove(
-                        "active"
-                    );
-
-                    menuButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                }
-            );
-
-        });
-
+:root {
+    --background: #0b0b0b;
+    --surface: #121212;
+    --surface-light: #1a1a1a;
+    --text: #f5f1e8;
+    --muted: #aaa69d;
+    --gold: #c7a76a;
+    --border: rgba(255, 255, 255, 0.1);
+    --max-width: 1180px;
 }
 
 
-// ========================================
-// HEADER AO ROLAR
-// ========================================
-
-const header =
-    document.getElementById("header");
-
-
-window.addEventListener("scroll", function () {
-
-    if (!header) return;
-
-    if (window.scrollY > 30) {
-
-        header.classList.add("scrolled");
-
-    } else {
-
-        header.classList.remove("scrolled");
-
-    }
-
-});
-
-
-// ========================================
-// SISTEMA DE AVALIAÇÕES
-// ========================================
-
-const testimonialsSection =
-    document.getElementById("depoimentos");
-
-
-if (testimonialsSection) {
-
-    const heading =
-        testimonialsSection.querySelector(
-            ".section-heading"
-        );
-
-    const testimonialsGrid =
-        testimonialsSection.querySelector(
-            ".testimonials-grid"
-        );
-
-
-    // ------------------------------------
-    // BOTÃO AVALIAR
-    // ------------------------------------
-
-    const reviewButton =
-        document.createElement("button");
-
-    reviewButton.type = "button";
-
-    reviewButton.className =
-        "button review-button";
-
-    reviewButton.textContent =
-        "⭐ Avaliar atendimento";
-
-
-    if (heading) {
-
-        heading.appendChild(reviewButton);
-
-    }
-
-
-    // ------------------------------------
-    // MODAL
-    // ------------------------------------
-
-    const modal =
-        document.createElement("div");
-
-    modal.className =
-        "review-modal";
-
-
-    modal.innerHTML = `
-
-        <div class="review-modal-content">
-
-            <button
-                type="button"
-                class="review-close"
-                aria-label="Fechar"
-            >
-                ×
-            </button>
-
-            <p class="eyebrow">
-                SUA OPINIÃO
-            </p>
-
-            <h2>
-                Como foi sua experiência?
-            </h2>
-
-            <form id="reviewForm">
-
-                <label>
-                    Seu nome
-
-                    <input
-                        id="reviewName"
-                        type="text"
-                        maxlength="80"
-                        placeholder="Digite seu nome"
-                        required
-                    >
-                </label>
-
-
-                <label>
-                    Sua avaliação
-
-                    <div
-                        class="star-picker"
-                        id="starPicker"
-                    >
-
-                        <button
-                            type="button"
-                            data-rating="1"
-                        >★</button>
-
-                        <button
-                            type="button"
-                            data-rating="2"
-                        >★</button>
-
-                        <button
-                            type="button"
-                            data-rating="3"
-                        >★</button>
-
-                        <button
-                            type="button"
-                            data-rating="4"
-                        >★</button>
-
-                        <button
-                            type="button"
-                            data-rating="5"
-                        >★</button>
-
-                    </div>
-
-                </label>
-
-
-                <input
-                    id="reviewRating"
-                    type="hidden"
-                    value="5"
-                >
-
-
-                <label>
-                    Seu comentário
-
-                    <textarea
-                        id="reviewComment"
-                        maxlength="500"
-                        rows="5"
-                        placeholder="Conte como foi sua experiência..."
-                        required
-                    ></textarea>
-
-                </label>
-
-
-                <button
-                    id="submitReview"
-                    type="submit"
-                    class="button"
-                >
-                    Enviar avaliação
-                </button>
-
-            </form>
-
-        </div>
-    `;
-
-
-    document.body.appendChild(modal);
-
-
-    // ------------------------------------
-    // ABRIR / FECHAR
-    // ------------------------------------
-
-    reviewButton.addEventListener(
-        "click",
-        function () {
-
-            modal.classList.add("active");
-
-        }
+/* =========================
+   GENERAL
+========================= */
+
+.container {
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
     );
 
-
-    const closeButton =
-        modal.querySelector(".review-close");
-
-
-    closeButton.addEventListener(
-        "click",
-        function () {
-
-            modal.classList.remove("active");
-
-        }
-    );
-
-
-    modal.addEventListener(
-        "click",
-        function (event) {
-
-            if (event.target === modal) {
-
-                modal.classList.remove(
-                    "active"
-                );
-
-            }
-
-        }
-    );
-
-
-    // ------------------------------------
-    // ESTRELAS
-    // ------------------------------------
-
-    const starButtons =
-        modal.querySelectorAll(
-            ".star-picker button"
-        );
-
-
-    const ratingInput =
-        modal.querySelector(
-            "#reviewRating"
-        );
-
-
-    function setRating(rating) {
-
-        ratingInput.value = rating;
-
-        starButtons.forEach(
-            function (star) {
-
-                const value =
-                    Number(
-                        star.dataset.rating
-                    );
-
-                if (value <= rating) {
-
-                    star.classList.add(
-                        "selected"
-                    );
-
-                } else {
-
-                    star.classList.remove(
-                        "selected"
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    starButtons.forEach(
-        function (star) {
-
-            star.addEventListener(
-                "click",
-                function () {
-
-                    setRating(
-                        Number(
-                            star.dataset.rating
-                        )
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    setRating(5);
-
-
-    // ====================================
-    // ENVIAR AVALIAÇÃO
-    // ====================================
-
-    const form =
-        modal.querySelector(
-            "#reviewForm"
-        );
-
-
-    form.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-
-            const name =
-                modal.querySelector(
-                    "#reviewName"
-                ).value.trim();
-
-
-            const comment =
-                modal.querySelector(
-                    "#reviewComment"
-                ).value.trim();
-
-
-            const rating =
-                Number(
-                    ratingInput.value
-                );
-
-
-            if (
-                !name ||
-                !comment ||
-                rating < 1 ||
-                rating > 5
-            ) {
-
-                alert(
-                    "Preencha todos os campos."
-                );
-
-                return;
-
-            }
-
-
-            const submitButton =
-                modal.querySelector(
-                    "#submitReview"
-                );
-
-
-            submitButton.disabled = true;
-
-            submitButton.textContent =
-                "Enviando...";
-
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${SUPABASE_URL}/rest/v1/reviews`,
-                        {
-
-                            method: "POST",
-
-                            headers: {
-
-                                "Content-Type":
-                                    "application/json",
-
-                                "apikey":
-                                    SUPABASE_KEY,
-
-                                "Authorization":
-                                    `Bearer ${SUPABASE_KEY}`,
-
-                                "Prefer":
-                                    "return=representation"
-
-                            },
-
-                            body: JSON.stringify({
-
-                                name: name,
-
-                                rating: rating,
-
-                                comment: comment
-
-                            })
-
-                        }
-                    );
-
-
-                if (!response.ok) {
-
-                    const error =
-                        await response.text();
-
-                    console.error(error);
-
-                    throw new Error(
-                        "Erro ao salvar avaliação."
-                    );
-
-                }
-
-
-                alert(
-                    "Avaliação enviada com sucesso! ⭐"
-                );
-
-
-                form.reset();
-
-                setRating(5);
-
-                modal.classList.remove(
-                    "active"
-                );
-
-
-                await loadReviews();
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Erro ao enviar avaliação. Tente novamente."
-                );
-
-            } finally {
-
-                submitButton.disabled = false;
-
-                submitButton.textContent =
-                    "Enviar avaliação";
-
-            }
-
-        }
-    );
-
-
-    // ====================================
-    // CARREGAR AVALIAÇÕES
-    // ====================================
-
-    async function loadReviews() {
-
-        try {
-
-            const response =
-                await fetch(
-                    `${SUPABASE_URL}/rest/v1/reviews?select=id,name,rating,comment,created_at&order=created_at.desc`,
-                    {
-
-                        headers: {
-
-                            "apikey":
-                                SUPABASE_KEY,
-
-                            "Authorization":
-                                `Bearer ${SUPABASE_KEY}`
-
-                        }
-
-                    }
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Erro ao carregar avaliações."
-                );
-
-            }
-
-
-            const reviews =
-                await response.json();
-
-
-            if (!testimonialsGrid) {
-                return;
-            }
-
-
-            // Limpa os depoimentos antigos
-
-            testimonialsGrid.innerHTML = "";
-
-
-            // Nenhuma avaliação
-
-            if (reviews.length === 0) {
-
-                testimonialsGrid.innerHTML = `
-
-                    <article class="testimonial">
-
-                        <div class="stars">
-                            ☆☆☆☆☆
-                        </div>
-
-                        <p>
-                            Ainda não temos avaliações.
-                            Seja o primeiro!
-                        </p>
-
-                        <strong>
-                            Prime Barber
-                        </strong>
-
-                    </article>
-
-                `;
-
-                return;
-
-            }
-
-
-            // Criar cards
-
-            reviews.forEach(
-                function (review) {
-
-                    const article =
-                        document.createElement(
-                            "article"
-                        );
-
-
-                    article.className =
-                        "testimonial";
-
-
-                    const rating =
-                        Number(
-                            review.rating
-                        );
-
-
-                    const stars =
-                        "★".repeat(rating) +
-                        "☆".repeat(5 - rating);
-
-
-                    const date =
-                        new Date(
-                            review.created_at
-                        ).toLocaleDateString(
-                            "pt-BR"
-                        );
-
-
-                    article.innerHTML = `
-
-                        <div class="stars">
-                            ${stars}
-                        </div>
-
-                        <p>
-                            “${escapeHTML(
-                                review.comment
-                            )}”
-                        </p>
-
-                        <strong>
-                            ${escapeHTML(
-                                review.name
-                            )}
-                        </strong>
-
-                        <small>
-                            ${date}
-                        </small>
-
-                    `;
-
-
-                    testimonialsGrid.appendChild(
-                        article
-                    );
-
-                }
-            );
-
-
-        } catch (error) {
-
-            console.error(error);
-
-        }
-
-    }
-
-
-    // ------------------------------------
-    // PROTEÇÃO CONTRA HTML
-    // ------------------------------------
-
-    function escapeHTML(text) {
-
-        const element =
-            document.createElement("div");
-
-        element.textContent = text;
-
-        return element.innerHTML;
-
-    }
-
-
-    // Carregar ao abrir o site
-
-    loadReviews();
-
+    margin: 0 auto;
+}
+
+.section {
+    padding: 110px 0;
+}
+
+.eyebrow {
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.1;
+}
+
+h1,
+h2 {
+    font-family: "Playfair Display", serif;
+}
+
+h2 {
+    font-size: clamp(40px, 5vw, 64px);
+}
+
+.section-heading {
+    max-width: 650px;
+    margin-bottom: 55px;
+}
+
+.section-heading p:last-child {
+    color: var(--muted);
+    margin-top: 20px;
+}
+
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
-// ========================================
-// FIM
-// ========================================
+/* =========================
+   BUTTON
+========================= */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+    padding: 0 28px;
+
+    background: var(--gold);
+    color: #111;
+
+    border: 1px solid var(--gold);
+
+    font-weight: 700;
+    font-size: 14px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    background: #d8b978;
+}
+
+.button-outline {
+    background: transparent;
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.button-outline:hover {
+    background: white;
+    color: #111;
+}
+
+.button-small {
+    min-height: 44px;
+    padding: 0 20px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    background: rgba(11, 11, 11, 0.8);
+
+    border-bottom: 1px solid transparent;
+
+    backdrop-filter: blur(14px);
+
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.header.scrolled {
+    background: rgba(11, 11, 11, 0.96);
+    border-color: var(--border);
+}
+
+.nav {
+    min-height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.logo {
+    font-family: "Playfair Display", serif;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: var(--gold);
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    margin-left: auto;
+}
+
+.navigation a {
+    color: #d7d3cb;
+    font-size: 14px;
+    transition: color 0.2s ease;
+}
+
+.navigation a:hover {
+    color: var(--gold);
+}
+
+.menu-button {
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    background: transparent;
+    border: 0;
+
+    cursor: pointer;
+}
+
+.menu-button span {
+    display: block;
+
+    width: 24px;
+    height: 2px;
+
+    margin: 5px auto;
+
+    background: white;
+
+    transition: transform 0.25s ease;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 75% 30%,
+            rgba(199, 167, 106, 0.18),
+            transparent 30%
+        ),
+        linear-gradient(
+            120deg,
+            #080808,
+            #181512
+        );
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.95),
+            rgba(0, 0, 0, 0.35)
+        );
+}
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    padding-top: 80px;
+
+    max-width: 760px;
+}
+
+.hero h1 {
+    font-size: clamp(
+        54px,
+        8vw,
+        100px
+    );
+
+    letter-spacing: -2px;
+}
+
+.hero-text {
+    max-width: 600px;
+
+    margin: 28px 0 35px;
+
+    color: #c1bdb5;
+
+    font-size: 18px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+
+/* =========================
+   SERVICES
+========================= */
+
+.services {
+    background: var(--surface);
+}
+
+.services-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.service-card {
+    position: relative;
+
+    padding: 40px;
+
+    min-height: 330px;
+
+    background: #101010;
+
+    border: 1px solid var(--border);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(199, 167, 106, 0.5);
+}
+
+.service-card.featured {
+    background:
+        linear-gradient(
+            145deg,
+            #191610,
+            #101010
+        );
+
+    border-color:
+        rgba(199, 167, 106, 0.45);
+}
+
+.service-number {
+    color: var(--gold);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    margin-bottom: 60px;
+}
+
+.service-card h3 {
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+
+    margin-bottom: 15px;
+}
+
+.service-card p {
+    color: var(--muted);
+
+    margin-bottom: 30px;
+}
+
+.service-card strong {
+    color: var(--gold);
+
+    font-size: 18px;
+}
+
+
+/* =========================
+   ABOUT
+========================= */
+
+.about {
+    background: var(--background);
+}
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 80px;
+
+    align-items: center;
+}
+
+.about-image {
+    min-height: 620px;
+}
+
+.image-placeholder {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #252019,
+            #0d0d0d
+        );
+
+    border: 1px solid var(--border);
+
+    position: relative;
+}
+
+.image-placeholder::before {
+    content: "";
+
+    position: absolute;
+
+    width: 65%;
+    height: 75%;
+
+    border: 1px solid rgba(199, 167, 106, 0.35);
+}
+
+.image-placeholder span {
+    position: relative;
+
+    font-family:
+        "Playfair Display",
+        serif;
+
+    font-size: 70px;
+
+    color: rgba(
+        199,
+        167,
+        106,
+        0.7
+    );
+}
+
+.about-content > p:not(.eyebrow) {
+    color: var(--muted);
+
+    margin-top: 22px;
+
+    max-width: 540px;
+}
+
+.about-stats {
+    display: flex;
+
+    gap: 45px;
+
+    margin-top: 45px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid var(--border);
+}
+
+.about-stats div {
+    display: flex;
+    flex-direction: column;
+}
+
+.about-stats strong {
+    font-family: "Playfair Display", serif;
+
+    color: var(--gold);
+
+    font-size: 34px;
+}
+
+.about-stats span {
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   TESTIMONIALS
+========================= */
+
+.testimonials {
+    background: var(--surface);
+}
+
+.testimonials-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.testimonial {
+    padding: 35px;
+
+    background: #101010;
+
+    border: 1px solid var(--border);
+}
+
+.stars {
+    color: var(--gold);
+
+    letter-spacing: 3px;
+
+    margin-bottom: 25px;
+}
+
+.testimonial p {
+    color: #d0ccc5;
+
+    margin-bottom: 25px;
+}
+
+.testimonial strong {
+    font-size: 14px;
+}
+
+
+/* =========================
+   BOOKING
+========================= */
+
+.booking {
+    background: var(--background);
+}
+
+.booking-box {
+    padding: 70px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 50px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1b1711,
+            #111
+        );
+
+    border: 1px solid
+        rgba(199, 167, 106, 0.3);
+}
+
+.booking-box h2 {
+    max-width: 650px;
+}
+
+.booking-box p:last-child {
+    color: var(--muted);
+
+    max-width: 600px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact {
+    background: var(--surface);
+}
+
+.contact-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 80px;
+}
+
+.contact-grid > div:first-child > p:last-child {
+    color: var(--muted);
+
+    margin-top: 25px;
+}
+
+.contact-info {
+    display: grid;
+
+    gap: 25px;
+}
+
+.contact-info div {
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+.contact-info span {
+    display: block;
+
+    color: var(--gold);
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.contact-info strong {
+    font-size: 16px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background: #070707;
+
+    border-top: 1px solid var(--border);
+}
+
+.footer-content {
+    min-height: 100px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.footer p,
+.footer-content > a:last-child {
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+.footer-content > a:last-child:hover {
+    color: var(--gold);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 850px) {
+
+    .navigation {
+        position: absolute;
+
+        top: 80px;
+        left: 20px;
+        right: 20px;
+
+        display: none;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 0;
+
+        padding: 10px;
+
+        background: #111;
+
+        border: 1px solid var(--border);
+    }
+
+    .navigation.active {
+        display: flex;
+    }
+
+    .navigation a {
+        padding: 15px;
+
+        border-bottom: 1px solid var(--border);
+    }
+
+    .navigation a:last-child {
+        border-bottom: 0;
+    }
+
+    .desktop-button {
+        display: none;
+    }
+
+    .menu-button {
+        display: block;
+
+        order: 3;
+    }
+
+    .services-grid,
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-grid,
+    .contact-grid {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+    }
+
+    .about-image {
+        min-height: 450px;
+    }
+
+    .booking-box {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        padding: 45px 30px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+
+        justify-content: center;
+
+        padding: 30px 0;
+
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .container {
+        width: min(
+            calc(100% - 30px),
+            var(--max-width)
+        );
+    }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .hero h1 {
+        font-size: 54px;
+    }
+
+    .hero-text {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .hero-buttons .button {
+        width: 100%;
+    }
+
+    .service-card {
+        padding: 30px;
+
+        min-height: auto;
+    }
+
+    .service-number {
+        margin-bottom: 35px;
+    }
+
+    .about-image {
+        min-height: 350px;
+    }
+
+    .image-placeholder span {
+        font-size: 48px;
+    }
+
+    .about-stats {
+        gap: 20px;
+
+        flex-wrap: wrap;
+    }
+
+    .about-stats strong {
+        font-size: 28px;
+    }
+
+    .booking-box .button {
+        width: 100%;
+    }
+
+    h2 {
+        font-size: 42px;
+    }
+}
