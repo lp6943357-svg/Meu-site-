@@ -1,7 +1,3 @@
-/* =========================
-   RESET
-========================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -10,7 +6,6 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 85px;
 }
 
 body {
@@ -18,7 +13,6 @@ body {
     background: #0b0b0b;
     color: #f5f1e8;
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 body.review-open {
@@ -36,27 +30,15 @@ textarea {
     font: inherit;
 }
 
-
-/* =========================
-   VARIABLES
-========================= */
-
 :root {
     --background: #0b0b0b;
     --surface: #121212;
-    --surface-light: #1a1a1a;
     --text: #f5f1e8;
     --muted: #aaa69d;
     --gold: #c7a76a;
-    --gold-light: #d8b978;
-    --border: rgba(255, 255, 255, 0.1);
+    --border: rgba(255,255,255,.1);
     --max-width: 1180px;
 }
-
-
-/* =========================
-   GENERAL
-========================= */
 
 .container {
     width: min(calc(100% - 40px), var(--max-width));
@@ -108,7 +90,7 @@ h2 {
 
 
 /* =========================
-   BUTTONS
+   BOTÕES
 ========================= */
 
 .button {
@@ -130,20 +112,19 @@ h2 {
     cursor: pointer;
 
     transition:
-        transform 0.25s ease,
-        background 0.25s ease,
-        color 0.25s ease;
+        transform .25s ease,
+        background .25s ease;
 }
 
 .button:hover {
     transform: translateY(-3px);
-    background: var(--gold-light);
+    background: #d8b978;
 }
 
 .button-outline {
     background: transparent;
     color: var(--text);
-    border-color: rgba(255, 255, 255, 0.35);
+    border-color: rgba(255,255,255,.35);
 }
 
 .button-outline:hover {
@@ -163,27 +144,22 @@ h2 {
 
 .header {
     position: fixed;
-
     top: 0;
     left: 0;
     right: 0;
 
     z-index: 1000;
 
-    background: rgba(11, 11, 11, 0.82);
+    background: rgba(11,11,11,.82);
 
     border-bottom: 1px solid transparent;
 
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-
-    transition:
-        background 0.3s ease,
-        border-color 0.3s ease;
 }
 
 .header.scrolled {
-    background: rgba(11, 11, 11, 0.97);
+    background: rgba(11,11,11,.96);
     border-color: var(--border);
 }
 
@@ -197,66 +173,58 @@ h2 {
 }
 
 .logo {
-    flex: 0 0 auto;
+    flex-shrink: 0;
 
     font-family: "Playfair Display", serif;
+
     font-size: 25px;
     font-weight: 700;
-    letter-spacing: 1px;
 
-    white-space: nowrap;
+    letter-spacing: 1px;
 }
 
 .logo span {
     color: var(--gold);
 }
 
-
-/* =========================
-   DESKTOP NAVIGATION
-========================= */
+.nav-scroll {
+    flex: 1;
+    min-width: 0;
+}
 
 .navigation {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
 
     gap: 30px;
-
-    margin-left: auto;
-
-    white-space: nowrap;
 }
 
 .navigation a {
+    white-space: nowrap;
+
     color: #d7d3cb;
+
     font-size: 14px;
 
-    transition: color 0.2s ease;
+    transition: color .2s ease;
 }
 
 .navigation a:hover {
     color: var(--gold);
 }
 
-
-/* =========================
-   MENU BUTTON
-========================= */
-
 .menu-button {
     display: none;
 
-    flex: 0 0 auto;
+    flex-shrink: 0;
 
     width: 44px;
     height: 44px;
 
-    padding: 0;
-
     background: transparent;
 
-    border: 1px solid transparent;
+    border: 0;
 
     cursor: pointer;
 }
@@ -271,21 +239,7 @@ h2 {
 
     background: white;
 
-    transition:
-        transform 0.25s ease,
-        opacity 0.25s ease;
-}
-
-.menu-button.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-.menu-button.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-button.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+    transition: transform .25s ease;
 }
 
 
@@ -306,7 +260,7 @@ h2 {
     background:
         radial-gradient(
             circle at 75% 30%,
-            rgba(199, 167, 106, 0.18),
+            rgba(199,167,106,.18),
             transparent 30%
         ),
         linear-gradient(
@@ -326,16 +280,13 @@ h2 {
     background:
         linear-gradient(
             90deg,
-            rgba(0, 0, 0, 0.95),
-            rgba(0, 0, 0, 0.35)
+            rgba(0,0,0,.95),
+            rgba(0,0,0,.35)
         );
-
-    pointer-events: none;
 }
 
 .hero-content {
     position: relative;
-
     z-index: 2;
 
     padding-top: 80px;
@@ -368,7 +319,7 @@ h2 {
 
 
 /* =========================
-   SERVICES
+   SERVIÇOS
 ========================= */
 
 .services {
@@ -395,15 +346,15 @@ h2 {
     border: 1px solid var(--border);
 
     transition:
-        transform 0.3s ease,
-        border-color 0.3s ease;
+        transform .3s ease,
+        border-color .3s ease;
 }
 
 .service-card:hover {
     transform: translateY(-6px);
 
     border-color:
-        rgba(199, 167, 106, 0.5);
+        rgba(199,167,106,.5);
 }
 
 .service-card.featured {
@@ -415,7 +366,7 @@ h2 {
         );
 
     border-color:
-        rgba(199, 167, 106, 0.45);
+        rgba(199,167,106,.45);
 }
 
 .service-number {
@@ -449,7 +400,7 @@ h2 {
 
 
 /* =========================
-   ABOUT
+   SOBRE
 ========================= */
 
 .about {
@@ -500,18 +451,20 @@ h2 {
 
     border:
         1px solid
-        rgba(199, 167, 106, 0.35);
+        rgba(199,167,106,.35);
 }
 
 .image-placeholder span {
     position: relative;
 
-    font-family: "Playfair Display", serif;
+    font-family:
+        "Playfair Display",
+        serif;
 
     font-size: 70px;
 
     color:
-        rgba(199, 167, 106, 0.7);
+        rgba(199,167,106,.7);
 }
 
 .about-content > p:not(.eyebrow) {
@@ -531,18 +484,18 @@ h2 {
 
     padding-top: 30px;
 
-    border-top:
-        1px solid var(--border);
+    border-top: 1px solid var(--border);
 }
 
 .about-stats div {
     display: flex;
-
     flex-direction: column;
 }
 
 .about-stats strong {
-    font-family: "Playfair Display", serif;
+    font-family:
+        "Playfair Display",
+        serif;
 
     color: var(--gold);
 
@@ -557,7 +510,7 @@ h2 {
 
 
 /* =========================
-   TESTIMONIALS
+   AVALIAÇÕES
 ========================= */
 
 .testimonials {
@@ -567,7 +520,8 @@ h2 {
 .testimonials-grid {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(3, 1fr);
 
     gap: 20px;
 }
@@ -613,12 +567,12 @@ h2 {
 
     text-align: center;
 
-    padding: 40px 20px;
+    grid-column: 1 / -1;
 }
 
 
 /* =========================
-   REVIEW BUTTON
+   BOTÃO AVALIAÇÃO
 ========================= */
 
 .review-button {
@@ -655,7 +609,7 @@ h2 {
 
     border:
         1px solid
-        rgba(199, 167, 106, 0.3);
+        rgba(199,167,106,.3);
 }
 
 .booking-box h2 {
@@ -672,7 +626,7 @@ h2 {
 
 
 /* =========================
-   CONTACT
+   CONTATO
 ========================= */
 
 .contact {
@@ -702,8 +656,7 @@ h2 {
 .contact-info div {
     padding-bottom: 25px;
 
-    border-bottom:
-        1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
 
 .contact-info span {
@@ -735,8 +688,7 @@ h2 {
 .footer {
     background: #070707;
 
-    border-top:
-        1px solid var(--border);
+    border-top: 1px solid var(--border);
 }
 
 .footer-content {
@@ -762,9 +714,9 @@ h2 {
 }
 
 
-/* =====================================================
-   MODAL DE AVALIAÇÃO
-===================================================== */
+/* =========================
+   MODAL
+========================= */
 
 .review-modal {
     position: fixed;
@@ -781,18 +733,20 @@ h2 {
     padding: 20px;
 
     background:
-        rgba(0, 0, 0, 0.82);
+        rgba(0,0,0,.84);
 
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 
     transition:
-        opacity 0.25s ease,
-        visibility 0.25s ease;
+        opacity .25s ease,
+        visibility .25s ease;
 }
 
 .review-modal.active {
@@ -824,18 +778,18 @@ h2 {
 
     border:
         1px solid
-        rgba(199, 167, 106, 0.35);
+        rgba(199,167,106,.35);
 
     box-shadow:
         0 30px 80px
-        rgba(0, 0, 0, 0.65);
+        rgba(0,0,0,.65);
 
     transform:
         translateY(20px)
-        scale(0.98);
+        scale(.98);
 
     transition:
-        transform 0.25s ease;
+        transform .25s ease;
 
     -webkit-overflow-scrolling: touch;
 }
@@ -853,8 +807,8 @@ h2 {
     top: 14px;
     right: 16px;
 
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
 
     display: flex;
 
@@ -866,7 +820,7 @@ h2 {
         var(--border);
 
     background:
-        rgba(255, 255, 255, 0.04);
+        rgba(255,255,255,.04);
 
     color: var(--text);
 
@@ -888,7 +842,7 @@ h2 {
 
     margin-bottom: 30px;
 
-    padding-right: 35px;
+    padding-right: 40px;
 }
 
 #reviewForm {
@@ -919,7 +873,7 @@ h2 {
 
     border:
         1px solid
-        rgba(255, 255, 255, 0.12);
+        rgba(255,255,255,.12);
 
     background: #0b0b0b;
 
@@ -927,17 +881,11 @@ h2 {
 
     padding: 14px 15px;
 
-    font-family: inherit;
-
-    font-size: 15px;
-
     outline: none;
 
     border-radius: 0;
 
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+    -webkit-appearance: none;
 }
 
 #reviewForm input[type="text"]:focus,
@@ -946,7 +894,7 @@ h2 {
 
     box-shadow:
         0 0 0 3px
-        rgba(199, 167, 106, 0.08);
+        rgba(199,167,106,.08);
 }
 
 #reviewForm textarea {
@@ -960,7 +908,7 @@ h2 {
 
     align-items: center;
 
-    gap: 4px;
+    gap: 3px;
 
     margin-top: 2px;
 }
@@ -984,18 +932,17 @@ h2 {
     cursor: pointer;
 
     transition:
-        color 0.15s ease,
-        transform 0.15s ease;
+        color .15s ease,
+        transform .15s ease;
+}
+
+.star-picker button:hover,
+.star-picker button.selected {
+    color: var(--gold);
 }
 
 .star-picker button:hover {
-    color: var(--gold);
-
-    transform: scale(1.12);
-}
-
-.star-picker button.selected {
-    color: var(--gold);
+    transform: scale(1.1);
 }
 
 #submitReview {
@@ -1007,7 +954,7 @@ h2 {
 }
 
 #submitReview:disabled {
-    opacity: 0.6;
+    opacity: .6;
 
     cursor: wait;
 
@@ -1027,139 +974,50 @@ h2 {
 }
 
 
-/* =====================================================
-   TABLET / MOBILE
-===================================================== */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 850px) {
 
-    .container {
-        width: min(
-            calc(100% - 30px),
-            var(--max-width)
-        );
-    }
-
     .nav {
-        min-height: 72px;
-
+        min-height: 70px;
         gap: 12px;
-
-        position: relative;
     }
 
-    /*
-       MENU HORIZONTAL:
-       permite arrastar os links para esquerda/direita
-    */
+    .nav-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        scrollbar-width: none;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nav-scroll::-webkit-scrollbar {
+        display: none;
+    }
 
     .navigation {
-        order: 2;
-
-        flex: 1 1 auto;
-
-        display: flex;
+        width: max-content;
 
         justify-content: flex-start;
 
         gap: 22px;
 
-        margin-left: 8px;
-
-        overflow-x: auto;
-
-        overflow-y: hidden;
-
-        white-space: nowrap;
-
-        scrollbar-width: none;
-
-        -webkit-overflow-scrolling: touch;
-
-        padding: 4px 0;
-    }
-
-    .navigation::-webkit-scrollbar {
-        display: none;
+        padding: 4px 2px;
     }
 
     .navigation a {
-        flex: 0 0 auto;
-
         font-size: 13px;
-
-        padding: 8px 0;
     }
 
     .desktop-button {
         display: none;
     }
 
-    /*
-       TRÊS TRACINHOS:
-       continua aparecendo no celular
-    */
-
     .menu-button {
         display: block;
-
-        order: 3;
-    }
-
-    /*
-       Painel que aparece ao clicar
-    */
-
-    .navigation.active {
-        position: absolute;
-
-        top: 72px;
-
-        left: 0;
-        right: 0;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 0;
-
-        margin: 0;
-
-        padding: 8px;
-
-        max-height: calc(100vh - 85px);
-
-        overflow-y: auto;
-
-        background:
-            rgba(17, 17, 17, 0.98);
-
-        border:
-            1px solid
-            var(--border);
-
-        box-shadow:
-            0 20px 50px
-            rgba(0, 0, 0, 0.5);
-
-        scrollbar-width: thin;
-    }
-
-    .navigation.active a {
-        width: 100%;
-
-        padding: 15px;
-
-        border-bottom:
-            1px solid
-            var(--border);
-    }
-
-    .navigation.active a:last-child {
-        border-bottom: 0;
     }
 
     .services-grid,
@@ -1198,28 +1056,44 @@ h2 {
 }
 
 
-/* =====================================================
-   CELULAR
-===================================================== */
-
 @media (max-width: 550px) {
 
-    .section {
-        padding: 80px 0;
+    .container {
+        width:
+            min(
+                calc(100% - 30px),
+                var(--max-width)
+            );
     }
 
-    .hero {
-        min-height: 100svh;
+    .header {
+        background:
+            rgba(11,11,11,.96);
     }
 
-    .hero-content {
-        padding-top: 75px;
+    .nav {
+        min-height: 66px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .navigation {
+        gap: 20px;
+    }
+
+    .navigation a {
+        font-size: 12px;
+    }
+
+    .menu-button {
+        width: 40px;
+        height: 40px;
     }
 
     .hero h1 {
         font-size: 54px;
-
-        letter-spacing: -1.5px;
     }
 
     .hero-text {
@@ -1232,6 +1106,10 @@ h2 {
 
     .hero-buttons .button {
         width: 100%;
+    }
+
+    .section {
+        padding: 80px 0;
     }
 
     .service-card {
@@ -1270,57 +1148,76 @@ h2 {
         font-size: 42px;
     }
 
-    /*
-       MODAL MOBILE
-    */
+
+    /* MODAL MOBILE */
 
     .review-modal {
         align-items: flex-end;
 
-        padding: 8px;
+        padding: 0;
     }
 
     .review-modal-content {
         width: 100%;
 
         max-height:
-            calc(100dvh - 16px);
+            calc(100dvh - 12px);
 
         padding:
-            28px 20px
-            24px;
+            28px
+            20px
+            calc(24px + env(safe-area-inset-bottom));
 
-        border-radius: 18px 18px 10px 10px;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 0;
+
+        border-radius:
+            22px 22px 0 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    .review-modal.active
+    .review-modal-content {
+        transform:
+            translateY(0);
     }
 
     .review-modal-content h2 {
-        font-size: 31px;
+        font-size: 32px;
 
         margin-bottom: 24px;
     }
 
     .review-close {
-        top: 10px;
-        right: 10px;
+        top: 12px;
+        right: 12px;
     }
 
     .star-picker {
-        gap: 1px;
+        justify-content: center;
+
+        gap: 2px;
     }
 
     .star-picker button {
-        width: 40px;
-        height: 40px;
+        width: 48px;
+        height: 48px;
 
-        font-size: 28px;
+        font-size: 32px;
     }
 
     #reviewForm {
-        gap: 18px;
+        gap: 19px;
     }
 
-    #reviewForm input[type="text"],
     #reviewForm textarea {
-        font-size: 16px;
+        min-height: 110px;
+    }
+
+    #submitReview {
+        min-height: 54px;
     }
 }
