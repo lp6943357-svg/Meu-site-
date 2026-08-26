@@ -1,872 +1,354 @@
-"use strict";
-
-/* =====================================================
-   CONFIGURAÇÃO
-===================================================== */
-
-const SUPABASE_URL =
-    "https://kuhdbyjejwhsmaunvupf.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
-
-let supabaseClient = null;
-
-if (
-    window.supabase &&
-    typeof window.supabase.createClient === "function"
-) {
-    supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-}
+/* =========================================
+   PRIME BARBER
+   SCRIPT PRINCIPAL
+========================================= */
 
 
-/* =====================================================
+/* =========================================
+   CONFIGURAÇÕES
+========================================= */
+
+/*
+  IMPORTANTE:
+
+  Troque este número pelo WhatsApp REAL
+  da barbearia.
+
+  Formato:
+  55 + DDD + número
+
+  Exemplo:
+  5531999999999
+
+  NÃO coloque:
+  +55
+  espaços
+  parênteses
+  hífens
+*/
+
+const whatsappNumber = "5531999999999";
+
+const whatsappMessage =
+  "Olá! Gostaria de agendar um horário na Prime Barber.";
+
+
+/* =========================================
    ELEMENTOS
-===================================================== */
+========================================= */
 
-const header = document.getElementById("header");
-const menuButton = document.getElementById("menuButton");
-const navigation = document.getElementById("navigation");
-const year = document.getElementById("year");
+const siteHeader = document.getElementById("siteHeader");
 
-const servicesGrid =
-    document.getElementById("servicesGrid");
+const navToggle = document.getElementById("navToggle");
 
-const reviewModal =
-    document.getElementById("reviewModal");
+const nav = document.getElementById("nav");
 
-const openReview =
-    document.getElementById("openReview");
+const backTop = document.getElementById("backTop");
 
-const closeReview =
-    document.getElementById("closeReview");
-
-const reviewForm =
-    document.getElementById("reviewForm");
-
-const reviewName =
-    document.getElementById("reviewName");
-
-const reviewRating =
-    document.getElementById("reviewRating");
-
-const reviewComment =
-    document.getElementById("reviewComment");
-
-const reviewMessage =
-    document.getElementById("reviewMessage");
-
-const submitReview =
-    document.getElementById("submitReview");
-
-const reviewsList =
-    document.getElementById("reviewsList");
-
-const averageRating =
-    document.getElementById("averageRating");
+const whatsappButtons =
+  document.querySelectorAll(".whatsapp-btn");
 
 
-/* =====================================================
-   ANO
-===================================================== */
-
-if (year) {
-    year.textContent = new Date().getFullYear();
-}
-
-
-/* =====================================================
-   SERVIÇOS
-===================================================== */
-
-const services = [
-    {
-        number: "01",
-        name: "Corte masculino",
-        description:
-            "Corte personalizado de acordo com seu estilo, formato de rosto e preferência.",
-        price: "R$ 60"
-    },
-
-    {
-        number: "02",
-        name: "Corte + Barba",
-        description:
-            "O combo completo para renovar o visual com acabamento profissional.",
-        price: "R$ 90",
-        featured: true
-    },
-
-    {
-        number: "03",
-        name: "Barba premium",
-        description:
-            "Modelagem, toalha quente e acabamento para deixar sua barba impecável.",
-        price: "R$ 45"
-    }
-];
-
-
-function renderServices() {
-
-    if (!servicesGrid) {
-        return;
-    }
-
-    servicesGrid.innerHTML = "";
-
-    services.forEach((service) => {
-
-        const card =
-            document.createElement("article");
-
-        card.className = "service-card";
-
-        if (service.featured) {
-            card.classList.add("featured");
-        }
-
-        card.innerHTML = `
-            <div class="service-number">
-                ${service.number}
-            </div>
-
-            <h3>
-                ${service.name}
-            </h3>
-
-            <p>
-                ${service.description}
-            </p>
-
-            <strong>
-                ${service.price}
-            </strong>
-        `;
-
-        servicesGrid.appendChild(card);
-    });
-}
-
-renderServices();
-
-
-/* =====================================================
-   HEADER
-===================================================== */
+/* =========================================
+   HEADER AO ROLAR
+========================================= */
 
 function updateHeader() {
 
-    if (!header) {
-        return;
-    }
+  if (!siteHeader) return;
 
-    if (window.scrollY > 30) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
+  if (window.scrollY > 40) {
+
+    siteHeader.classList.add("scrolled");
+
+  } else {
+
+    siteHeader.classList.remove("scrolled");
+
+  }
+
 }
 
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
+
+window.addEventListener("scroll", updateHeader);
 
 updateHeader();
 
 
-/* =====================================================
+/* =========================================
    MENU MOBILE
-   ABRIR / FECHAR PELOS 3 TRACINHOS
-===================================================== */
+========================================= */
 
-function closeMenu() {
+if (navToggle) {
 
-    if (!navigation) {
-        return;
-    }
-
-    navigation.classList.remove("active");
-
-    if (menuButton) {
-        menuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        menuButton.setAttribute(
-            "aria-label",
-            "Abrir menu"
-        );
-    }
-}
-
-
-function toggleMenu() {
-
-    if (!navigation || !menuButton) {
-        return;
-    }
+  navToggle.addEventListener("click", function () {
 
     const isOpen =
-        navigation.classList.contains("active");
+      siteHeader.classList.toggle("menu-open");
 
-    if (isOpen) {
-        closeMenu();
-    } else {
+    navToggle.classList.toggle("open", isOpen);
 
-        navigation.classList.add("active");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
-
-        menuButton.setAttribute(
-            "aria-label",
-            "Fechar menu"
-        );
-    }
-}
-
-
-if (menuButton) {
-
-    menuButton.addEventListener(
-        "click",
-        function (event) {
-
-            event.preventDefault();
-            event.stopPropagation();
-
-            toggleMenu();
-        }
+    navToggle.setAttribute(
+      "aria-expanded",
+      String(isOpen)
     );
+
+    navToggle.setAttribute(
+      "aria-label",
+      isOpen
+        ? "Fechar menu"
+        : "Abrir menu"
+    );
+
+    document.body.classList.toggle(
+      "menu-open",
+      isOpen
+    );
+
+  });
+
 }
 
 
-/* =====================================================
-   FECHAR MENU AO CLICAR EM UMA OPÇÃO
-===================================================== */
+/* =========================================
+   FECHAR MENU AO CLICAR EM LINK
+========================================= */
 
-if (navigation) {
+if (nav) {
 
-    const navigationLinks =
-        navigation.querySelectorAll("a");
+  const navLinks =
+    nav.querySelectorAll("a");
 
-    navigationLinks.forEach((link) => {
+  navLinks.forEach(function (link) {
 
-        link.addEventListener(
-            "click",
-            function () {
-                closeMenu();
-            }
-        );
+    link.addEventListener("click", function () {
+
+      siteHeader.classList.remove("menu-open");
+
+      navToggle.classList.remove("open");
+
+      navToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      navToggle.setAttribute(
+        "aria-label",
+        "Abrir menu"
+      );
+
+      document.body.classList.remove(
+        "menu-open"
+      );
 
     });
+
+  });
+
 }
 
 
-/* =====================================================
-   FECHAR MENU AO CLICAR FORA
-===================================================== */
+/* =========================================
+   WHATSAPP
+========================================= */
 
-document.addEventListener(
+function openWhatsApp() {
+
+  const encodedMessage =
+    encodeURIComponent(whatsappMessage);
+
+  const url =
+    `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+whatsappButtons.forEach(function (button) {
+
+  button.addEventListener(
     "click",
     function (event) {
 
-        if (!navigation || !menuButton) {
-            return;
-        }
+      event.preventDefault();
 
-        if (!navigation.classList.contains("active")) {
-            return;
-        }
-
-        const clickedInsideMenu =
-            navigation.contains(event.target);
-
-        const clickedButton =
-            menuButton.contains(event.target);
-
-        if (
-            !clickedInsideMenu &&
-            !clickedButton
-        ) {
-            closeMenu();
-        }
-    }
-);
-
-
-/* =====================================================
-   REDIMENSIONAMENTO
-===================================================== */
-
-window.addEventListener(
-    "resize",
-    function () {
-
-        if (window.innerWidth > 850) {
-            closeMenu();
-        }
+      openWhatsApp();
 
     }
-);
-
-
-/* =====================================================
-   LINKS INTERNOS
-===================================================== */
-
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            function (event) {
-
-                const targetId =
-                    link.getAttribute("href");
-
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
-
-                const target =
-                    document.querySelector(targetId);
-
-                if (!target) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                closeMenu();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        );
-
-    });
-
-
-/* =====================================================
-   MODAL DE AVALIAÇÃO
-===================================================== */
-
-function openReviewModal() {
-
-    if (!reviewModal) {
-        return;
-    }
-
-    reviewModal.classList.add("active");
-
-    reviewModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.classList.add(
-        "review-open"
-    );
-
-    setTimeout(() => {
-
-        if (reviewName) {
-            reviewName.focus();
-        }
-
-    }, 250);
-}
-
-
-function closeReviewModal() {
-
-    if (!reviewModal) {
-        return;
-    }
-
-    reviewModal.classList.remove("active");
-
-    reviewModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.classList.remove(
-        "review-open"
-    );
-}
-
-
-if (openReview) {
-
-    openReview.addEventListener(
-        "click",
-        openReviewModal
-    );
-}
-
-
-if (closeReview) {
-
-    closeReview.addEventListener(
-        "click",
-        closeReviewModal
-    );
-}
-
-
-if (reviewModal) {
-
-    reviewModal.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === reviewModal
-            ) {
-                closeReviewModal();
-            }
-
-        }
-    );
-}
-
-
-/* =====================================================
-   ESC FECHA AVALIAÇÃO
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function (event) {
-
-        if (
-            event.key === "Escape" &&
-            reviewModal &&
-            reviewModal.classList.contains("active")
-        ) {
-            closeReviewModal();
-        }
-
-    }
-);
-
-
-/* =====================================================
-   ESTRELAS
-===================================================== */
-
-const starButtons =
-    document.querySelectorAll(
-        "#starPicker button"
-    );
-
-
-starButtons.forEach((button) => {
-
-    button.addEventListener(
-        "click",
-        function () {
-
-            const rating =
-                Number(
-                    button.dataset.rating
-                );
-
-            if (reviewRating) {
-                reviewRating.value =
-                    String(rating);
-            }
-
-            starButtons.forEach((star) => {
-
-                const starRating =
-                    Number(
-                        star.dataset.rating
-                    );
-
-                star.classList.toggle(
-                    "selected",
-                    starRating <= rating
-                );
-
-            });
-
-        }
-    );
+  );
 
 });
 
 
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
+/* =========================================
+   SCROLL REVEAL
+========================================= */
 
-function escapeHTML(value) {
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
+const revealElements =
+  document.querySelectorAll(".reveal");
 
 
-/* =====================================================
-   CARREGAR AVALIAÇÕES
-===================================================== */
+if ("IntersectionObserver" in window) {
 
-async function loadReviews() {
+  const observer =
+    new IntersectionObserver(
+      function (entries, observer) {
 
-    if (!supabaseClient) {
+        entries.forEach(function (entry) {
 
-        console.error(
-            "Supabase não foi inicializado."
-        );
+          if (entry.isIntersecting) {
 
-        return;
-    }
+            entry.target.classList.add("in");
 
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("reviews")
-        .select(
-            "id, name, rating, comment, created_at"
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-    if (error) {
-
-        console.error(
-            "Erro ao carregar avaliações:",
-            error
-        );
-
-        return;
-    }
-
-    renderReviews(data || []);
-}
-
-
-/* =====================================================
-   MOSTRAR AVALIAÇÕES
-===================================================== */
-
-function renderReviews(reviews) {
-
-    if (!reviewsList) {
-        return;
-    }
-
-    if (reviews.length === 0) {
-
-        reviewsList.innerHTML = `
-            <p class="no-reviews">
-                Ainda não existem avaliações.
-                Seja o primeiro a avaliar!
-            </p>
-        `;
-
-        if (averageRating) {
-            averageRating.textContent = "0.0";
-        }
-
-        return;
-    }
-
-    reviewsList.innerHTML = "";
-
-    reviews.forEach((review) => {
-
-        const article =
-            document.createElement("article");
-
-        article.className =
-            "testimonial";
-
-        const rating =
-            Math.max(
-                1,
-                Math.min(
-                    5,
-                    Number(review.rating)
-                )
+            observer.unobserve(
+              entry.target
             );
 
-        const stars =
-            "★".repeat(rating) +
-            "☆".repeat(5 - rating);
+          }
 
-        const date =
-            review.created_at
-                ? new Date(
-                    review.created_at
-                ).toLocaleDateString(
-                    "pt-BR"
-                )
-                : "";
+        });
 
-        article.innerHTML = `
-            <div class="stars">
-                ${stars}
-            </div>
+      },
+      {
+        threshold: 0.12
+      }
+    );
 
-            <p>
-                “${escapeHTML(
-                    review.comment
-                )}”
-            </p>
 
-            <strong>
-                ${escapeHTML(
-                    review.name
-                )}
-            </strong>
+  revealElements.forEach(function (element) {
 
-            <small>
-                ${date}
-            </small>
-        `;
+    observer.observe(element);
 
-        reviewsList.appendChild(article);
-    });
+  });
 
-    updateAverage(reviews);
+} else {
+
+  revealElements.forEach(function (element) {
+
+    element.classList.add("in");
+
+  });
+
 }
 
 
-/* =====================================================
-   MÉDIA
-===================================================== */
+/* =========================================
+   VOLTAR AO TOPO
+========================================= */
 
-function updateAverage(reviews) {
+function updateBackTop() {
+
+  if (!backTop) return;
+
+  if (window.scrollY > 500) {
+
+    backTop.classList.add("show");
+
+  } else {
+
+    backTop.classList.remove("show");
+
+  }
+
+}
+
+
+window.addEventListener(
+  "scroll",
+  updateBackTop
+);
+
+
+if (backTop) {
+
+  backTop.addEventListener(
+    "click",
+    function () {
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+  );
+
+}
+
+
+/* =========================================
+   FECHAR MENU COM ESC
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  function (event) {
+
+    if (event.key !== "Escape") return;
 
     if (
-        !averageRating ||
-        reviews.length === 0
+      siteHeader &&
+      siteHeader.classList.contains("menu-open")
     ) {
-        return;
+
+      siteHeader.classList.remove(
+        "menu-open"
+      );
+
+      navToggle.classList.remove(
+        "open"
+      );
+
+      navToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      navToggle.setAttribute(
+        "aria-label",
+        "Abrir menu"
+      );
+
+      document.body.classList.remove(
+        "menu-open"
+      );
+
     }
 
-    const total =
-        reviews.reduce(
-            (sum, review) => {
+  }
+);
 
-                return (
-                    sum +
-                    Number(review.rating)
-                );
 
-            },
-            0
-        );
+/* =========================================
+   ANO AUTOMÁTICO DO FOOTER
+========================================= */
 
-    const average =
-        total / reviews.length;
+const currentYear =
+  new Date().getFullYear();
 
-    averageRating.textContent =
-        average.toFixed(1);
+const footerText =
+  document.querySelector(
+    ".footer-inner p"
+  );
+
+
+if (footerText) {
+
+  footerText.textContent =
+    `© ${currentYear} Prime Barber. Todos os direitos reservados.`;
+
 }
 
 
-/* =====================================================
-   ENVIAR AVALIAÇÃO
-===================================================== */
+/* =========================================
+   LOG DE TESTE
+========================================= */
 
-if (reviewForm) {
-
-    reviewForm.addEventListener(
-        "submit",
-        async function (event) {
-
-            event.preventDefault();
-
-            const name =
-                reviewName
-                    ? reviewName.value.trim()
-                    : "";
-
-            const rating =
-                reviewRating
-                    ? Number(
-                        reviewRating.value
-                    )
-                    : 0;
-
-            const comment =
-                reviewComment
-                    ? reviewComment.value.trim()
-                    : "";
-
-
-            if (!name) {
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "Digite seu nome.";
-                }
-
-                return;
-            }
-
-
-            if (
-                rating < 1 ||
-                rating > 5
-            ) {
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "Escolha uma nota de 1 a 5 estrelas.";
-                }
-
-                return;
-            }
-
-
-            if (!comment) {
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "Digite um comentário.";
-                }
-
-                return;
-            }
-
-
-            if (!supabaseClient) {
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "Sistema de avaliações indisponível.";
-                }
-
-                return;
-            }
-
-
-            if (submitReview) {
-
-                submitReview.disabled = true;
-
-                submitReview.textContent =
-                    "Enviando...";
-            }
-
-
-            if (reviewMessage) {
-                reviewMessage.textContent = "";
-            }
-
-
-            try {
-
-                const {
-                    error
-                } = await supabaseClient
-                    .from("reviews")
-                    .insert({
-                        name: name,
-                        rating: rating,
-                        comment: comment
-                    });
-
-
-                if (error) {
-                    throw error;
-                }
-
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "⭐ Avaliação enviada com sucesso!";
-                }
-
-
-                reviewForm.reset();
-
-
-                if (reviewRating) {
-                    reviewRating.value = "0";
-                }
-
-
-                starButtons.forEach((star) => {
-
-                    star.classList.remove(
-                        "selected"
-                    );
-
-                });
-
-
-                await loadReviews();
-
-
-                setTimeout(
-                    closeReviewModal,
-                    1200
-                );
-
-
-            } catch (error) {
-
-                console.error(
-                    "Erro ao enviar avaliação:",
-                    error
-                );
-
-                if (reviewMessage) {
-                    reviewMessage.textContent =
-                        "Não foi possível enviar. Tente novamente.";
-                }
-
-            } finally {
-
-                if (submitReview) {
-
-                    submitReview.disabled =
-                        false;
-
-                    submitReview.textContent =
-                        "Enviar avaliação";
-                }
-
-            }
-
-        }
-    );
-}
-
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-loadReviews();
+console.log(
+  "Prime Barber — site carregado com sucesso."
+);
