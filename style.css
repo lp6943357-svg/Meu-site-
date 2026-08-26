@@ -18,7 +18,6 @@ body {
     background: #0b0b0b;
     color: #f5f1e8;
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 body.review-open {
@@ -57,7 +56,11 @@ textarea {
 ========================= */
 
 .container {
-    width: min(calc(100% - 40px), var(--max-width));
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
+    );
+
     margin: 0 auto;
 }
 
@@ -161,6 +164,7 @@ h2 {
 
 .header {
     position: fixed;
+
     top: 0;
     left: 0;
     right: 0;
@@ -190,15 +194,17 @@ h2 {
     display: flex;
     align-items: center;
 
-    gap: 24px;
+    gap: 30px;
 }
 
 .logo {
     flex: 0 0 auto;
 
     font-family: "Playfair Display", serif;
+
     font-size: 25px;
     font-weight: 700;
+
     letter-spacing: 1px;
 }
 
@@ -207,74 +213,49 @@ h2 {
 }
 
 
-/* Faixa que pode deslizar no celular */
-
-.nav-scroll {
-    flex: 1;
-    min-width: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-
-    scrollbar-width: none;
-
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-}
-
-.nav-scroll::-webkit-scrollbar {
-    display: none;
-}
+/* =========================
+   NAVEGAÇÃO
+========================= */
 
 .navigation {
     display: flex;
+
     align-items: center;
-    justify-content: flex-end;
 
     gap: 30px;
 
-    width: max-content;
-    min-width: 100%;
+    margin-left: auto;
+
+    overflow-x: auto;
+
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+}
+
+.navigation::-webkit-scrollbar {
+    display: none;
 }
 
 .navigation a {
     flex: 0 0 auto;
 
     color: #d7d3cb;
+
     font-size: 14px;
+
     white-space: nowrap;
 
-    padding: 8px 0;
-
-    transition: color 0.2s ease;
+    transition:
+        color 0.2s ease;
 }
 
 .navigation a:hover {
     color: var(--gold);
 }
 
-.menu-button {
-    display: none;
-
+.desktop-button {
     flex: 0 0 auto;
-
-    width: 42px;
-    height: 42px;
-
-    background: transparent;
-    border: 0;
-
-    cursor: pointer;
-}
-
-.menu-button span {
-    display: block;
-
-    width: 24px;
-    height: 2px;
-
-    margin: 5px auto;
-
-    background: white;
 }
 
 
@@ -309,6 +290,7 @@ h2 {
     content: "";
 
     position: absolute;
+
     inset: 0;
 
     background:
@@ -321,6 +303,7 @@ h2 {
 
 .hero-content {
     position: relative;
+
     z-index: 2;
 
     padding-top: 80px;
@@ -329,7 +312,12 @@ h2 {
 }
 
 .hero h1 {
-    font-size: clamp(54px, 8vw, 100px);
+    font-size: clamp(
+        54px,
+        8vw,
+        100px
+    );
+
     letter-spacing: -2px;
 }
 
@@ -339,12 +327,15 @@ h2 {
     margin: 28px 0 35px;
 
     color: #c1bdb5;
+
     font-size: 18px;
 }
 
 .hero-buttons {
     display: flex;
+
     gap: 14px;
+
     flex-wrap: wrap;
 }
 
@@ -359,7 +350,10 @@ h2 {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 20px;
 }
 
@@ -367,6 +361,7 @@ h2 {
     position: relative;
 
     padding: 40px;
+
     min-height: 330px;
 
     background: #101010;
@@ -380,7 +375,9 @@ h2 {
 
 .service-card:hover {
     transform: translateY(-6px);
-    border-color: rgba(199, 167, 106, 0.5);
+
+    border-color:
+        rgba(199, 167, 106, 0.5);
 }
 
 .service-card.featured {
@@ -391,29 +388,36 @@ h2 {
             #101010
         );
 
-    border-color: rgba(199, 167, 106, 0.45);
+    border-color:
+        rgba(199, 167, 106, 0.45);
 }
 
 .service-number {
     color: var(--gold);
+
     font-size: 13px;
     font-weight: 700;
+
     margin-bottom: 60px;
 }
 
 .service-card h3 {
     font-family: "Playfair Display", serif;
+
     font-size: 30px;
+
     margin-bottom: 15px;
 }
 
 .service-card p {
     color: var(--muted);
+
     margin-bottom: 30px;
 }
 
 .service-card strong {
     color: var(--gold);
+
     font-size: 18px;
 }
 
@@ -428,8 +432,12 @@ h2 {
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 80px;
+
     align-items: center;
 }
 
@@ -441,6 +449,7 @@ h2 {
     height: 100%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -464,30 +473,39 @@ h2 {
     width: 65%;
     height: 75%;
 
-    border: 1px solid rgba(199, 167, 106, 0.35);
+    border:
+        1px solid
+        rgba(199, 167, 106, 0.35);
 }
 
 .image-placeholder span {
     position: relative;
 
-    font-family: "Playfair Display", serif;
+    font-family:
+        "Playfair Display",
+        serif;
 
     font-size: 70px;
 
-    color: rgba(199, 167, 106, 0.7);
+    color:
+        rgba(199, 167, 106, 0.7);
 }
 
 .about-content > p:not(.eyebrow) {
     color: var(--muted);
+
     margin-top: 22px;
+
     max-width: 540px;
 }
 
 .about-stats {
     display: flex;
+
     gap: 45px;
 
     margin-top: 45px;
+
     padding-top: 30px;
 
     border-top: 1px solid var(--border);
@@ -495,17 +513,21 @@ h2 {
 
 .about-stats div {
     display: flex;
+
     flex-direction: column;
 }
 
 .about-stats strong {
     font-family: "Playfair Display", serif;
+
     color: var(--gold);
+
     font-size: 34px;
 }
 
 .about-stats span {
     color: var(--muted);
+
     font-size: 12px;
 }
 
@@ -520,7 +542,10 @@ h2 {
 
 .testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 20px;
 }
 
@@ -528,17 +553,21 @@ h2 {
     padding: 35px;
 
     background: #101010;
+
     border: 1px solid var(--border);
 }
 
 .stars {
     color: var(--gold);
+
     letter-spacing: 3px;
+
     margin-bottom: 25px;
 }
 
 .testimonial p {
     color: #d0ccc5;
+
     margin-bottom: 25px;
 }
 
@@ -548,9 +577,21 @@ h2 {
 
 .testimonial small {
     display: block;
+
     margin-top: 10px;
+
     color: var(--muted);
+
     font-size: 11px;
+}
+
+
+/* =========================
+   BOTÃO DE AVALIAÇÃO
+========================= */
+
+.review-button {
+    margin-top: 28px;
 }
 
 
@@ -566,6 +607,7 @@ h2 {
     padding: 70px;
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -578,7 +620,9 @@ h2 {
             #111
         );
 
-    border: 1px solid rgba(199, 167, 106, 0.3);
+    border:
+        1px solid
+        rgba(199, 167, 106, 0.3);
 }
 
 .booking-box h2 {
@@ -587,7 +631,9 @@ h2 {
 
 .booking-box p:last-child {
     color: var(--muted);
+
     max-width: 600px;
+
     margin-top: 20px;
 }
 
@@ -602,22 +648,28 @@ h2 {
 
 .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+
+    grid-template-columns:
+        1fr 1fr;
+
     gap: 80px;
 }
 
 .contact-grid > div:first-child > p:last-child {
     color: var(--muted);
+
     margin-top: 25px;
 }
 
 .contact-info {
     display: grid;
+
     gap: 25px;
 }
 
 .contact-info div {
     padding-bottom: 25px;
+
     border-bottom: 1px solid var(--border);
 }
 
@@ -627,18 +679,14 @@ h2 {
     color: var(--gold);
 
     font-size: 12px;
+
     letter-spacing: 2px;
 
     margin-bottom: 8px;
 }
 
-.contact-info strong,
-.contact-info a {
+.contact-info strong {
     font-size: 16px;
-}
-
-.contact-info a:hover {
-    color: var(--gold);
 }
 
 
@@ -648,6 +696,7 @@ h2 {
 
 .footer {
     background: #070707;
+
     border-top: 1px solid var(--border);
 }
 
@@ -655,6 +704,7 @@ h2 {
     min-height: 100px;
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -664,6 +714,7 @@ h2 {
 .footer p,
 .footer-content > a:last-child {
     color: var(--muted);
+
     font-size: 13px;
 }
 
@@ -673,28 +724,33 @@ h2 {
 
 
 /* =========================
-   MODAL AVALIAÇÃO
+   MODAL DE AVALIAÇÃO
 ========================= */
 
 .review-modal {
     position: fixed;
+
     inset: 0;
 
     z-index: 9999;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
-    padding: 16px;
+    padding: 20px;
 
-    background: rgba(0, 0, 0, 0.84);
+    background:
+        rgba(0, 0, 0, 0.82);
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 
     transition:
@@ -704,20 +760,23 @@ h2 {
 
 .review-modal.active {
     opacity: 1;
+
     visibility: visible;
+
     pointer-events: auto;
 }
 
 .review-modal-content {
     position: relative;
 
-    width: min(100%, 500px);
-    max-height: calc(100dvh - 32px);
+    width: min(100%, 520px);
+
+    max-height:
+        calc(100dvh - 40px);
 
     overflow-y: auto;
-    overscroll-behavior: contain;
 
-    padding: 34px;
+    padding: 40px;
 
     background:
         linear-gradient(
@@ -726,86 +785,138 @@ h2 {
             #0f0f0f
         );
 
-    border: 1px solid rgba(199, 167, 106, 0.35);
+    border:
+        1px solid
+        rgba(199, 167, 106, 0.35);
 
     box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.65);
+        0 30px 80px
+        rgba(0, 0, 0, 0.65);
 
-    transform: translateY(18px) scale(0.98);
+    transform:
+        translateY(20px)
+        scale(0.98);
 
-    transition: transform 0.25s ease;
+    transition:
+        transform 0.25s ease;
 }
 
-.review-modal.active .review-modal-content {
-    transform: translateY(0) scale(1);
+.review-modal.active
+.review-modal-content {
+    transform:
+        translateY(0)
+        scale(1);
 }
+
+
+/* =========================
+   FECHAR MODAL
+========================= */
 
 .review-close {
     position: absolute;
 
-    top: 12px;
-    right: 12px;
+    top: 14px;
+    right: 16px;
 
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.04);
+
+    background:
+        rgba(255, 255, 255, 0.04);
 
     color: var(--text);
 
     font-size: 28px;
+
     line-height: 1;
 
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
 }
 
 .review-close:hover {
     background: var(--gold);
+
     color: #111;
 }
 
+
+/* =========================
+   TÍTULO MODAL
+========================= */
+
 .review-modal-content h2 {
     font-size: 38px;
-    margin-bottom: 28px;
-    padding-right: 40px;
+
+    margin-bottom: 30px;
+
+    padding-right: 35px;
 }
+
+
+/* =========================
+   FORMULÁRIO
+========================= */
 
 #reviewForm {
     display: flex;
+
     flex-direction: column;
-    gap: 20px;
+
+    gap: 22px;
 }
 
 #reviewForm label {
     display: flex;
+
     flex-direction: column;
+
     gap: 9px;
 
     color: #ddd8cf;
 
     font-size: 14px;
+
     font-weight: 600;
 }
+
+
+/* =========================
+   INPUTS
+========================= */
 
 #reviewForm input[type="text"],
 #reviewForm textarea {
     width: 100%;
 
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.12);
 
     background: #0b0b0b;
+
     color: var(--text);
 
     padding: 14px 15px;
 
-    border-radius: 0;
+    font-family: inherit;
+
+    font-size: 15px;
 
     outline: none;
+
+    border-radius: 0;
 
     transition:
         border-color 0.2s ease,
@@ -823,27 +934,39 @@ h2 {
 
 #reviewForm textarea {
     resize: vertical;
+
     min-height: 120px;
 }
 
+
+/* =========================
+   ESTRELAS
+========================= */
+
 .star-picker {
     display: flex;
+
     align-items: center;
-    gap: 3px;
+
+    gap: 4px;
+
+    margin-top: 2px;
 }
 
 .star-picker button {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
 
     padding: 0;
 
     border: 0;
+
     background: transparent;
 
     color: #57534c;
 
     font-size: 30px;
+
     line-height: 1;
 
     cursor: pointer;
@@ -853,82 +976,99 @@ h2 {
         transform 0.15s ease;
 }
 
-.star-picker button:hover,
+.star-picker button:hover {
+    color: var(--gold);
+
+    transform: scale(1.12);
+}
+
 .star-picker button.selected {
     color: var(--gold);
 }
 
-.star-picker button:hover {
-    transform: scale(1.1);
-}
+
+/* =========================
+   ENVIAR
+========================= */
 
 #submitReview {
     width: 100%;
+
     border: 0;
+
+    cursor: pointer;
 }
 
 #submitReview:disabled {
     opacity: 0.6;
+
     cursor: wait;
+
     transform: none;
 }
 
 #reviewMessage {
     min-height: 22px;
 
-    margin-top: -4px;
+    margin-top: -8px;
 
     color: var(--gold);
 
     font-size: 14px;
-    text-align: center;
-}
 
-.no-reviews {
-    color: var(--muted);
     text-align: center;
-    grid-column: 1 / -1;
 }
 
 
 /* =========================
-   TABLET
+   MOBILE
 ========================= */
 
 @media (max-width: 850px) {
 
+    .container {
+        width:
+            min(
+                calc(100% - 30px),
+                var(--max-width)
+            );
+    }
+
     .nav {
-        gap: 14px;
-    }
+        min-height: 72px;
 
-    .desktop-button {
-        display: none;
-    }
+        gap: 18px;
 
-    .menu-button {
-        display: block;
-    }
-
-    .nav-scroll {
-        order: 2;
-    }
-
-    .logo {
-        order: 1;
-    }
-
-    .menu-button {
-        order: 3;
+        overflow: hidden;
     }
 
     .navigation {
-        justify-content: flex-start;
-        min-width: max-content;
-        gap: 24px;
+        order: 2;
+
+        flex: 1 1 auto;
+
+        margin-left: 0;
+
+        gap: 22px;
+
+        min-width: 0;
+
+        padding:
+            6px 0 10px;
+
+        overscroll-behavior-x: contain;
+
+        -webkit-overflow-scrolling: touch;
+
+        touch-action: pan-x;
     }
 
     .navigation a {
         font-size: 13px;
+    }
+
+    .desktop-button {
+        display: none;
     }
 
     .services-grid,
@@ -939,6 +1079,7 @@ h2 {
     .about-grid,
     .contact-grid {
         grid-template-columns: 1fr;
+
         gap: 50px;
     }
 
@@ -948,62 +1089,29 @@ h2 {
 
     .booking-box {
         flex-direction: column;
+
         align-items: flex-start;
+
         padding: 45px 30px;
     }
 
     .footer-content {
         flex-direction: column;
+
         justify-content: center;
+
         padding: 30px 0;
+
         text-align: center;
     }
 }
 
 
 /* =========================
-   MOBILE
+   CELULAR
 ========================= */
 
 @media (max-width: 550px) {
-
-    .container {
-        width: min(
-            calc(100% - 30px),
-            var(--max-width)
-        );
-    }
-
-    .header .container {
-        width: calc(100% - 24px);
-    }
-
-    .nav {
-        min-height: 68px;
-        gap: 10px;
-    }
-
-    .logo {
-        font-size: 22px;
-    }
-
-    .nav-scroll {
-        margin: 0;
-    }
-
-    .navigation {
-        gap: 20px;
-    }
-
-    .navigation a {
-        font-size: 12px;
-        padding: 7px 0;
-    }
-
-    .menu-button {
-        width: 38px;
-        height: 38px;
-    }
 
     .section {
         padding: 80px 0;
@@ -1027,6 +1135,7 @@ h2 {
 
     .service-card {
         padding: 30px;
+
         min-height: auto;
     }
 
@@ -1044,6 +1153,7 @@ h2 {
 
     .about-stats {
         gap: 20px;
+
         flex-wrap: wrap;
     }
 
@@ -1059,22 +1169,30 @@ h2 {
         font-size: 42px;
     }
 
-    /* Modal realmente adaptado para celular */
+
+    /* MODAL NO CELULAR */
 
     .review-modal {
         padding: 10px;
+
         align-items: center;
     }
 
     .review-modal-content {
         width: 100%;
-        max-height: calc(100dvh - 20px);
-        padding: 28px 20px 22px;
+
+        max-height:
+            calc(100dvh - 20px);
+
+        padding:
+            30px 20px;
+
+        border-radius: 16px;
     }
 
     .review-modal-content h2 {
         font-size: 31px;
-        line-height: 1.1;
+
         margin-bottom: 24px;
     }
 
@@ -1085,21 +1203,22 @@ h2 {
     #reviewForm input[type="text"],
     #reviewForm textarea {
         font-size: 16px;
+
         padding: 13px;
     }
 
     .star-picker {
-        justify-content: flex-start;
         gap: 1px;
     }
 
     .star-picker button {
-        width: 42px;
+        width: 40px;
         height: 42px;
+
         font-size: 28px;
     }
 
     #submitReview {
-        min-height: 52px;
+        min-height: 50px;
     }
 }
