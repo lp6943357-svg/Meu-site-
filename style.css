@@ -834,3 +834,196 @@ h2 {
         font-size: 42px;
     }
   }
+/* =================================
+   SISTEMA DE AVALIAÇÕES
+================================= */
+
+.review-button {
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.review-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+}
+
+.review-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.review-modal-content {
+    position: relative;
+
+    width: 100%;
+    max-width: 500px;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    padding: 35px;
+
+    background: #ffffff;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35);
+}
+
+.review-modal-content h2 {
+    margin-bottom: 25px;
+}
+
+.review-close {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    width: 40px;
+    height: 40px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 32px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+#reviewForm label {
+    display: block;
+
+    margin-bottom: 20px;
+
+    font-weight: 600;
+}
+
+#reviewForm input,
+#reviewForm textarea {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 13px 14px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+#reviewForm textarea {
+    resize: vertical;
+}
+
+#reviewForm input:focus,
+#reviewForm textarea:focus {
+    outline: none;
+
+    border-color: #111;
+
+    box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ESTRELAS */
+
+.star-picker {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 8px;
+}
+
+.star-picker button {
+    border: none;
+
+    background: transparent;
+
+    padding: 0;
+
+    font-size: 38px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    color: #c8c8c8;
+
+    transition:
+        transform 0.15s ease,
+        color 0.15s ease;
+}
+
+.star-picker button:hover {
+    transform: scale(1.12);
+}
+
+.star-picker button.selected {
+    color: #d4a72c;
+}
+
+
+/* DATA DAS AVALIAÇÕES */
+
+.testimonial small {
+    display: block;
+
+    margin-top: 8px;
+
+    opacity: 0.55;
+
+    font-size: 12px;
+}
+
+
+/* MENU MOBILE */
+
+.navigation.open {
+    display: flex;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .review-modal-content {
+        padding: 28px 22px;
+    }
+
+    .star-picker button {
+        font-size: 34px;
+    }
+
+}
