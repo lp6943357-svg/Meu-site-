@@ -1,22 +1,28 @@
 "use strict";
 
+
 /* =====================================================
-   SUPABASE
+   CONFIGURAÇÃO
 ===================================================== */
 
 const SUPABASE_URL =
     "https://kuhdbyjejwhsmaunvupf.supabase.co";
 
 const SUPABASE_KEY =
-    "sb_publishable_Hnrie3sbRLN_0YUgjCqzw_Kd2wcori";
+    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
+
 
 let supabaseClient = null;
 
-if (window.supabase) {
-    supabaseClient = window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
+if (
+    window.supabase &&
+    typeof window.supabase.createClient === "function"
+) {
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 }
 
 
@@ -35,6 +41,9 @@ const navigation =
 
 const year =
     document.getElementById("year");
+
+const servicesGrid =
+    document.getElementById("servicesGrid");
 
 const reviewModal =
     document.getElementById("reviewModal");
@@ -81,24 +90,121 @@ if (year) {
 
 
 /* =====================================================
+   SERVIÇOS
+===================================================== */
+
+const services = [
+
+    {
+        number: "01",
+        name: "Corte masculino",
+        description:
+            "Corte personalizado de acordo com seu estilo, formato de rosto e preferência.",
+        price: "R$ 60"
+    },
+
+    {
+        number: "02",
+        name: "Corte + Barba",
+        description:
+            "O combo completo para renovar o visual com acabamento profissional.",
+        price: "R$ 90",
+        featured: true
+    },
+
+    {
+        number: "03",
+        name: "Barba premium",
+        description:
+            "Modelagem, toalha quente e acabamento para deixar sua barba impecável.",
+        price: "R$ 45"
+    }
+
+];
+
+
+function renderServices() {
+
+    if (!servicesGrid) {
+        return;
+    }
+
+    servicesGrid.innerHTML = "";
+
+    services.forEach(
+        (service) => {
+
+            const card =
+                document.createElement("article");
+
+            card.className =
+                "service-card";
+
+            if (service.featured) {
+                card.classList.add(
+                    "featured"
+                );
+            }
+
+            card.innerHTML = `
+
+                <div class="service-number">
+                    ${service.number}
+                </div>
+
+                <h3>
+                    ${service.name}
+                </h3>
+
+                <p>
+                    ${service.description}
+                </p>
+
+                <strong>
+                    ${service.price}
+                </strong>
+
+            `;
+
+            servicesGrid.appendChild(card);
+        }
+    );
+}
+
+renderServices();
+
+
+/* =====================================================
    HEADER
 ===================================================== */
 
 function updateHeader() {
 
-    if (!header) return;
+    if (!header) {
+        return;
+    }
 
     if (window.scrollY > 30) {
-        header.classList.add("scrolled");
+
+        header.classList.add(
+            "scrolled"
+        );
+
     } else {
-        header.classList.remove("scrolled");
+
+        header.classList.remove(
+            "scrolled"
+        );
     }
 }
+
 
 window.addEventListener(
     "scroll",
     updateHeader,
-    { passive: true }
+    {
+        passive: true
+    }
 );
 
 updateHeader();
@@ -108,135 +214,74 @@ updateHeader();
    MENU MOBILE
 ===================================================== */
 
-function openMobileMenu() {
-
-    if (!navigation || !menuButton) {
-        return;
-    }
-
-    navigation.classList.add("active");
-
-    menuButton.classList.add("active");
-
-    menuButton.setAttribute(
-        "aria-expanded",
-        "true"
-    );
-
-    menuButton.setAttribute(
-        "aria-label",
-        "Fechar menu"
-    );
-}
-
-
-function closeMobileMenu() {
-
-    if (!navigation || !menuButton) {
-        return;
-    }
-
-    navigation.classList.remove("active");
-
-    menuButton.classList.remove("active");
-
-    menuButton.setAttribute(
-        "aria-expanded",
-        "false"
-    );
-
-    menuButton.setAttribute(
-        "aria-label",
-        "Abrir menu"
-    );
-}
-
-
-function toggleMobileMenu() {
+function closeMenu() {
 
     if (!navigation) {
         return;
     }
 
-    if (navigation.classList.contains("active")) {
-        closeMobileMenu();
-    } else {
-        openMobileMenu();
+    navigation.classList.remove(
+        "active"
+    );
+
+    if (menuButton) {
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        menuButton.setAttribute(
+            "aria-label",
+            "Abrir menu"
+        );
     }
 }
 
 
-if (menuButton) {
+if (
+    menuButton &&
+    navigation
+) {
 
     menuButton.addEventListener(
         "click",
-        (event) => {
+        () => {
 
-            event.preventDefault();
+            const isOpen =
+                navigation.classList.toggle(
+                    "active"
+                );
 
-            event.stopPropagation();
+            menuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
 
-            toggleMobileMenu();
+            menuButton.setAttribute(
+                "aria-label",
+                isOpen
+                    ? "Fechar menu"
+                    : "Abrir menu"
+            );
+
         }
     );
-}
 
-
-/* =====================================================
-   LINKS DO MENU
-===================================================== */
-
-if (navigation) {
 
     navigation
         .querySelectorAll("a")
-        .forEach((link) => {
+        .forEach(
+            (link) => {
 
-            link.addEventListener(
-                "click",
-                () => {
+                link.addEventListener(
+                    "click",
+                    closeMenu
+                );
 
-                    /*
-                       Fecha o menu aberto.
-                    */
-
-                    closeMobileMenu();
-
-                }
-            );
-
-        });
+            }
+        );
 }
-
-
-/* =====================================================
-   FECHAR MENU CLICANDO FORA
-===================================================== */
-
-document.addEventListener(
-    "click",
-    (event) => {
-
-        if (!navigation ||
-            !menuButton) {
-            return;
-        }
-
-        const clickedInsideMenu =
-            navigation.contains(event.target);
-
-        const clickedButton =
-            menuButton.contains(event.target);
-
-        if (
-            !clickedInsideMenu &&
-            !clickedButton
-        ) {
-            closeMobileMenu();
-        }
-
-    }
-);
 
 
 /* =====================================================
@@ -250,7 +295,7 @@ window.addEventListener(
         if (
             window.innerWidth > 850
         ) {
-            closeMobileMenu();
+            closeMenu();
         }
 
     }
@@ -262,45 +307,51 @@ window.addEventListener(
 ===================================================== */
 
 document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((link) => {
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach(
+        (link) => {
 
-        link.addEventListener(
-            "click",
-            (event) => {
+            link.addEventListener(
+                "click",
+                (event) => {
 
-                const targetId =
-                    link.getAttribute("href");
+                    const targetId =
+                        link.getAttribute(
+                            "href"
+                        );
 
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
+                    if (
+                        !targetId ||
+                        targetId === "#"
+                    ) {
+                        return;
+                    }
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    closeMenu();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
                 }
+            );
 
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-
-                if (!target) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                closeMobileMenu();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-        );
-
-    });
+        }
+    );
 
 
 /* =====================================================
@@ -326,18 +377,16 @@ function openReviewModal() {
         "review-open"
     );
 
-    /*
-       Pequeno atraso para o teclado
-       não abrir antes da animação.
-    */
+    setTimeout(
+        () => {
 
-    setTimeout(() => {
+            if (reviewName) {
+                reviewName.focus();
+            }
 
-        if (reviewName) {
-            reviewName.focus();
-        }
-
-    }, 250);
+        },
+        250
+    );
 }
 
 
@@ -401,10 +450,6 @@ if (reviewModal) {
 }
 
 
-/* =====================================================
-   ESC
-===================================================== */
-
 document.addEventListener(
     "keydown",
     (event) => {
@@ -416,7 +461,9 @@ document.addEventListener(
                 "active"
             )
         ) {
+
             closeReviewModal();
+
         }
 
     }
@@ -482,11 +529,26 @@ starButtons.forEach(
 function escapeHTML(value) {
 
     return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 }
 
 
@@ -505,12 +567,12 @@ async function loadReviews() {
         return;
     }
 
-    try {
 
-        const {
-            data,
-            error
-        } = await supabaseClient
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
             .from("reviews")
             .select(
                 "id, name, rating, comment, created_at"
@@ -522,28 +584,21 @@ async function loadReviews() {
                 }
             );
 
-        if (error) {
 
-            console.error(
-                "Erro ao carregar avaliações:",
-                error
-            );
-
-            return;
-        }
-
-        renderReviews(
-            data || []
-        );
-
-    } catch (error) {
+    if (error) {
 
         console.error(
-            "Erro inesperado:",
+            "Erro ao carregar avaliações:",
             error
         );
 
+        return;
     }
+
+
+    renderReviews(
+        data || []
+    );
 }
 
 
@@ -551,19 +606,26 @@ async function loadReviews() {
    MOSTRAR AVALIAÇÕES
 ===================================================== */
 
-function renderReviews(reviews) {
+function renderReviews(
+    reviews
+) {
 
     if (!reviewsList) {
         return;
     }
 
-    if (!reviews.length) {
+
+    if (
+        reviews.length === 0
+    ) {
 
         reviewsList.innerHTML = `
+
             <p class="no-reviews">
                 Ainda não existem avaliações.
                 Seja o primeiro a avaliar!
             </p>
+
         `;
 
         if (averageRating) {
@@ -603,8 +665,12 @@ function renderReviews(reviews) {
 
 
             const stars =
-                "★".repeat(rating) +
-                "☆".repeat(5 - rating);
+                "★".repeat(
+                    rating
+                ) +
+                "☆".repeat(
+                    5 - rating
+                );
 
 
             const date =
@@ -618,6 +684,7 @@ function renderReviews(reviews) {
 
 
             article.innerHTML = `
+
                 <div class="stars">
                     ${stars}
                 </div>
@@ -637,6 +704,7 @@ function renderReviews(reviews) {
                 <small>
                     ${date}
                 </small>
+
             `;
 
 
@@ -648,7 +716,9 @@ function renderReviews(reviews) {
     );
 
 
-    updateAverage(reviews);
+    updateAverage(
+        reviews
+    );
 }
 
 
@@ -656,11 +726,13 @@ function renderReviews(reviews) {
    MÉDIA
 ===================================================== */
 
-function updateAverage(reviews) {
+function updateAverage(
+    reviews
+) {
 
     if (
         !averageRating ||
-        !reviews.length
+        reviews.length === 0
     ) {
         return;
     }
@@ -668,12 +740,17 @@ function updateAverage(reviews) {
 
     const total =
         reviews.reduce(
-            (sum, review) => {
+            (
+                sum,
+                review
+            ) => {
 
-                return sum +
+                return (
+                    sum +
                     Number(
                         review.rating
-                    );
+                    )
+                );
 
             },
             0
@@ -681,7 +758,8 @@ function updateAverage(reviews) {
 
 
     const average =
-        total / reviews.length;
+        total /
+        reviews.length;
 
 
     averageRating.textContent =
@@ -725,8 +803,10 @@ if (reviewForm) {
             if (!name) {
 
                 if (reviewMessage) {
+
                     reviewMessage.textContent =
                         "Digite seu nome.";
+
                 }
 
                 return;
@@ -739,8 +819,10 @@ if (reviewForm) {
             ) {
 
                 if (reviewMessage) {
+
                     reviewMessage.textContent =
                         "Escolha uma nota de 1 a 5 estrelas.";
+
                 }
 
                 return;
@@ -750,8 +832,10 @@ if (reviewForm) {
             if (!comment) {
 
                 if (reviewMessage) {
+
                     reviewMessage.textContent =
                         "Digite um comentário.";
+
                 }
 
                 return;
@@ -761,8 +845,10 @@ if (reviewForm) {
             if (!supabaseClient) {
 
                 if (reviewMessage) {
+
                     reviewMessage.textContent =
-                        "O sistema de avaliações ainda não foi conectado ao Supabase.";
+                        "Sistema de avaliações indisponível.";
+
                 }
 
                 return;
@@ -790,28 +876,25 @@ if (reviewForm) {
 
                 const {
                     error
-                } = await supabaseClient
-                    .from("reviews")
-                    .insert({
-                        name: name,
-                        rating: rating,
-                        comment: comment
-                    });
+                } =
+                    await supabaseClient
+                        .from("reviews")
+                        .insert({
+
+                            name:
+                                name,
+
+                            rating:
+                                rating,
+
+                            comment:
+                                comment
+
+                        });
 
 
                 if (error) {
-
-                    console.error(
-                        "Erro ao enviar avaliação:",
-                        error
-                    );
-
-                    if (reviewMessage) {
-                        reviewMessage.textContent =
-                            "Não foi possível enviar. Tente novamente.";
-                    }
-
-                    return;
+                    throw error;
                 }
 
 
@@ -827,8 +910,10 @@ if (reviewForm) {
 
 
                 if (reviewRating) {
+
                     reviewRating.value =
                         "0";
+
                 }
 
 
@@ -855,13 +940,16 @@ if (reviewForm) {
             } catch (error) {
 
                 console.error(
-                    "Erro inesperado:",
+                    "Erro ao enviar avaliação:",
                     error
                 );
 
+
                 if (reviewMessage) {
+
                     reviewMessage.textContent =
-                        "Ocorreu um erro. Tente novamente.";
+                        "Não foi possível enviar. Tente novamente.";
+
                 }
 
             } finally {
@@ -880,7 +968,6 @@ if (reviewForm) {
 
         }
     );
-
 }
 
 
