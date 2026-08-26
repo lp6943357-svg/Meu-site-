@@ -1,7 +1,8 @@
 "use strict";
 
+
 /* =====================================================
-   CONFIGURAÇÃO SUPABASE
+   SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
@@ -23,9 +24,8 @@ if (window.supabase) {
 } else {
 
     console.error(
-        "Biblioteca do Supabase não foi carregada."
+        "Biblioteca do Supabase não carregada."
     );
-
 }
 
 
@@ -45,6 +45,7 @@ const navigation =
 const year =
     document.getElementById("year");
 
+
 const reviewModal =
     document.getElementById("reviewModal");
 
@@ -53,6 +54,7 @@ const openReview =
 
 const closeReview =
     document.getElementById("closeReview");
+
 
 const reviewForm =
     document.getElementById("reviewForm");
@@ -78,6 +80,7 @@ const reviewsList =
 const averageRating =
     document.getElementById("averageRating");
 
+
 const starButtons =
     document.querySelectorAll(
         "#starPicker button"
@@ -97,7 +100,7 @@ if (year) {
 
 
 /* =====================================================
-   HEADER
+   HEADER AO ROLAR
 ===================================================== */
 
 function updateHeader() {
@@ -106,14 +109,17 @@ function updateHeader() {
 
     if (window.scrollY > 30) {
 
-        header.classList.add("scrolled");
+        header.classList.add(
+            "scrolled"
+        );
 
     } else {
 
-        header.classList.remove("scrolled");
+        header.classList.remove(
+            "scrolled"
+        );
 
     }
-
 }
 
 window.addEventListener(
@@ -228,9 +234,7 @@ window.addEventListener(
 ===================================================== */
 
 document
-    .querySelectorAll(
-        'a[href^="#"]'
-    )
+    .querySelectorAll('a[href^="#"]')
     .forEach((link) => {
 
         link.addEventListener(
@@ -238,7 +242,9 @@ document
             (event) => {
 
                 const targetId =
-                    link.getAttribute("href");
+                    link.getAttribute(
+                        "href"
+                    );
 
                 if (
                     !targetId ||
@@ -290,9 +296,6 @@ function openReviewModal() {
         "review-open"
     );
 
-    document.body.style.overflow =
-        "hidden";
-
     setTimeout(
         () => {
 
@@ -301,9 +304,8 @@ function openReviewModal() {
             }
 
         },
-        300
+        250
     );
-
 }
 
 
@@ -323,10 +325,6 @@ function closeReviewModal() {
     document.body.classList.remove(
         "review-open"
     );
-
-    document.body.style.overflow =
-        "";
-
 }
 
 
@@ -369,6 +367,10 @@ if (reviewModal) {
 
 }
 
+
+/* =====================================================
+   ESC FECHA MODAL
+===================================================== */
 
 document.addEventListener(
     "keydown",
@@ -416,8 +418,7 @@ starButtons.forEach(
                 starButtons.forEach(
                     (star) => {
 
-                        const
-                            starRating =
+                        const starRating =
                             Number(
                                 star.dataset.rating
                             );
@@ -484,6 +485,7 @@ async function loadReviews() {
 
     }
 
+
     const {
         data,
         error
@@ -515,12 +517,11 @@ async function loadReviews() {
     renderReviews(
         data || []
     );
-
 }
 
 
 /* =====================================================
-   MOSTRAR AVALIAÇÕES
+   RENDERIZAR AVALIAÇÕES
 ===================================================== */
 
 function renderReviews(reviews) {
@@ -545,7 +546,6 @@ function renderReviews(reviews) {
         }
 
         return;
-
     }
 
 
@@ -577,9 +577,7 @@ function renderReviews(reviews) {
 
 
             const stars =
-                "★".repeat(
-                    rating
-                ) +
+                "★".repeat(rating) +
                 "☆".repeat(
                     5 - rating
                 );
@@ -612,9 +610,15 @@ function renderReviews(reviews) {
                     )}
                 </strong>
 
-                <small>
-                    ${date}
-                </small>
+                ${
+                    date
+                        ? `
+                            <small>
+                                ${date}
+                            </small>
+                          `
+                        : ""
+                }
             `;
 
 
@@ -629,7 +633,6 @@ function renderReviews(reviews) {
     updateAverage(
         reviews
     );
-
 }
 
 
@@ -643,40 +646,53 @@ function updateAverage(reviews) {
         !averageRating ||
         reviews.length === 0
     ) {
+
+        return;
+
+    }
+
+
+    const validRatings =
+        reviews
+            .map(
+                review =>
+                    Number(
+                        review.rating
+                    )
+            )
+            .filter(
+                rating =>
+                    rating >= 1 &&
+                    rating <= 5
+            );
+
+
+    if (
+        validRatings.length === 0
+    ) {
+
+        averageRating.textContent =
+            "0.0";
+
         return;
     }
 
 
     const total =
-        reviews.reduce(
-            (sum, review) => {
-
-                const rating =
-                    Number(
-                        review.rating
-                    );
-
-                return sum +
-                    (
-                        Number.isFinite(
-                            rating
-                        )
-                            ? rating
-                            : 0
-                    );
-
-            },
+        validRatings.reduce(
+            (sum, rating) =>
+                sum + rating,
             0
         );
 
 
     const average =
-        total / reviews.length;
+        total /
+        validRatings.length;
 
 
     averageRating.textContent =
         average.toFixed(1);
-
 }
 
 
@@ -722,8 +738,11 @@ if (reviewForm) {
 
                 }
 
-                return;
+                if (reviewName) {
+                    reviewName.focus();
+                }
 
+                return;
             }
 
 
@@ -740,7 +759,6 @@ if (reviewForm) {
                 }
 
                 return;
-
             }
 
 
@@ -753,8 +771,11 @@ if (reviewForm) {
 
                 }
 
-                return;
+                if (reviewComment) {
+                    reviewComment.focus();
+                }
 
+                return;
             }
 
 
@@ -763,12 +784,11 @@ if (reviewForm) {
                 if (reviewMessage) {
 
                     reviewMessage.textContent =
-                        "O sistema de avaliações não está conectado.";
+                        "O sistema de avaliações ainda não foi conectado.";
 
                 }
 
                 return;
-
             }
 
 
@@ -846,7 +866,7 @@ if (reviewForm) {
 
                 setTimeout(
                     closeReviewModal,
-                    1200
+                    1000
                 );
 
 
