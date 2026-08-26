@@ -37,23 +37,23 @@
 
     <div class="container nav">
 
-        <a href="#inicio" class="logo" id="logo">
+        <a href="#inicio" class="logo">
             PRIME<span>.</span>
         </a>
 
-        <nav class="navigation" id="navigation">
+        <div class="nav-scroll">
 
-            <a href="#inicio">Início</a>
+            <nav class="navigation" id="navigation">
 
-            <a href="#servicos">Serviços</a>
+                <a href="#inicio">Início</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#depoimentos">Avaliações</a>
+                <a href="#contato">Contato</a>
 
-            <a href="#sobre">Sobre</a>
+            </nav>
 
-            <a href="#depoimentos">Avaliações</a>
-
-            <a href="#contato">Contato</a>
-
-        </nav>
+        </div>
 
         <a
             href="#agendamento"
@@ -69,11 +69,9 @@
             aria-label="Abrir menu"
             aria-expanded="false"
         >
-
             <span></span>
             <span></span>
             <span></span>
-
         </button>
 
     </div>
@@ -83,10 +81,6 @@
 
 <main>
 
-<!-- =========================
-     HERO
-========================= -->
-
 <section class="hero" id="inicio">
 
     <div class="hero-content container">
@@ -95,16 +89,13 @@
             BARBEARIA PREMIUM
         </p>
 
-        <h1 id="heroTitle">
+        <h1>
             Seu estilo.
             <br>
             Nossa assinatura.
         </h1>
 
-        <p
-            class="hero-text"
-            id="heroText"
-        >
+        <p class="hero-text">
             Cortes precisos, barba impecável e uma experiência
             feita para quem valoriza cada detalhe.
         </p>
@@ -132,10 +123,6 @@
 </section>
 
 
-<!-- =========================
-     SERVIÇOS
-========================= -->
-
 <section
     class="section services"
     id="servicos"
@@ -160,7 +147,6 @@
 
         </div>
 
-
         <div
             class="services-grid"
             id="servicesGrid"
@@ -170,10 +156,6 @@
 
 </section>
 
-
-<!-- =========================
-     SOBRE
-========================= -->
 
 <section
     class="section about"
@@ -186,7 +168,7 @@
 
             <div class="image-placeholder">
 
-                <span id="aboutLogo">
+                <span>
                     PRIME
                 </span>
 
@@ -201,18 +183,18 @@
                 SOBRE A BARBEARIA
             </p>
 
-            <h2 id="aboutTitle">
+            <h2>
                 Mais que um corte.
                 <br>
                 Uma experiência.
             </h2>
 
-            <p id="aboutText1">
+            <p>
                 A Prime nasceu para unir técnica,
                 estilo e atendimento em um único lugar.
             </p>
 
-            <p id="aboutText2">
+            <p>
                 Nossa equipe trabalha para entender
                 exatamente o que você procura e entregar
                 um resultado que combine com você.
@@ -222,41 +204,18 @@
             <div class="about-stats">
 
                 <div>
-
-                    <strong id="experience">
-                        5+
-                    </strong>
-
-                    <span>
-                        Anos de experiência
-                    </span>
-
+                    <strong>5+</strong>
+                    <span>Anos de experiência</span>
                 </div>
 
-
                 <div>
-
-                    <strong id="clients">
-                        2k+
-                    </strong>
-
-                    <span>
-                        Clientes atendidos
-                    </span>
-
+                    <strong>2k+</strong>
+                    <span>Clientes atendidos</span>
                 </div>
 
-
                 <div>
-
-                    <strong id="averageRating">
-                        5.0
-                    </strong>
-
-                    <span>
-                        Avaliação média
-                    </span>
-
+                    <strong id="averageRating">5.0</strong>
+                    <span>Avaliação média</span>
                 </div>
 
             </div>
@@ -267,10 +226,6 @@
 
 </section>
 
-
-<!-- =========================
-     AVALIAÇÕES
-========================= -->
 
 <section
     class="section testimonials"
@@ -293,7 +248,6 @@
                 Veja o que nossos clientes estão dizendo.
             </p>
 
-
             <button
                 type="button"
                 class="button review-button"
@@ -314,10 +268,6 @@
 
 </section>
 
-
-<!-- =========================
-     AGENDAMENTO
-========================= -->
 
 <section
     class="section booking"
@@ -346,7 +296,7 @@
 
 
         <a
-            href="#"
+            href="https://wa.me/5531900000000"
             class="button"
             id="whatsappButton"
             target="_blank"
@@ -359,10 +309,6 @@
 
 </section>
 
-
-<!-- =========================
-     CONTATO
-========================= -->
 
 <section
     class="section contact"
@@ -380,12 +326,10 @@
             <h2>
                 Venha conhecer
                 <br>
-                <span id="contactBusinessName">
-                    a Prime.
-                </span>
+                a Prime.
             </h2>
 
-            <p id="address">
+            <p>
                 Rua Exemplo, 123
                 <br>
                 Centro — Belo Horizonte/MG
@@ -398,11 +342,9 @@
 
             <div>
 
-                <span>
-                    Horário
-                </span>
+                <span>Horário</span>
 
-                <strong id="openingHours">
+                <strong>
                     Terça a sábado
                     <br>
                     09:00 — 20:00
@@ -413,11 +355,9 @@
 
             <div>
 
-                <span>
-                    WhatsApp
-                </span>
+                <span>WhatsApp</span>
 
-                <strong id="phone">
+                <strong>
                     (31) 90000-0000
                 </strong>
 
@@ -426,13 +366,10 @@
 
             <div>
 
-                <span>
-                    Instagram
-                </span>
+                <span>Instagram</span>
 
                 <a
-                    id="instagramLink"
-                    href="#"
+                    href="https://www.instagram.com/"
                     target="_blank"
                     rel="noopener noreferrer"
                 >
@@ -450,10 +387,6 @@
 </main>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
-
 <footer class="footer">
 
     <div class="container footer-content">
@@ -461,7 +394,6 @@
         <a
             href="#inicio"
             class="logo"
-            id="footerLogo"
         >
             PRIME<span>.</span>
         </a>
@@ -469,9 +401,7 @@
         <p>
             ©
             <span id="year"></span>
-            <span id="footerName">
-                Prime Barber
-            </span>.
+            Prime Barber.
             Todos os direitos reservados.
         </p>
 
@@ -484,9 +414,7 @@
 </footer>
 
 
-<!-- =========================
-     MODAL DE AVALIAÇÃO
-========================= -->
+<!-- MODAL DE AVALIAÇÃO -->
 
 <div
     class="review-modal"
@@ -494,13 +422,18 @@
     aria-hidden="true"
 >
 
-    <div class="review-modal-content">
+    <div
+        class="review-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="reviewTitle"
+    >
 
         <button
             type="button"
             class="review-close"
             id="closeReview"
-            aria-label="Fechar"
+            aria-label="Fechar avaliação"
         >
             ×
         </button>
@@ -510,15 +443,14 @@
             SUA EXPERIÊNCIA
         </p>
 
-        <h2>
+        <h2 id="reviewTitle">
             Deixe sua avaliação
         </h2>
 
 
         <form id="reviewForm">
 
-            <label>
-
+            <label for="reviewName">
                 Seu nome
 
                 <input
@@ -534,13 +466,11 @@
 
 
             <label>
-
                 Sua nota
 
                 <div
                     class="star-picker"
                     id="starPicker"
-                    aria-label="Escolha sua nota"
                 >
 
                     <button
@@ -594,8 +524,7 @@
             </label>
 
 
-            <label>
-
+            <label for="reviewComment">
                 Comentário
 
                 <textarea
@@ -626,7 +555,6 @@
 </div>
 
 
-<!-- SUPABASE: apenas UMA vez -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script src="script.js"></script>
