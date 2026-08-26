@@ -1,651 +1,892 @@
 "use strict";
 
 /* =====================================================
-CONFIGURAÇÃO SUPABASE
+   CONFIGURAÇÃO SUPABASE
 ===================================================== */
 
 const SUPABASE_URL =
-"https://kuhdbyjejwhsmaunvupf.supabase.co";
+    "https://kuhdbyjejwhsmaunvupf.supabase.co";
 
 const SUPABASE_KEY =
-"sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
+    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
 
 let supabaseClient = null;
 
 if (window.supabase) {
-supabaseClient = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+} else {
+
+    console.error(
+        "Biblioteca do Supabase não foi carregada."
+    );
+
 }
 
+
 /* =====================================================
-ELEMENTOS
+   ELEMENTOS
 ===================================================== */
 
-const header = document.getElementById("header");
-const menuButton = document.getElementById("menuButton");
-const navigation = document.getElementById("navigation");
-const year = document.getElementById("year");
+const header =
+    document.getElementById("header");
 
-const reviewModal = document.getElementById("reviewModal");
-const openReview = document.getElementById("openReview");
-const closeReview = document.getElementById("closeReview");
+const menuButton =
+    document.getElementById("menuButton");
 
-const reviewForm = document.getElementById("reviewForm");
-const reviewName = document.getElementById("reviewName");
-const reviewRating = document.getElementById("reviewRating");
-const reviewComment = document.getElementById("reviewComment");
-const reviewMessage = document.getElementById("reviewMessage");
-const submitReview = document.getElementById("submitReview");
+const navigation =
+    document.getElementById("navigation");
 
-const reviewsList = document.getElementById("reviewsList");
-const averageRating = document.getElementById("averageRating");
+const year =
+    document.getElementById("year");
+
+const reviewModal =
+    document.getElementById("reviewModal");
+
+const openReview =
+    document.getElementById("openReview");
+
+const closeReview =
+    document.getElementById("closeReview");
+
+const reviewForm =
+    document.getElementById("reviewForm");
+
+const reviewName =
+    document.getElementById("reviewName");
+
+const reviewRating =
+    document.getElementById("reviewRating");
+
+const reviewComment =
+    document.getElementById("reviewComment");
+
+const reviewMessage =
+    document.getElementById("reviewMessage");
+
+const submitReview =
+    document.getElementById("submitReview");
+
+const reviewsList =
+    document.getElementById("reviewsList");
+
+const averageRating =
+    document.getElementById("averageRating");
+
+const starButtons =
+    document.querySelectorAll(
+        "#starPicker button"
+    );
+
 
 /* =====================================================
-ANO AUTOMÁTICO
+   ANO
 ===================================================== */
 
 if (year) {
-year.textContent = new Date().getFullYear();
+
+    year.textContent =
+        new Date().getFullYear();
+
 }
 
+
 /* =====================================================
-HEADER AO ROLAR
+   HEADER
 ===================================================== */
 
 function updateHeader() {
-if (!header) return;
 
-if (window.scrollY > 30) {
-    header.classList.add("scrolled");
-} else {
-    header.classList.remove("scrolled");
-}
+    if (!header) return;
+
+    if (window.scrollY > 30) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
 
 }
 
 window.addEventListener(
-"scroll",
-updateHeader,
-{ passive: true }
+    "scroll",
+    updateHeader,
+    { passive: true }
 );
 
 updateHeader();
 
+
 /* =====================================================
-MENU MOBILE
+   MENU MOBILE
 ===================================================== */
 
 if (menuButton && navigation) {
 
-menuButton.addEventListener("click", () => {
+    menuButton.addEventListener(
+        "click",
+        () => {
 
-    const isOpen =
-        navigation.classList.toggle("active");
-
-    menuButton.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
-    menuButton.setAttribute(
-        "aria-label",
-        isOpen
-            ? "Fechar menu"
-            : "Abrir menu"
-    );
-});
-
-
-navigation
-    .querySelectorAll("a")
-    .forEach((link) => {
-
-        link.addEventListener("click", () => {
-
-            navigation.classList.remove("active");
+            const isOpen =
+                navigation.classList.toggle(
+                    "active"
+                );
 
             menuButton.setAttribute(
                 "aria-expanded",
-                "false"
+                String(isOpen)
             );
 
             menuButton.setAttribute(
                 "aria-label",
-                "Abrir menu"
+                isOpen
+                    ? "Fechar menu"
+                    : "Abrir menu"
             );
+
+        }
+    );
+
+
+    navigation
+        .querySelectorAll("a")
+        .forEach((link) => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    navigation.classList.remove(
+                        "active"
+                    );
+
+                    menuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    menuButton.setAttribute(
+                        "aria-label",
+                        "Abrir menu"
+                    );
+
+                }
+            );
+
         });
-    });
 
 }
 
+
 /* =====================================================
-FECHAR MENU AO REDIMENSIONAR
+   FECHAR MENU AO REDIMENSIONAR
 ===================================================== */
 
-window.addEventListener("resize", () => {
+window.addEventListener(
+    "resize",
+    () => {
 
-if (window.innerWidth > 850 && navigation) {
+        if (
+            window.innerWidth > 850 &&
+            navigation
+        ) {
 
-    navigation.classList.remove("active");
+            navigation.classList.remove(
+                "active"
+            );
 
-    if (menuButton) {
+            if (menuButton) {
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
+                menuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
 
-        menuButton.setAttribute(
-            "aria-label",
-            "Abrir menu"
-        );
+                menuButton.setAttribute(
+                    "aria-label",
+                    "Abrir menu"
+                );
+
+            }
+
+        }
+
     }
-}
+);
 
-});
 
 /* =====================================================
-LINKS INTERNOS
+   LINKS INTERNOS
 ===================================================== */
 
 document
-.querySelectorAll('a[href^="#"]')
-.forEach((link) => {
+    .querySelectorAll(
+        'a[href^="#"]'
+    )
+    .forEach((link) => {
 
-    link.addEventListener("click", (event) => {
+        link.addEventListener(
+            "click",
+            (event) => {
 
-        const targetId =
-            link.getAttribute("href");
+                const targetId =
+                    link.getAttribute("href");
 
-        if (!targetId || targetId === "#") {
-            return;
-        }
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
 
-        const target =
-            document.querySelector(targetId);
+                const target =
+                    document.querySelector(
+                        targetId
+                    );
 
-        if (!target) {
-            return;
-        }
+                if (!target) {
+                    return;
+                }
 
-        event.preventDefault();
+                event.preventDefault();
 
-        target.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
     });
-});
+
 
 /* =====================================================
-MODAL DE AVALIAÇÃO
+   MODAL
 ===================================================== */
 
 function openReviewModal() {
 
-if (!reviewModal) return;
+    if (!reviewModal) return;
 
-reviewModal.classList.add("active");
+    reviewModal.classList.add(
+        "active"
+    );
 
-reviewModal.setAttribute(
-    "aria-hidden",
-    "false"
-);
+    reviewModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
 
-document.body.style.overflow = "hidden";
+    document.body.classList.add(
+        "review-open"
+    );
+
+    document.body.style.overflow =
+        "hidden";
+
+    setTimeout(
+        () => {
+
+            if (reviewName) {
+                reviewName.focus();
+            }
+
+        },
+        300
+    );
 
 }
+
 
 function closeReviewModal() {
 
-if (!reviewModal) return;
+    if (!reviewModal) return;
 
-reviewModal.classList.remove("active");
+    reviewModal.classList.remove(
+        "active"
+    );
 
-reviewModal.setAttribute(
-    "aria-hidden",
-    "true"
-);
+    reviewModal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
 
-document.body.style.overflow = "";
+    document.body.classList.remove(
+        "review-open"
+    );
+
+    document.body.style.overflow =
+        "";
 
 }
+
 
 if (openReview) {
 
-openReview.addEventListener(
-    "click",
-    openReviewModal
-);
+    openReview.addEventListener(
+        "click",
+        openReviewModal
+    );
 
 }
+
 
 if (closeReview) {
 
-closeReview.addEventListener(
-    "click",
-    closeReviewModal
-);
+    closeReview.addEventListener(
+        "click",
+        closeReviewModal
+    );
 
 }
+
 
 if (reviewModal) {
 
-reviewModal.addEventListener(
-    "click",
-    (event) => {
+    reviewModal.addEventListener(
+        "click",
+        (event) => {
 
-        if (event.target === reviewModal) {
-            closeReviewModal();
+            if (
+                event.target === reviewModal
+            ) {
+
+                closeReviewModal();
+
+            }
+
         }
-    }
-);
+    );
 
 }
+
 
 document.addEventListener(
-"keydown",
-(event) => {
+    "keydown",
+    (event) => {
 
-    if (
-        event.key === "Escape" &&
-        reviewModal &&
-        reviewModal.classList.contains("active")
-    ) {
-        closeReviewModal();
-    }
-}
+        if (
+            event.key === "Escape" &&
+            reviewModal &&
+            reviewModal.classList.contains(
+                "active"
+            )
+        ) {
 
-);
+            closeReviewModal();
 
-/* =====================================================
-SELEÇÃO DE ESTRELAS
-===================================================== */
-
-const starButtons =
-document.querySelectorAll(
-"#starPicker button"
-);
-
-starButtons.forEach((button) => {
-
-button.addEventListener(
-    "click",
-    () => {
-
-        const rating =
-            Number(button.dataset.rating);
-
-        if (reviewRating) {
-            reviewRating.value =
-                String(rating);
         }
 
-        starButtons.forEach((star) => {
-
-            const starRating =
-                Number(star.dataset.rating);
-
-            star.classList.toggle(
-                "selected",
-                starRating <= rating
-            );
-        });
     }
 );
 
-});
 
 /* =====================================================
-ESCAPAR HTML
+   ESTRELAS
+===================================================== */
+
+starButtons.forEach(
+    (button) => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const rating =
+                    Number(
+                        button.dataset.rating
+                    );
+
+                if (reviewRating) {
+
+                    reviewRating.value =
+                        String(rating);
+
+                }
+
+                starButtons.forEach(
+                    (star) => {
+
+                        const
+                            starRating =
+                            Number(
+                                star.dataset.rating
+                            );
+
+                        star.classList.toggle(
+                            "selected",
+                            starRating <= rating
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPAR HTML
 ===================================================== */
 
 function escapeHTML(value) {
 
-return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    return String(value)
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
+
 /* =====================================================
-CARREGAR AVALIAÇÕES
+   CARREGAR AVALIAÇÕES
 ===================================================== */
 
 async function loadReviews() {
 
-if (!supabaseClient) {
+    if (!supabaseClient) {
 
-    console.error(
-        "Supabase não foi inicializado."
-    );
+        console.error(
+            "Supabase não foi inicializado."
+        );
 
-    return;
-}
+        return;
 
-const {
-    data,
-    error
-} = await supabaseClient
-    .from("reviews")
-    .select(
-        "id, name, rating, comment, created_at"
-    )
-    .order(
-        "created_at",
-        {
-            ascending: false
-        }
-    );
+    }
 
-
-if (error) {
-
-    console.error(
-        "Erro ao carregar avaliações:",
+    const {
+        data,
         error
+    } = await supabaseClient
+        .from("reviews")
+        .select(
+            "id, name, rating, comment, created_at"
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        );
+
+
+    if (error) {
+
+        console.error(
+            "Erro ao carregar avaliações:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    renderReviews(
+        data || []
     );
 
-    return;
 }
 
-
-renderReviews(data || []);
-
-}
 
 /* =====================================================
-MOSTRAR AVALIAÇÕES
+   MOSTRAR AVALIAÇÕES
 ===================================================== */
 
 function renderReviews(reviews) {
 
-if (!reviewsList) return;
+    if (!reviewsList) return;
 
-if (reviews.length === 0) {
 
-    reviewsList.innerHTML = `
-        <p class="no-reviews">
-            Ainda não existem avaliações.
-            Seja o primeiro a avaliar!
-        </p>
-    `;
+    if (reviews.length === 0) {
 
-    if (averageRating) {
-        averageRating.textContent = "0.0";
+        reviewsList.innerHTML = `
+            <p class="no-reviews">
+                Ainda não existem avaliações.
+                Seja o primeiro a avaliar!
+            </p>
+        `;
+
+        if (averageRating) {
+
+            averageRating.textContent =
+                "0.0";
+
+        }
+
+        return;
+
     }
 
-    return;
-}
+
+    reviewsList.innerHTML = "";
 
 
-reviewsList.innerHTML = "";
+    reviews.forEach(
+        (review) => {
+
+            const article =
+                document.createElement(
+                    "article"
+                );
+
+            article.className =
+                "testimonial";
 
 
-reviews.forEach((review) => {
-
-    const article =
-        document.createElement("article");
-
-    article.className =
-        "testimonial";
-
-
-    const rating =
-        Math.max(
-            1,
-            Math.min(
-                5,
-                Number(review.rating)
-            )
-        );
+            const rating =
+                Math.max(
+                    1,
+                    Math.min(
+                        5,
+                        Number(
+                            review.rating
+                        )
+                    )
+                );
 
 
-    const stars =
-        "★".repeat(rating) +
-        "☆".repeat(5 - rating);
+            const stars =
+                "★".repeat(
+                    rating
+                ) +
+                "☆".repeat(
+                    5 - rating
+                );
 
 
-    const date =
-        review.created_at
-            ? new Date(
+            const date =
                 review.created_at
-            ).toLocaleDateString("pt-BR")
-            : "";
+                    ? new Date(
+                        review.created_at
+                    ).toLocaleDateString(
+                        "pt-BR"
+                    )
+                    : "";
 
 
-    article.innerHTML = `
-        <div class="stars">
-            ${stars}
-        </div>
+            article.innerHTML = `
+                <div class="stars">
+                    ${stars}
+                </div>
 
-        <p>
-            “${escapeHTML(review.comment)}”
-        </p>
+                <p>
+                    “${escapeHTML(
+                        review.comment
+                    )}”
+                </p>
 
-        <strong>
-            ${escapeHTML(review.name)}
-        </strong>
+                <strong>
+                    ${escapeHTML(
+                        review.name
+                    )}
+                </strong>
 
-        <small>
-            ${date}
-        </small>
-    `;
-
-
-    reviewsList.appendChild(article);
-});
+                <small>
+                    ${date}
+                </small>
+            `;
 
 
-updateAverage(reviews);
+            reviewsList.appendChild(
+                article
+            );
+
+        }
+    );
+
+
+    updateAverage(
+        reviews
+    );
 
 }
+
 
 /* =====================================================
-CALCULAR MÉDIA
+   MÉDIA
 ===================================================== */
 
 function updateAverage(reviews) {
 
-if (!averageRating || reviews.length === 0) {
-    return;
+    if (
+        !averageRating ||
+        reviews.length === 0
+    ) {
+        return;
+    }
+
+
+    const total =
+        reviews.reduce(
+            (sum, review) => {
+
+                const rating =
+                    Number(
+                        review.rating
+                    );
+
+                return sum +
+                    (
+                        Number.isFinite(
+                            rating
+                        )
+                            ? rating
+                            : 0
+                    );
+
+            },
+            0
+        );
+
+
+    const average =
+        total / reviews.length;
+
+
+    averageRating.textContent =
+        average.toFixed(1);
+
 }
 
-
-const total =
-    reviews.reduce(
-        (sum, review) =>
-            sum + Number(review.rating),
-        0
-    );
-
-
-const average =
-    total / reviews.length;
-
-
-averageRating.textContent =
-    average.toFixed(1);
-
-}
 
 /* =====================================================
-ENVIAR AVALIAÇÃO
+   ENVIAR AVALIAÇÃO
 ===================================================== */
 
 if (reviewForm) {
 
-reviewForm.addEventListener(
-    "submit",
-    async (event) => {
+    reviewForm.addEventListener(
+        "submit",
+        async (event) => {
 
-        event.preventDefault();
-
-
-        const name =
-            reviewName
-                ? reviewName.value.trim()
-                : "";
+            event.preventDefault();
 
 
-        const rating =
-            reviewRating
-                ? Number(reviewRating.value)
-                : 0;
+            const name =
+                reviewName
+                    ? reviewName.value.trim()
+                    : "";
 
 
-        const comment =
-            reviewComment
-                ? reviewComment.value.trim()
-                : "";
+            const rating =
+                reviewRating
+                    ? Number(
+                        reviewRating.value
+                    )
+                    : 0;
 
 
-        if (!name) {
+            const comment =
+                reviewComment
+                    ? reviewComment.value.trim()
+                    : "";
 
-            if (reviewMessage) {
-                reviewMessage.textContent =
-                    "Digite seu nome.";
+
+            if (!name) {
+
+                if (reviewMessage) {
+
+                    reviewMessage.textContent =
+                        "Digite seu nome.";
+
+                }
+
+                return;
+
             }
 
-            return;
-        }
 
+            if (
+                rating < 1 ||
+                rating > 5
+            ) {
 
-        if (rating < 1 || rating > 5) {
+                if (reviewMessage) {
 
-            if (reviewMessage) {
-                reviewMessage.textContent =
-                    "Escolha uma nota de 1 a 5 estrelas.";
+                    reviewMessage.textContent =
+                        "Escolha uma nota de 1 a 5 estrelas.";
+
+                }
+
+                return;
+
             }
 
-            return;
-        }
 
+            if (!comment) {
 
-        if (!comment) {
+                if (reviewMessage) {
 
-            if (reviewMessage) {
-                reviewMessage.textContent =
-                    "Digite um comentário.";
+                    reviewMessage.textContent =
+                        "Digite um comentário.";
+
+                }
+
+                return;
+
             }
 
-            return;
-        }
 
+            if (!supabaseClient) {
 
-        if (!supabaseClient) {
+                if (reviewMessage) {
 
-            if (reviewMessage) {
-                reviewMessage.textContent =
-                    "O sistema de avaliações ainda não foi conectado ao Supabase.";
-            }
+                    reviewMessage.textContent =
+                        "O sistema de avaliações não está conectado.";
 
-            return;
-        }
+                }
 
+                return;
 
-        if (submitReview) {
-
-            submitReview.disabled = true;
-
-            submitReview.textContent =
-                "Enviando...";
-        }
-
-
-        if (reviewMessage) {
-            reviewMessage.textContent = "";
-        }
-
-
-        const {
-            error
-        } = await supabaseClient
-            .from("reviews")
-            .insert({
-                name: name,
-                rating: rating,
-                comment: comment
-            });
-
-
-        if (error) {
-
-            console.error(
-                "Erro ao enviar avaliação:",
-                error
-            );
-
-
-            if (reviewMessage) {
-                reviewMessage.textContent =
-                    "Não foi possível enviar. Tente novamente.";
             }
 
 
             if (submitReview) {
 
-                submitReview.disabled = false;
+                submitReview.disabled =
+                    true;
 
                 submitReview.textContent =
-                    "Enviar avaliação";
+                    "Enviando...";
+
             }
 
-            return;
+
+            if (reviewMessage) {
+
+                reviewMessage.textContent =
+                    "";
+
+            }
+
+
+            try {
+
+                const {
+                    error
+                } = await supabaseClient
+                    .from("reviews")
+                    .insert({
+                        name: name,
+                        rating: rating,
+                        comment: comment
+                    });
+
+
+                if (error) {
+
+                    throw error;
+
+                }
+
+
+                if (reviewMessage) {
+
+                    reviewMessage.textContent =
+                        "⭐ Avaliação enviada com sucesso!";
+
+                }
+
+
+                reviewForm.reset();
+
+
+                if (reviewRating) {
+
+                    reviewRating.value =
+                        "0";
+
+                }
+
+
+                starButtons.forEach(
+                    (star) => {
+
+                        star.classList.remove(
+                            "selected"
+                        );
+
+                    }
+                );
+
+
+                await loadReviews();
+
+
+                setTimeout(
+                    closeReviewModal,
+                    1200
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro ao enviar avaliação:",
+                    error
+                );
+
+
+                if (reviewMessage) {
+
+                    reviewMessage.textContent =
+                        "Não foi possível enviar. Tente novamente.";
+
+                }
+
+            } finally {
+
+                if (submitReview) {
+
+                    submitReview.disabled =
+                        false;
+
+                    submitReview.textContent =
+                        "Enviar avaliação";
+
+                }
+
+            }
+
         }
-
-
-        if (reviewMessage) {
-
-            reviewMessage.textContent =
-                "⭐ Avaliação enviada com sucesso!";
-        }
-
-
-        reviewForm.reset();
-
-
-        if (reviewRating) {
-            reviewRating.value = "0";
-        }
-
-
-        starButtons.forEach((star) => {
-
-            star.classList.remove(
-                "selected"
-            );
-        });
-
-
-        await loadReviews();
-
-
-        if (submitReview) {
-
-            submitReview.disabled = false;
-
-            submitReview.textContent =
-                "Enviar avaliação";
-        }
-
-
-        setTimeout(
-            closeReviewModal,
-            1200
-        );
-    }
-);
+    );
 
 }
 
+
 /* =====================================================
-INICIAR
+   INICIAR
 ===================================================== */
 
 loadReviews();
