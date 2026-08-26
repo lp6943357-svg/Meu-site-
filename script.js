@@ -1,329 +1,717 @@
-const SUPABASE_URL = "https://kuhdbyjejwhsmaunvupf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
+// ========================================
+// PRIME BARBER — SCRIPT
+// ========================================
 
-const CONFIG = {
-  whatsappNumber: "5531999999999",
-  whatsappMessage: "Olá! Vim pelo site e gostaria de saber mais sobre os serviços."
-};
+const SUPABASE_URL =
+    "https://kuhdbyjejwhsmaunvupf.supabase.co";
 
-// ------------------------------
-// WHATSAPP
-// ------------------------------
-const whatsappUrl =
-  `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(CONFIG.whatsappMessage)}`;
+const SUPABASE_KEY =
+    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
 
-document.querySelectorAll(".whatsapp-link").forEach(link => {
-  link.href = whatsappUrl;
-});
 
-// ------------------------------
+// ========================================
+// ANO DO RODAPÉ
+// ========================================
+
+const year = document.getElementById("year");
+
+if (year) {
+    year.textContent = new Date().getFullYear();
+}
+
+
+// ========================================
 // MENU MOBILE
-// ------------------------------
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
+// ========================================
 
-menuToggle?.addEventListener("click", () => {
-  const open = navLinks.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(open));
-});
+const menuButton =
+    document.getElementById("menuButton");
 
-document.querySelectorAll(".nav-links a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-  });
-});
+const navigation =
+    document.getElementById("navigation");
 
-// ------------------------------
-// MODAL DE AVALIAÇÃO
-// ------------------------------
-const modal = document.querySelector("#reviewModal");
-const openReview = document.querySelector("#openReview");
-const closeReview = document.querySelector("#closeReview");
-const reviewForm = document.querySelector("#reviewForm");
-const ratingInput = document.querySelector("#reviewRating");
 
-const starButtons = [
-  ...document.querySelectorAll(".star-picker button")
-];
+if (menuButton && navigation) {
 
-function setRating(value) {
-  ratingInput.value = value;
+    menuButton.addEventListener("click", function () {
 
-  starButtons.forEach(button => {
-    button.classList.toggle(
-      "active",
-      Number(button.dataset.rating) <= value
-    );
-  });
-}
+        navigation.classList.toggle("active");
 
-setRating(5);
+        const isOpen =
+            navigation.classList.contains("active");
 
-starButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    setRating(Number(button.dataset.rating));
-  });
-});
+        menuButton.setAttribute(
+            "aria-expanded",
+            isOpen
+        );
 
-function showModal() {
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-}
-
-function hideModal() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-}
-
-openReview?.addEventListener("click", showModal);
-closeReview?.addEventListener("click", hideModal);
-
-modal?.addEventListener("click", event => {
-  if (event.target === modal) {
-    hideModal();
-  }
-});
-
-// ------------------------------
-// SUPABASE
-// ------------------------------
-
-async function getReviews() {
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/reviews?select=id,name,rating,comment,created_at&order=created_at.desc`,
-    {
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`
-      }
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Não foi possível carregar as avaliações.");
-  }
-
-  return await response.json();
-}
-
-async function createReview(review) {
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/reviews`,
-    {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${SUPABASE_KEY}`,
-        "Content-Type": "application/json",
-        Prefer: "return=representation"
-      },
-      body: JSON.stringify(review)
-    }
-  );
-
-  if (!response.ok) {
-    const error = await response.text();
-    console.error(error);
-    throw new Error("Não foi possível enviar sua avaliação.");
-  }
-
-  return await response.json();
-}
-
-// ------------------------------
-// SEGURANÇA CONTRA HTML
-// ------------------------------
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, character => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  }[character]));
-}
-
-// ------------------------------
-// ESTRELAS
-// ------------------------------
-
-function stars(rating) {
-  return "★".repeat(rating) + "☆".repeat(5 - rating);
-}
-
-// ------------------------------
-// RENDERIZAR AVALIAÇÕES
-// ------------------------------
-
-function renderReviews(reviews) {
-  const list = document.querySelector("#reviewsList");
-
-  const averageElement =
-    document.querySelector("#averageRating");
-
-  const averageStarsElement =
-    document.querySelector("#averageStars");
-
-  const countElement =
-    document.querySelector("#reviewCount");
-
-  const count = reviews.length;
-
-  countElement.textContent =
-    `${count} ${count === 1 ? "avaliação" : "avaliações"}`;
-
-  if (count === 0) {
-    averageElement.textContent = "0,0";
-    averageStarsElement.textContent = "☆☆☆☆☆";
-
-    list.innerHTML = `
-      <article class="review empty-review">
-        <div class="review-stars">☆☆☆☆☆</div>
-        <p>Ainda não temos avaliações. Seja o primeiro!</p>
-      </article>
-    `;
-
-    [1, 2, 3, 4, 5].forEach(number => {
-      document.querySelector(`#bar${number}`).style.width = "0%";
     });
 
-    return;
-  }
 
-  const total = reviews.reduce(
-    (sum, review) => sum + Number(review.rating),
-    0
-  );
+    navigation
+        .querySelectorAll("a")
+        .forEach(function (link) {
 
-  const average = total / count;
+            link.addEventListener(
+                "click",
+                function () {
 
-  averageElement.textContent =
-    average.toFixed(1).replace(".", ",");
+                    navigation.classList.remove(
+                        "active"
+                    );
 
-  averageStarsElement.textContent =
-    stars(Math.round(average));
+                    menuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
 
-  // Barras de distribuição
-  [1, 2, 3, 4, 5].forEach(number => {
-    const amount = reviews.filter(
-      review => Number(review.rating) === number
-    ).length;
+                }
+            );
 
-    const percentage = (amount / count) * 100;
+        });
 
-    document.querySelector(`#bar${number}`)
-      .style.width = `${percentage}%`;
-  });
+}
 
-  // Cards das avaliações
-  list.innerHTML = reviews.map(review => {
-    const date = new Date(review.created_at)
-      .toLocaleDateString("pt-BR");
 
-    return `
-      <article class="review">
-        <div class="review-stars">
-          ${stars(Number(review.rating))}
+// ========================================
+// HEADER AO ROLAR
+// ========================================
+
+const header =
+    document.getElementById("header");
+
+
+window.addEventListener("scroll", function () {
+
+    if (!header) return;
+
+    if (window.scrollY > 30) {
+
+        header.classList.add("scrolled");
+
+    } else {
+
+        header.classList.remove("scrolled");
+
+    }
+
+});
+
+
+// ========================================
+// SISTEMA DE AVALIAÇÕES
+// ========================================
+
+const testimonialsSection =
+    document.getElementById("depoimentos");
+
+
+if (testimonialsSection) {
+
+    const heading =
+        testimonialsSection.querySelector(
+            ".section-heading"
+        );
+
+    const testimonialsGrid =
+        testimonialsSection.querySelector(
+            ".testimonials-grid"
+        );
+
+
+    // ------------------------------------
+    // BOTÃO AVALIAR
+    // ------------------------------------
+
+    const reviewButton =
+        document.createElement("button");
+
+    reviewButton.type = "button";
+
+    reviewButton.className =
+        "button review-button";
+
+    reviewButton.textContent =
+        "⭐ Avaliar atendimento";
+
+
+    if (heading) {
+
+        heading.appendChild(reviewButton);
+
+    }
+
+
+    // ------------------------------------
+    // MODAL
+    // ------------------------------------
+
+    const modal =
+        document.createElement("div");
+
+    modal.className =
+        "review-modal";
+
+
+    modal.innerHTML = `
+
+        <div class="review-modal-content">
+
+            <button
+                type="button"
+                class="review-close"
+                aria-label="Fechar"
+            >
+                ×
+            </button>
+
+            <p class="eyebrow">
+                SUA OPINIÃO
+            </p>
+
+            <h2>
+                Como foi sua experiência?
+            </h2>
+
+            <form id="reviewForm">
+
+                <label>
+                    Seu nome
+
+                    <input
+                        id="reviewName"
+                        type="text"
+                        maxlength="80"
+                        placeholder="Digite seu nome"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Sua avaliação
+
+                    <div
+                        class="star-picker"
+                        id="starPicker"
+                    >
+
+                        <button
+                            type="button"
+                            data-rating="1"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="2"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="3"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="4"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="5"
+                        >★</button>
+
+                    </div>
+
+                </label>
+
+
+                <input
+                    id="reviewRating"
+                    type="hidden"
+                    value="5"
+                >
+
+
+                <label>
+                    Seu comentário
+
+                    <textarea
+                        id="reviewComment"
+                        maxlength="500"
+                        rows="5"
+                        placeholder="Conte como foi sua experiência..."
+                        required
+                    ></textarea>
+
+                </label>
+
+
+                <button
+                    id="submitReview"
+                    type="submit"
+                    class="button"
+                >
+                    Enviar avaliação
+                </button>
+
+            </form>
+
         </div>
-
-        <p>
-          ${escapeHtml(review.comment)}
-        </p>
-
-        <small>
-          <strong>${escapeHtml(review.name)}</strong>
-          · ${date}
-        </small>
-      </article>
     `;
-  }).join("");
-}
 
-// ------------------------------
-// CARREGAR AVALIAÇÕES
-// ------------------------------
 
-async function loadReviews() {
-  try {
-    const reviews = await getReviews();
+    document.body.appendChild(modal);
 
-    renderReviews(reviews);
 
-  } catch (error) {
-    console.error(error);
+    // ------------------------------------
+    // ABRIR / FECHAR
+    // ------------------------------------
 
-    document.querySelector("#reviewsList").innerHTML = `
-      <article class="review empty-review">
-        <p>
-          Não foi possível carregar as avaliações agora.
-        </p>
-      </article>
-    `;
-  }
-}
+    reviewButton.addEventListener(
+        "click",
+        function () {
 
-// ------------------------------
-// ENVIAR AVALIAÇÃO
-// ------------------------------
+            modal.classList.add("active");
 
-reviewForm?.addEventListener("submit", async event => {
-  event.preventDefault();
+        }
+    );
 
-  const name =
-    document.querySelector("#reviewName").value.trim();
 
-  const comment =
-    document.querySelector("#reviewText").value.trim();
+    const closeButton =
+        modal.querySelector(".review-close");
 
-  const rating =
-    Number(ratingInput.value);
 
-  if (!name || !comment || rating < 1 || rating > 5) {
-    alert("Preencha seu nome, comentário e escolha uma nota.");
-    return;
-  }
+    closeButton.addEventListener(
+        "click",
+        function () {
 
-  const submitButton =
-    reviewForm.querySelector("button[type='submit']");
+            modal.classList.remove("active");
 
-  submitButton.disabled = true;
-  submitButton.textContent = "Enviando...";
+        }
+    );
 
-  try {
 
-    await createReview({
-      name: name,
-      rating: rating,
-      comment: comment
-    });
+    modal.addEventListener(
+        "click",
+        function (event) {
 
-    reviewForm.reset();
+            if (event.target === modal) {
+
+                modal.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+
+    // ------------------------------------
+    // ESTRELAS
+    // ------------------------------------
+
+    const starButtons =
+        modal.querySelectorAll(
+            ".star-picker button"
+        );
+
+
+    const ratingInput =
+        modal.querySelector(
+            "#reviewRating"
+        );
+
+
+    function setRating(rating) {
+
+        ratingInput.value = rating;
+
+        starButtons.forEach(
+            function (star) {
+
+                const value =
+                    Number(
+                        star.dataset.rating
+                    );
+
+                if (value <= rating) {
+
+                    star.classList.add(
+                        "selected"
+                    );
+
+                } else {
+
+                    star.classList.remove(
+                        "selected"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    starButtons.forEach(
+        function (star) {
+
+            star.addEventListener(
+                "click",
+                function () {
+
+                    setRating(
+                        Number(
+                            star.dataset.rating
+                        )
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
     setRating(5);
 
-    hideModal();
 
-    alert("Obrigado pela avaliação! ⭐");
+    // ====================================
+    // ENVIAR AVALIAÇÃO
+    // ====================================
 
-    await loadReviews();
+    const form =
+        modal.querySelector(
+            "#reviewForm"
+        );
 
-  } catch (error) {
 
-    console.error(error);
+    form.addEventListener(
+        "submit",
+        async function (event) {
 
-    alert(
-      "Não foi possível enviar sua avaliação. Tente novamente."
+            event.preventDefault();
+
+
+            const name =
+                modal.querySelector(
+                    "#reviewName"
+                ).value.trim();
+
+
+            const comment =
+                modal.querySelector(
+                    "#reviewComment"
+                ).value.trim();
+
+
+            const rating =
+                Number(
+                    ratingInput.value
+                );
+
+
+            if (
+                !name ||
+                !comment ||
+                rating < 1 ||
+                rating > 5
+            ) {
+
+                alert(
+                    "Preencha todos os campos."
+                );
+
+                return;
+
+            }
+
+
+            const submitButton =
+                modal.querySelector(
+                    "#submitReview"
+                );
+
+
+            submitButton.disabled = true;
+
+            submitButton.textContent =
+                "Enviando...";
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${SUPABASE_URL}/rest/v1/reviews`,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "apikey":
+                                    SUPABASE_KEY,
+
+                                "Authorization":
+                                    `Bearer ${SUPABASE_KEY}`,
+
+                                "Prefer":
+                                    "return=representation"
+
+                            },
+
+                            body: JSON.stringify({
+
+                                name: name,
+
+                                rating: rating,
+
+                                comment: comment
+
+                            })
+
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const error =
+                        await response.text();
+
+                    console.error(error);
+
+                    throw new Error(
+                        "Erro ao salvar avaliação."
+                    );
+
+                }
+
+
+                alert(
+                    "Avaliação enviada com sucesso! ⭐"
+                );
+
+
+                form.reset();
+
+                setRating(5);
+
+                modal.classList.remove(
+                    "active"
+                );
+
+
+                await loadReviews();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert(
+                    "Erro ao enviar avaliação. Tente novamente."
+                );
+
+            } finally {
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Enviar avaliação";
+
+            }
+
+        }
     );
 
-  } finally {
 
-    submitButton.disabled = false;
-    submitButton.textContent = "Enviar avaliação";
-  }
-});
+    // ====================================
+    // CARREGAR AVALIAÇÕES
+    // ====================================
 
-// ------------------------------
-// INICIALIZAÇÃO
-// ------------------------------
+    async function loadReviews() {
 
-loadReviews();
+        try {
+
+            const response =
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/reviews?select=id,name,rating,comment,created_at&order=created_at.desc`,
+                    {
+
+                        headers: {
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                `Bearer ${SUPABASE_KEY}`
+
+                        }
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Erro ao carregar avaliações."
+                );
+
+            }
+
+
+            const reviews =
+                await response.json();
+
+
+            if (!testimonialsGrid) {
+                return;
+            }
+
+
+            // Limpa os depoimentos antigos
+
+            testimonialsGrid.innerHTML = "";
+
+
+            // Nenhuma avaliação
+
+            if (reviews.length === 0) {
+
+                testimonialsGrid.innerHTML = `
+
+                    <article class="testimonial">
+
+                        <div class="stars">
+                            ☆☆☆☆☆
+                        </div>
+
+                        <p>
+                            Ainda não temos avaliações.
+                            Seja o primeiro!
+                        </p>
+
+                        <strong>
+                            Prime Barber
+                        </strong>
+
+                    </article>
+
+                `;
+
+                return;
+
+            }
+
+
+            // Criar cards
+
+            reviews.forEach(
+                function (review) {
+
+                    const article =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    article.className =
+                        "testimonial";
+
+
+                    const rating =
+                        Number(
+                            review.rating
+                        );
+
+
+                    const stars =
+                        "★".repeat(rating) +
+                        "☆".repeat(5 - rating);
+
+
+                    const date =
+                        new Date(
+                            review.created_at
+                        ).toLocaleDateString(
+                            "pt-BR"
+                        );
+
+
+                    article.innerHTML = `
+
+                        <div class="stars">
+                            ${stars}
+                        </div>
+
+                        <p>
+                            “${escapeHTML(
+                                review.comment
+                            )}”
+                        </p>
+
+                        <strong>
+                            ${escapeHTML(
+                                review.name
+                            )}
+                        </strong>
+
+                        <small>
+                            ${date}
+                        </small>
+
+                    `;
+
+
+                    testimonialsGrid.appendChild(
+                        article
+                    );
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    // ------------------------------------
+    // PROTEÇÃO CONTRA HTML
+    // ------------------------------------
+
+    function escapeHTML(text) {
+
+        const element =
+            document.createElement("div");
+
+        element.textContent = text;
+
+        return element.innerHTML;
+
+    }
+
+
+    // Carregar ao abrir o site
+
+    loadReviews();
+
+}
+
+
+// ========================================
+// FIM
+// ========================================
