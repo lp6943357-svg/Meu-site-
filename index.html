@@ -1,495 +1,596 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
+// ===============================
+// PRIME BARBER — SCRIPT
+// ===============================
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+// ---------- CONFIGURAÇÕES ----------
 
-    <meta
-        name="description"
-        content="Barbearia Prime — corte, barba e experiência premium."
-    >
+const SUPABASE_URL =
+    "https://kuhdbyjejwhsmaunvupf.supabase.co";
 
-    <title>Prime Barber | Barbearia Premium</title>
+const SUPABASE_KEY =
+    "sb_publishable_Hnrie3sbRLN_0YUgjQcqzw_Kd2wcori";
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
-        rel="stylesheet"
-    >
+// ---------- ANO AUTOMÁTICO ----------
 
-    <link rel="stylesheet" href="style.css">
-</head>
+const yearElement = document.getElementById("year");
 
-<body>
+if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
+}
 
-    <!-- HEADER -->
 
-    <header class="header" id="header">
-        <div class="container nav">
+// ---------- MENU MOBILE ----------
 
-            <a href="#inicio" class="logo">
-                PRIME<span>.</span>
-            </a>
+const menuButton = document.getElementById("menuButton");
+const navigation = document.getElementById("navigation");
+
+if (menuButton && navigation) {
+
+    menuButton.addEventListener("click", () => {
+
+        const isOpen =
+            navigation.classList.toggle("open");
+
+        menuButton.classList.toggle("active", isOpen);
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+    });
+
+
+    navigation.querySelectorAll("a").forEach(link => {
+
+        link.addEventListener("click", () => {
+
+            navigation.classList.remove("open");
+
+            menuButton.classList.remove("active");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        });
+
+    });
+
+}
+
+
+// ---------- AVALIAÇÕES ----------
+
+const testimonialsSection =
+    document.getElementById("depoimentos");
+
+if (testimonialsSection) {
+
+    const container =
+        testimonialsSection.querySelector(".container");
+
+    const heading =
+        testimonialsSection.querySelector(".section-heading");
+
+    const testimonialsGrid =
+        testimonialsSection.querySelector(
+            ".testimonials-grid"
+        );
+
+
+    // Botão para avaliar
+
+    const reviewButton = document.createElement("button");
+
+    reviewButton.type = "button";
+
+    reviewButton.className =
+        "button review-button";
+
+    reviewButton.textContent =
+        "⭐ Avaliar atendimento";
+
+
+    heading.appendChild(reviewButton);
+
+
+    // Modal
+
+    const modal =
+        document.createElement("div");
+
+    modal.className =
+        "review-modal";
+
+    modal.innerHTML = `
+
+        <div class="review-modal-content">
 
             <button
-                class="menu-button"
-                id="menuButton"
-                aria-label="Abrir menu"
-                aria-expanded="false"
+                type="button"
+                class="review-close"
+                aria-label="Fechar"
             >
-                <span></span>
-                <span></span>
-                <span></span>
+                ×
             </button>
 
-            <nav class="navigation" id="navigation">
-                <a href="#inicio">Início</a>
-                <a href="#servicos">Serviços</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#depoimentos">Avaliações</a>
-                <a href="#contato">Contato</a>
-            </nav>
-
-            <a
-                href="#agendamento"
-                class="button button-small desktop-button"
-            >
-                Agendar horário
-            </a>
-
-        </div>
-    </header>
-
-
-    <!-- HERO -->
-
-    <main>
-
-        <section class="hero" id="inicio">
-
-            <div class="hero-overlay"></div>
-
-            <div class="container hero-content">
-
-                <p class="eyebrow">
-                    BARBEARIA PREMIUM
-                </p>
-
-                <h1>
-                    Seu estilo.
-                    <br>
-                    Nossa assinatura.
-                </h1>
-
-                <p class="hero-text">
-                    Cortes precisos, barba impecável e uma experiência
-                    feita para quem valoriza cada detalhe.
-                </p>
-
-                <div class="hero-buttons">
-
-                    <a
-                        href="#agendamento"
-                        class="button"
-                    >
-                        Agendar horário
-                    </a>
-
-                    <a
-                        href="#servicos"
-                        class="button button-outline"
-                    >
-                        Conhecer serviços
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SERVIÇOS -->
-
-        <section class="section services" id="servicos">
-
-            <div class="container">
-
-                <div class="section-heading">
-
-                    <p class="eyebrow">
-                        NOSSOS SERVIÇOS
-                    </p>
-
-                    <h2>
-                        Cuidado nos detalhes.
-                    </h2>
-
-                    <p>
-                        Tudo o que você precisa para sair daqui
-                        se sentindo ainda melhor.
-                    </p>
-
-                </div>
-
-
-                <div class="services-grid">
-
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            01
-                        </div>
-
-                        <h3>
-                            Corte masculino
-                        </h3>
-
-                        <p>
-                            Corte personalizado de acordo com seu
-                            estilo, formato de rosto e preferência.
-                        </p>
-
-                        <strong>
-                            R$ 60
-                        </strong>
-
-                    </article>
-
-
-                    <article class="service-card featured">
-
-                        <div class="service-number">
-                            02
-                        </div>
-
-                        <h3>
-                            Corte + Barba
-                        </h3>
-
-                        <p>
-                            O combo completo para renovar o visual
-                            com acabamento profissional.
-                        </p>
-
-                        <strong>
-                            R$ 90
-                        </strong>
-
-                    </article>
-
-
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            03
-                        </div>
-
-                        <h3>
-                            Barba premium
-                        </h3>
-
-                        <p>
-                            Modelagem, toalha quente e acabamento
-                            para deixar sua barba impecável.
-                        </p>
-
-                        <strong>
-                            R$ 45
-                        </strong>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- SOBRE -->
-
-        <section class="section about" id="sobre">
-
-            <div class="container about-grid">
-
-                <div class="about-image">
-                    <div class="image-placeholder">
-                        <span>PRIME</span>
-                    </div>
-                </div>
-
-                <div class="about-content">
-
-                    <p class="eyebrow">
-                        SOBRE A PRIME
-                    </p>
-
-                    <h2>
-                        Mais que um corte.
-                        <br>
-                        Uma experiência.
-                    </h2>
-
-                    <p>
-                        A Prime nasceu para unir técnica, estilo e
-                        atendimento em um único lugar.
-                    </p>
-
-                    <p>
-                        Nossa equipe trabalha para entender exatamente
-                        o que você procura e entregar um resultado que
-                        combine com você.
-                    </p>
-
-                    <div class="about-stats">
-
-                        <div>
-                            <strong>5+</strong>
-                            <span>Anos de experiência</span>
-                        </div>
-
-                        <div>
-                            <strong>2k+</strong>
-                            <span>Clientes atendidos</span>
-                        </div>
-
-                        <div>
-                            <strong>5.0</strong>
-                            <span>Avaliação média</span>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- DEPOIMENTOS -->
-
-        <section
-            class="section testimonials"
-            id="depoimentos"
-        >
-
-            <div class="container">
-
-                <div class="section-heading center">
-
-                    <p class="eyebrow">
-                        QUEM JÁ VEIO
-                    </p>
-
-                    <h2>
-                        Experiência que fala por si.
-                    </h2>
-
-                </div>
-
-
-                <div class="testimonials-grid">
-
-                    <article class="testimonial">
-
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            “Atendimento excelente e o corte ficou
-                            exatamente como eu queria. Já virei cliente.”
-                        </p>
-
-                        <strong>
-                            Lucas M.
-                        </strong>
-
-                    </article>
-
-
-                    <article class="testimonial">
-
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            “Ambiente muito bom, profissionais atenciosos
-                            e resultado impecável.”
-                        </p>
-
-                        <strong>
-                            Rafael S.
-                        </strong>
-
-                    </article>
-
-
-                    <article class="testimonial">
-
-                        <div class="stars">
-                            ★★★★★
-                        </div>
-
-                        <p>
-                            “Melhor barbearia que já frequentei. O
-                            acabamento é absurdo.”
-                        </p>
-
-                        <strong>
-                            André P.
-                        </strong>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- AGENDAMENTO -->
-
-        <section
-            class="section booking"
-            id="agendamento"
-        >
-
-            <div class="container booking-box">
-
-                <div>
-
-                    <p class="eyebrow">
-                        RESERVE SEU HORÁRIO
-                    </p>
-
-                    <h2>
-                        Pronto para renovar
-                        o visual?
-                    </h2>
-
-                    <p>
-                        Clique abaixo e fale diretamente com nossa
-                        equipe pelo WhatsApp.
-                    </p>
-
-                </div>
-
-                <a
-                    href="https://wa.me/5531989140548"
-                    class="button"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Agendar pelo WhatsApp
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- CONTATO -->
-
-        <section class="section contact" id="contato">
-
-            <div class="container contact-grid">
-
-                <div>
-
-                    <p class="eyebrow">
-                        ONDE ESTAMOS
-                    </p>
-
-                    <h2>
-                        Venha conhecer
-                        a Prime.
-                    </h2>
-
-                    <p>
-                        Rua Exemplo, 123
-                        <br>
-                        Centro — Belo Horizonte/MG
-                    </p>
-
-                </div>
-
-
-                <div class="contact-info">
-
-                    <div>
-                        <span>Horário</span>
-
-                        <strong>
-                            Terça a sábado
-                            <br>
-                            09:00 — 20:00
-                        </strong>
-                    </div>
-
-                    <div>
-                        <span>WhatsApp</span>
-
-                        <strong>
-                            (31) 99999-9999
-                        </strong>
-                    </div>
-
-                    <div>
-                       <a
-    href="https://www.instagram.com/Lucas.kkz/"
-    target="_blank"
-    rel="noopener noreferrer"
->
-    @B/A
-</a>
-                        </strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- FOOTER -->
-
-    <footer class="footer">
-
-        <div class="container footer-content">
-
-            <a href="#inicio" class="logo">
-                PRIME<span>.</span>
-            </a>
-
-            <p>
-                © <span id="year"></span> Prime Barber.
-                Todos os direitos reservados.
+            <p class="eyebrow">
+                SUA OPINIÃO
             </p>
 
-            <a href="#inicio">
-                Voltar ao topo ↑
-            </a>
+            <h2>
+                Como foi sua experiência?
+            </h2>
+
+            <form id="reviewForm">
+
+                <label>
+                    Seu nome
+
+                    <input
+                        type="text"
+                        id="reviewName"
+                        maxlength="80"
+                        placeholder="Digite seu nome"
+                        required
+                    >
+                </label>
+
+
+                <label>
+                    Sua avaliação
+
+                    <div
+                        class="star-picker"
+                        id="starPicker"
+                    >
+
+                        <button
+                            type="button"
+                            data-rating="1"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="2"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="3"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="4"
+                        >★</button>
+
+                        <button
+                            type="button"
+                            data-rating="5"
+                        >★</button>
+
+                    </div>
+                </label>
+
+
+                <input
+                    type="hidden"
+                    id="reviewRating"
+                    value="5"
+                >
+
+
+                <label>
+                    Seu comentário
+
+                    <textarea
+                        id="reviewComment"
+                        maxlength="500"
+                        rows="5"
+                        placeholder="Conte como foi sua experiência..."
+                        required
+                    ></textarea>
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="button"
+                    id="submitReview"
+                >
+                    Enviar avaliação
+                </button>
+
+            </form>
 
         </div>
+    `;
 
-    </footer>
+
+    document.body.appendChild(modal);
 
 
-    <script src="script.js"></script>
+    // Abrir modal
 
-</body>
-                      </html>
+    reviewButton.addEventListener("click", () => {
+
+        modal.classList.add("active");
+
+    });
+
+
+    // Fechar modal
+
+    const closeButton =
+        modal.querySelector(".review-close");
+
+    closeButton.addEventListener("click", () => {
+
+        modal.classList.remove("active");
+
+    });
+
+
+    modal.addEventListener("click", event => {
+
+        if (event.target === modal) {
+
+            modal.classList.remove("active");
+
+        }
+
+    });
+
+
+    // ---------- ESTRELAS ----------
+
+    const starButtons =
+        modal.querySelectorAll(
+            ".star-picker button"
+        );
+
+    const ratingInput =
+        modal.querySelector("#reviewRating");
+
+
+    function setRating(rating) {
+
+        ratingInput.value = rating;
+
+        starButtons.forEach(star => {
+
+            const value =
+                Number(star.dataset.rating);
+
+            star.classList.toggle(
+                "selected",
+                value <= rating
+            );
+
+        });
+
+    }
+
+
+    starButtons.forEach(star => {
+
+        star.addEventListener("click", () => {
+
+            setRating(
+                Number(star.dataset.rating)
+            );
+
+        });
+
+    });
+
+
+    setRating(5);
+
+
+    // ---------- ENVIAR AVALIAÇÃO ----------
+
+    const form =
+        modal.querySelector("#reviewForm");
+
+
+    form.addEventListener("submit", async event => {
+
+        event.preventDefault();
+
+
+        const name =
+            modal.querySelector("#reviewName")
+                .value
+                .trim();
+
+
+        const comment =
+            modal.querySelector("#reviewComment")
+                .value
+                .trim();
+
+
+        const rating =
+            Number(ratingInput.value);
+
+
+        if (
+            !name ||
+            !comment ||
+            rating < 1 ||
+            rating > 5
+        ) {
+
+            alert(
+                "Preencha todos os campos e escolha uma nota."
+            );
+
+            return;
+
+        }
+
+
+        const submitButton =
+            modal.querySelector("#submitReview");
+
+
+        submitButton.disabled = true;
+
+        submitButton.textContent =
+            "Enviando...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/reviews`,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                `Bearer ${SUPABASE_KEY}`,
+
+                            "Prefer":
+                                "return=representation"
+
+                        },
+
+                        body: JSON.stringify({
+
+                            name: name,
+
+                            rating: rating,
+
+                            comment: comment
+
+                        })
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                const error =
+                    await response.text();
+
+                console.error(error);
+
+                throw new Error(
+                    "Erro ao enviar avaliação."
+                );
+
+            }
+
+
+            alert(
+                "Avaliação enviada com sucesso! ⭐"
+            );
+
+
+            form.reset();
+
+            setRating(5);
+
+            modal.classList.remove("active");
+
+
+            await loadReviews();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Não foi possível enviar sua avaliação. Tente novamente."
+            );
+
+        } finally {
+
+            submitButton.disabled = false;
+
+            submitButton.textContent =
+                "Enviar avaliação";
+
+        }
+
+    });
+
+
+    // ---------- CARREGAR AVALIAÇÕES ----------
+
+    async function loadReviews() {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/reviews?select=id,name,rating,comment,created_at&order=created_at.desc`
+                ,
+                    {
+
+                        headers: {
+
+                            "apikey":
+                                SUPABASE_KEY,
+
+                            "Authorization":
+                                `Bearer ${SUPABASE_KEY}`
+
+                        }
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Erro ao carregar avaliações."
+                );
+
+            }
+
+
+            const reviews =
+                await response.json();
+
+
+            // Remove avaliações antigas/fictícias
+
+            testimonialsGrid.innerHTML = "";
+
+
+            if (reviews.length === 0) {
+
+                testimonialsGrid.innerHTML = `
+
+                    <article class="testimonial">
+
+                        <div class="stars">
+                            ☆☆☆☆☆
+                        </div>
+
+                        <p>
+                            Ainda não temos avaliações.
+                            Seja o primeiro a avaliar!
+                        </p>
+
+                        <strong>
+                            Prime Barber
+                        </strong>
+
+                    </article>
+
+                `;
+
+                return;
+
+            }
+
+
+            reviews.forEach(review => {
+
+                const article =
+                    document.createElement("article");
+
+                article.className =
+                    "testimonial";
+
+
+                const stars =
+                    "★".repeat(
+                        Number(review.rating)
+                    ) +
+                    "☆".repeat(
+                        5 - Number(review.rating)
+                    );
+
+
+                const date =
+                    new Date(
+                        review.created_at
+                    ).toLocaleDateString(
+                        "pt-BR"
+                    );
+
+
+                article.innerHTML = `
+
+                    <div class="stars">
+                        ${stars}
+                    </div>
+
+                    <p>
+                        “${escapeHTML(
+                            review.comment
+                        )}”
+                    </p>
+
+                    <strong>
+                        ${escapeHTML(
+                            review.name
+                        )}
+                    </strong>
+
+                    <small>
+                        ${date}
+                    </small>
+
+                `;
+
+
+                testimonialsGrid.appendChild(
+                    article
+                );
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    // ---------- PROTEÇÃO HTML ----------
+
+    function escapeHTML(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+
+    }
+
+
+    loadReviews();
+
+}
+
+
+// ===============================
+// FIM
+// ===============================
