@@ -1,644 +1,543 @@
-"use strict";
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
 
-/* =========================
-   CONFIGURAÇÃO SUPABASE
-========================= */
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const SUPABASE_URL =
-    "https://kuhdbyjejwhsmaunvupf.supabase.co";
+    <meta
+        name="description"
+        content="Barbearia Prime — corte, barba e experiência premium."
+    >
 
-/*
-   Use aqui a sua chave PUBLICÁVEL do Supabase.
-   Não use a service_role.
-*/
-const SUPABASE_KEY =
-    "COLE_AQUI_SUA_CHAVE_PUBLICAVEL";
+    <title>Prime Barber | Barbearia Premium</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-let supabaseClient = null;
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet"
+    >
 
-if (
-    window.supabase &&
-    SUPABASE_KEY !== "COLE_AQUI_SUA_CHAVE_PUBLICAVEL"
-) {
-    supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-}
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
 
-/* =========================
-   ELEMENTOS
-========================= */
+<header class="header" id="header">
+    <div class="container nav">
 
-const header =
-    document.getElementById("header");
+        <a href="#inicio" class="logo">
+            PRIME<span>.</span>
+        </a>
 
-const menuButton =
-    document.getElementById("menuButton");
+        <button
+            class="menu-button"
+            id="menuButton"
+            type="button"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
 
-const navigation =
-    document.getElementById("navigation");
+        <nav class="navigation" id="navigation">
+            <a href="#inicio">Início</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#depoimentos">Avaliações</a>
+            <a href="#contato">Contato</a>
+        </nav>
 
-const year =
-    document.getElementById("year");
+        <a href="#agendamento" class="button button-small desktop-button">
+            Agendar horário
+        </a>
 
-const reviewModal =
-    document.getElementById("reviewModal");
+    </div>
+</header>
 
-const openReview =
-    document.getElementById("openReview");
 
-const closeReview =
-    document.getElementById("closeReview");
+<main>
 
-const reviewForm =
-    document.getElementById("reviewForm");
+<section class="hero" id="inicio">
 
-const reviewName =
-    document.getElementById("reviewName");
+    <div class="hero-overlay"></div>
 
-const reviewRating =
-    document.getElementById("reviewRating");
+    <div class="container hero-content">
 
-const reviewComment =
-    document.getElementById("reviewComment");
+        <p class="eyebrow">BARBEARIA PREMIUM</p>
 
-const reviewMessage =
-    document.getElementById("reviewMessage");
+        <h1>
+            Seu estilo.
+            <br>
+            Nossa assinatura.
+        </h1>
 
-const submitReview =
-    document.getElementById("submitReview");
+        <p class="hero-text">
+            Cortes precisos, barba impecável e uma experiência
+            feita para quem valoriza cada detalhe.
+        </p>
 
-const reviewsList =
-    document.getElementById("reviewsList");
+        <div class="hero-buttons">
 
-const averageRating =
-    document.getElementById("averageRating");
+            <a href="#agendamento" class="button">
+                Agendar horário
+            </a>
 
+            <a href="#servicos" class="button button-outline">
+                Conhecer serviços
+            </a>
 
-/* =========================
-   ANO
-========================= */
+        </div>
 
-if (year) {
-    year.textContent =
-        new Date().getFullYear();
-}
+    </div>
 
+</section>
 
-/* =========================
-   HEADER
-========================= */
 
-function updateHeader() {
+<section class="section services" id="servicos">
 
-    if (!header) return;
+    <div class="container">
 
-    if (window.scrollY > 30) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-}
-
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
-
-updateHeader();
-
-
-/* =========================
-   MENU MOBILE
-========================= */
-
-if (menuButton && navigation) {
-
-    menuButton.addEventListener(
-        "click",
-        () => {
-
-            const isOpen =
-                navigation.classList.toggle(
-                    "active"
-                );
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                String(isOpen)
-            );
-
-            menuButton.setAttribute(
-                "aria-label",
-                isOpen
-                    ? "Fechar menu"
-                    : "Abrir menu"
-            );
-        }
-    );
-
-
-    navigation
-        .querySelectorAll("a")
-        .forEach((link) => {
-
-            link.addEventListener(
-                "click",
-                () => {
-
-                    navigation.classList.remove(
-                        "active"
-                    );
+        <div class="section-heading">
 
-                    menuButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                    menuButton.setAttribute(
-                        "aria-label",
-                        "Abrir menu"
-                    );
-                }
-            );
-        });
-}
+            <p class="eyebrow">NOSSOS SERVIÇOS</p>
 
-
-/* =========================
-   RESIZE
-========================= */
-
-window.addEventListener(
-    "resize",
-    () => {
-
-        if (
-            window.innerWidth > 850 &&
-            navigation
-        ) {
-
-            navigation.classList.remove(
-                "active"
-            );
-
-            if (menuButton) {
-
-                menuButton.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-                menuButton.setAttribute(
-                    "aria-label",
-                    "Abrir menu"
-                );
-            }
-        }
-    }
-);
-
-
-/* =========================
-   LINKS INTERNOS
-========================= */
-
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach((link) => {
-
-        link.addEventListener(
-            "click",
-            (event) => {
-
-                const targetId =
-                    link.getAttribute("href");
-
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
-
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-
-                if (!target) return;
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        );
-    });
-
-
-/* =========================
-   MODAL
-========================= */
-
-function openReviewModal() {
-
-    if (!reviewModal) return;
-
-    reviewModal.classList.add("active");
-
-    reviewModal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.style.overflow = "hidden";
-}
-
-
-function closeReviewModal() {
-
-    if (!reviewModal) return;
-
-    reviewModal.classList.remove("active");
-
-    reviewModal.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.style.overflow = "";
-}
-
-
-if (openReview) {
-    openReview.addEventListener(
-        "click",
-        openReviewModal
-    );
-}
-
-
-if (closeReview) {
-    closeReview.addEventListener(
-        "click",
-        closeReviewModal
-    );
-}
-
-
-if (reviewModal) {
-
-    reviewModal.addEventListener(
-        "click",
-        (event) => {
-
-            if (
-                event.target === reviewModal
-            ) {
-                closeReviewModal();
-            }
-        }
-    );
-}
-
-
-document.addEventListener(
-    "keydown",
-    (event) => {
-
-        if (
-            event.key === "Escape" &&
-            reviewModal &&
-            reviewModal.classList.contains("active")
-        ) {
-            closeReviewModal();
-        }
-    }
-);
-
-
-/* =========================
-   ESTRELAS
-========================= */
-
-const starButtons =
-    document.querySelectorAll(
-        "#starPicker button"
-    );
-
-
-starButtons.forEach((button) => {
-
-    button.addEventListener(
-        "click",
-        () => {
-
-            const rating =
-                Number(
-                    button.dataset.rating
-                );
-
-            reviewRating.value =
-                String(rating);
-
-            starButtons.forEach(
-                (star) => {
-
-                    const starRating =
-                        Number(
-                            star.dataset.rating
-                        );
-
-                    star.classList.toggle(
-                        "selected",
-                        starRating <= rating
-                    );
-                }
-            );
-        }
-    );
-});
-
-
-/* =========================
-   SUPABASE
-========================= */
-
-async function loadReviews() {
-
-    if (!supabaseClient) {
-        return;
-    }
-
-    const {
-        data,
-        error
-    } = await supabaseClient
-        .from("reviews")
-        .select(
-            "id, name, rating, comment, created_at"
-        )
-        .order(
-            "created_at",
-            {
-                ascending: false
-            }
-        );
-
-    if (error) {
-
-        console.error(
-            "Erro ao carregar avaliações:",
-            error
-        );
-
-        return;
-    }
-
-    renderReviews(data || []);
-}
-
-
-function renderReviews(reviews) {
-
-    if (!reviewsList) return;
-
-    if (reviews.length === 0) {
-        return;
-    }
-
-    reviewsList.innerHTML = "";
-
-    reviews.forEach((review) => {
-
-        const article =
-            document.createElement("article");
-
-        article.className =
-            "testimonial";
-
-        const stars =
-            "★".repeat(review.rating) +
-            "☆".repeat(5 - review.rating);
-
-        const date =
-            new Date(
-                review.created_at
-            ).toLocaleDateString(
-                "pt-BR"
-            );
-
-        article.innerHTML = `
-            <div class="stars">
-                ${stars}
-            </div>
+            <h2>Cuidado nos detalhes.</h2>
 
             <p>
-                “${escapeHTML(review.comment)}”
+                Tudo o que você precisa para sair daqui
+                se sentindo ainda melhor.
             </p>
 
-            <strong>
-                ${escapeHTML(review.name)}
-            </strong>
+        </div>
 
-            <small>
-                ${date}
-            </small>
-        `;
+        <div class="services-grid">
 
-        reviewsList.appendChild(article);
-    });
+            <article class="service-card">
 
+                <div class="service-number">01</div>
 
-    updateAverage(reviews);
-}
+                <h3>Corte masculino</h3>
 
+                <p>
+                    Corte personalizado de acordo com seu
+                    estilo, formato de rosto e preferência.
+                </p>
 
-/* =========================
-   MÉDIA
-========================= */
+                <strong>R$ 60</strong>
 
-function updateAverage(reviews) {
+            </article>
 
-    if (!averageRating || reviews.length === 0) {
-        return;
-    }
 
-    const total =
-        reviews.reduce(
-            (sum, review) =>
-                sum + Number(review.rating),
-            0
-        );
+            <article class="service-card featured">
 
-    const average =
-        total / reviews.length;
+                <div class="service-number">02</div>
 
-    averageRating.textContent =
-        average.toFixed(1);
-}
+                <h3>Corte + Barba</h3>
 
+                <p>
+                    O combo completo para renovar o visual
+                    com acabamento profissional.
+                </p>
 
-/* =========================
-   SEGURANÇA
-========================= */
+                <strong>R$ 90</strong>
 
-function escapeHTML(value) {
+            </article>
 
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-}
 
+            <article class="service-card">
 
-/* =========================
-   ENVIAR AVALIAÇÃO
-========================= */
+                <div class="service-number">03</div>
 
-if (reviewForm) {
+                <h3>Barba premium</h3>
 
-    reviewForm.addEventListener(
-        "submit",
-        async (event) => {
+                <p>
+                    Modelagem, toalha quente e acabamento
+                    para deixar sua barba impecável.
+                </p>
 
-            event.preventDefault();
+                <strong>R$ 45</strong>
 
-            const name =
-                reviewName.value.trim();
+            </article>
 
-            const rating =
-                Number(reviewRating.value);
+        </div>
 
-            const comment =
-                reviewComment.value.trim();
+    </div>
 
+</section>
 
-            if (!name) {
 
-                reviewMessage.textContent =
-                    "Digite seu nome.";
+<section class="section about" id="sobre">
 
-                return;
-            }
+    <div class="container about-grid">
 
+        <div class="about-image">
+            <div class="image-placeholder">
+                <span>PRIME</span>
+            </div>
+        </div>
 
-            if (
-                rating < 1 ||
-                rating > 5
-            ) {
+        <div class="about-content">
 
-                reviewMessage.textContent =
-                    "Escolha uma nota de 1 a 5 estrelas.";
+            <p class="eyebrow">SOBRE A PRIME</p>
 
-                return;
-            }
+            <h2>
+                Mais que um corte.
+                <br>
+                Uma experiência.
+            </h2>
 
+            <p>
+                A Prime nasceu para unir técnica, estilo e
+                atendimento em um único lugar.
+            </p>
 
-            if (!comment) {
+            <p>
+                Nossa equipe trabalha para entender exatamente
+                o que você procura e entregar um resultado que
+                combine com você.
+            </p>
 
-                reviewMessage.textContent =
-                    "Digite um comentário.";
+            <div class="about-stats">
 
-                return;
-            }
+                <div>
+                    <strong>5+</strong>
+                    <span>Anos de experiência</span>
+                </div>
 
+                <div>
+                    <strong>2k+</strong>
+                    <span>Clientes atendidos</span>
+                </div>
 
-            if (!supabaseClient) {
+                <div>
+                    <strong id="averageRating">5.0</strong>
+                    <span>Avaliação média</span>
+                </div>
 
-                reviewMessage.textContent =
-                    "Configure a chave do Supabase no script.js.";
+            </div>
 
-                return;
-            }
+        </div>
 
+    </div>
 
-            submitReview.disabled = true;
+</section>
 
-            submitReview.textContent =
-                "Enviando...";
 
-            reviewMessage.textContent =
-                "";
+<section class="section testimonials" id="depoimentos">
 
+    <div class="container">
 
-            const {
-                error
-            } = await supabaseClient
-                .from("reviews")
-                .insert({
-                    name: name,
-                    rating: rating,
-                    comment: comment
-                });
+        <div class="section-heading center">
 
+            <p class="eyebrow">QUEM JÁ VEIO</p>
 
-            if (error) {
+            <h2>Experiência que fala por si.</h2>
 
-                console.error(
-                    "Erro ao enviar avaliação:",
-                    error
-                );
+            <p>
+                Veja o que nossos clientes estão dizendo.
+            </p>
 
-                reviewMessage.textContent =
-                    "Não foi possível enviar. Tente novamente.";
+            <button
+                type="button"
+                class="button review-button"
+                id="openReview"
+            >
+                ⭐ Deixar uma avaliação
+            </button>
 
-                submitReview.disabled = false;
+        </div>
 
-                submitReview.textContent =
-                    "Enviar avaliação";
 
-                return;
-            }
+        <div
+            class="testimonials-grid"
+            id="reviewsList"
+        >
 
+            <article class="testimonial">
 
-            reviewMessage.textContent =
-                "⭐ Avaliação enviada com sucesso!";
+                <div class="stars">
+                    ★★★★★
+                </div>
 
+                <p>
+                    “Atendimento excelente e o corte ficou
+                    exatamente como eu queria. Já virei cliente.”
+                </p>
 
-            reviewForm.reset();
+                <strong>Lucas M.</strong>
 
-            reviewRating.value =
-                "0";
+            </article>
 
-            starButtons.forEach(
-                (star) =>
-                    star.classList.remove(
-                        "selected"
-                    )
-            );
 
+            <article class="testimonial">
 
-            submitReview.disabled = false;
+                <div class="stars">
+                    ★★★★★
+                </div>
 
-            submitReview.textContent =
-                "Enviar avaliação";
+                <p>
+                    “Ambiente muito bom, profissionais atenciosos
+                    e resultado impecável.”
+                </p>
 
+                <strong>Rafael S.</strong>
 
-            await loadReviews();
+            </article>
 
 
-            setTimeout(
-                closeReviewModal,
-                1200
-            );
-        }
-    );
-}
+            <article class="testimonial">
 
+                <div class="stars">
+                    ★★★★★
+                </div>
 
-/* =========================
-   INICIAR
-========================= */
+                <p>
+                    “Melhor barbearia que já frequentei.
+                    O acabamento é absurdo.”
+                </p>
 
-loadReviews();
+                <strong>André P.</strong>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section booking" id="agendamento">
+
+    <div class="container booking-box">
+
+        <div>
+
+            <p class="eyebrow">RESERVE SEU HORÁRIO</p>
+
+            <h2>
+                Pronto para renovar
+                o visual?
+            </h2>
+
+            <p>
+                Clique abaixo e fale diretamente com nossa
+                equipe pelo WhatsApp.
+            </p>
+
+        </div>
+
+        <a
+            href="https://wa.me/5531900000000"
+            class="button"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            Agendar pelo WhatsApp
+        </a>
+
+    </div>
+
+</section>
+
+
+<section class="section contact" id="contato">
+
+    <div class="container contact-grid">
+
+        <div>
+
+            <p class="eyebrow">ONDE ESTAMOS</p>
+
+            <h2>
+                Venha conhecer
+                a Prime.
+            </h2>
+
+            <p>
+                Rua Exemplo, 123
+                <br>
+                Centro — Belo Horizonte/MG
+            </p>
+
+        </div>
+
+
+        <div class="contact-info">
+
+            <div>
+
+                <span>Horário</span>
+
+                <strong>
+                    Terça a sábado
+                    <br>
+                    09:00 — 20:00
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>WhatsApp</span>
+
+                <strong>
+                    (31) 90000-0000
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Instagram</span>
+
+                <!-- TROQUE SOMENTE ESTE LINK -->
+                <a
+                    id="instagramLink"
+                    href="https://www.instagram.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    @primebarber
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container footer-content">
+
+        <a href="#inicio" class="logo">
+            PRIME<span>.</span>
+        </a>
+
+        <p>
+            © <span id="year"></span> Prime Barber.
+            Todos os direitos reservados.
+        </p>
+
+        <a href="#inicio">
+            Voltar ao topo ↑
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- MODAL DE AVALIAÇÃO -->
+
+<div
+    class="review-modal"
+    id="reviewModal"
+    aria-hidden="true"
+>
+
+    <div class="review-modal-content">
+
+        <button
+            type="button"
+            class="review-close"
+            id="closeReview"
+            aria-label="Fechar"
+        >
+            ×
+        </button>
+
+        <h2>Deixe sua avaliação</h2>
+
+        <form id="reviewForm">
+
+            <label>
+                Seu nome
+
+                <input
+                    type="text"
+                    id="reviewName"
+                    maxlength="80"
+                    placeholder="Digite seu nome"
+                    required
+                >
+            </label>
+
+
+            <label>
+                Sua nota
+
+                <div
+                    class="star-picker"
+                    id="starPicker"
+                >
+
+                    <button type="button" data-rating="1">★</button>
+                    <button type="button" data-rating="2">★</button>
+                    <button type="button" data-rating="3">★</button>
+                    <button type="button" data-rating="4">★</button>
+                    <button type="button" data-rating="5">★</button>
+
+                </div>
+
+                <input
+                    type="hidden"
+                    id="reviewRating"
+                    value="0"
+                >
+
+            </label>
+
+
+            <label>
+                Comentário
+
+                <textarea
+                    id="reviewComment"
+                    rows="5"
+                    maxlength="500"
+                    placeholder="Conte como foi sua experiência..."
+                    required
+                ></textarea>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="button"
+                id="submitReview"
+            >
+                Enviar avaliação
+            </button>
+
+            <p id="reviewMessage"></p>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
