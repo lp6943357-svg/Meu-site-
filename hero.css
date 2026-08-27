@@ -1,0 +1,63 @@
+/* PRIME BARBER — HERO PREMIUM */
+.hero {
+  isolation: isolate;
+  min-height: 780px;
+  background:
+    radial-gradient(circle at 78% 42%, rgba(199,154,91,.14), transparent 30%),
+    radial-gradient(circle at 8% 90%, rgba(124,50,48,.08), transparent 28%),
+    var(--bg);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .22;
+  background-image: linear-gradient(rgba(244,236,223,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(244,236,223,.025) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black, transparent 90%);
+}
+
+.hero-copy { position: relative; z-index: 3; }
+.hero h1 { max-width: 760px; font-size: clamp(50px, 7vw, 82px); letter-spacing: -.035em; }
+.hero h1 span { text-shadow: 0 0 36px rgba(224,184,120,.12); }
+.hero-lead { max-width: 500px; font-size: 18px; line-height: 1.75; }
+.hero-actions .btn-gold { box-shadow: 0 14px 35px rgba(199,154,91,.16); }
+
+.hero-art { min-height: 500px; }
+.hero-ring { box-shadow: 0 0 70px rgba(199,154,91,.04); }
+.ring-one { width: 470px; height: 470px; border-color: rgba(244,236,223,.12); }
+.ring-two { width: 370px; height: 370px; border-color: rgba(199,154,91,.2); }
+.hero-art::before,
+.hero-art::after { content: ""; position: absolute; border: 1px solid rgba(199,154,91,.08); border-radius: 50%; }
+.hero-art::before { width: 560px; height: 560px; }
+.hero-art::after { width: 245px; height: 245px; border-color: rgba(199,154,91,.12); }
+
+.razor-icon { width: 315px; height: 315px; filter: drop-shadow(0 18px 35px rgba(0,0,0,.35)); }
+.hero-art-label { bottom: 4px; letter-spacing: .3em; }
+
+@media (max-width: 900px) {
+  .hero { min-height: auto; padding-top: 140px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 20px; }
+  .hero-copy { text-align: center; }
+  .hero-lead { margin-inline: auto; }
+  .hero-actions, .hero-stats { justify-content: center; }
+  .hero-art { min-height: 360px; margin-top: -10px; }
+  .ring-one { width: 340px; height: 340px; }
+  .ring-two { width: 270px; height: 270px; }
+  .hero-art::before { width: 400px; height: 400px; }
+  .hero-art::after { width: 190px; height: 190px; }
+  .razor-icon { width: 235px; height: 235px; }
+}
+
+@media (max-width: 520px) {
+  .hero h1 { font-size: clamp(43px, 13vw, 62px); }
+  .hero-lead { font-size: 15px; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { width: 100%; }
+  .hero-stats { gap: 18px; }
+  .hero-stats strong { font-size: 25px; }
+  .hero-stats span { font-size: 9px; }
+  .hero-art { min-height: 300px; }
+}
