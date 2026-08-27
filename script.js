@@ -3,9 +3,11 @@
    SCRIPT PRINCIPAL
 ========================================= */
 
-/* CONFIGURAÇÕES */
-const whatsappNumber = "5531999999999";
-const whatsappMessage = "Olá! Gostaria de agendar um horário na Prime Barber.";
+/* CONFIGURAÇÕES — altere somente estes valores quando os dados reais estiverem disponíveis. */
+const PRIME_CONFIG = {
+  whatsappNumber: "5531999999999",
+  whatsappMessage: "Olá! Gostaria de agendar um horário na Prime Barber."
+};
 
 /* ELEMENTOS */
 const siteHeader = document.getElementById("siteHeader");
@@ -54,6 +56,7 @@ if (nav) {
 
 /* WHATSAPP */
 function openWhatsApp() {
+  const { whatsappNumber, whatsappMessage } = PRIME_CONFIG;
   if (!whatsappNumber) return;
 
   const encodedMessage = encodeURIComponent(whatsappMessage);
