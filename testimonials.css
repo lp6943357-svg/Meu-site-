@@ -1,0 +1,10 @@
+/* PRIME BARBER — TESTIMONIALS PREMIUM */
+.testimonials { position: relative; overflow: hidden; }
+.testimonials-grid { align-items: stretch; }
+.testimonial-card { position: relative; overflow: hidden; border: 1px solid rgba(244,236,223,.09); background: linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); box-shadow: 0 20px 55px rgba(0,0,0,.14); transition: transform .3s ease,border-color .3s ease,box-shadow .3s ease; }
+.testimonial-card::before { content:"“"; position:absolute; right:18px; top:-18px; font-family:Fraunces,serif; font-size:120px; line-height:1; color:rgba(224,184,120,.055); pointer-events:none; }
+.testimonial-card:hover { transform:translateY(-6px); border-color:rgba(224,184,120,.22); box-shadow:0 28px 70px rgba(0,0,0,.22); }
+.stars { letter-spacing:4px; font-size:.82rem; }
+.quote { position:relative; z-index:1; }
+.reviewer span { border:1px solid rgba(224,184,120,.24); box-shadow:0 0 24px rgba(224,184,120,.06); }
+@media (max-width:800px) { .testimonial-card:hover { transform:none; } }
