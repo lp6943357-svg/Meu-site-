@@ -1,0 +1,10 @@
+/* PRIME BARBER — CTA PREMIUM */
+.cta-band { position:relative; overflow:hidden; }
+.cta-band::before,.cta-band::after { content:""; position:absolute; border:1px solid rgba(224,184,120,.1); border-radius:50%; pointer-events:none; }
+.cta-band::before { width:460px;height:460px;left:-260px;top:50%;transform:translateY(-50%); }
+.cta-band::after { width:620px;height:620px;right:-380px;top:50%;transform:translateY(-50%); }
+.cta-inner { position:relative; z-index:1; }
+.cta-inner h2 { text-wrap:balance; }
+.whatsapp-btn { box-shadow:0 12px 35px rgba(0,0,0,.2); transition:transform .25s ease,box-shadow .25s ease; }
+.whatsapp-btn:hover { transform:translateY(-3px); box-shadow:0 18px 42px rgba(0,0,0,.28); }
+@media (max-width:800px) { .cta-band::before,.cta-band::after{display:none;} .whatsapp-btn{width:100%;justify-content:center;} }
