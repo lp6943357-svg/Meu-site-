@@ -122,6 +122,41 @@ window.addEventListener("resize", function () {
   }
 });
 
+/* NAVEGAÇÃO ATIVA POR SEÇÃO */
+const navLinks = nav ? Array.from(nav.querySelectorAll('a[href^="#"]')) : [];
+const sections = navLinks
+  .map(function (link) {
+    return document.querySelector(link.getAttribute("href"));
+  })
+  .filter(Boolean);
+
+function updateActiveNav() {
+  if (!navLinks.length || !sections.length) return;
+
+  const marker = window.scrollY + 140;
+  let activeId = sections[0].id;
+
+  sections.forEach(function (section) {
+    if (section.offsetTop <= marker) {
+      activeId = section.id;
+    }
+  });
+
+  navLinks.forEach(function (link) {
+    const isActive = link.getAttribute("href") === `#${activeId}`;
+    link.classList.toggle("active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+window.addEventListener("scroll", updateActiveNav, { passive: true });
+window.addEventListener("resize", updateActiveNav);
+updateActiveNav();
+
 /* ANO AUTOMÁTICO */
 const currentYear = new Date().getFullYear();
 const footerText = document.querySelector(".footer-inner p");
