@@ -56,15 +56,17 @@ if (nav) {
 
 /* WHATSAPP */
 function openWhatsApp() {
-  const { whatsappNumber, whatsappMessage } = PRIME_CONFIG;
-  if (!whatsappNumber) return;
+  const digits = String(PRIME_CONFIG.whatsappNumber || "").replace(/\D/g, "");
+  const message = String(PRIME_CONFIG.whatsappMessage || "").trim().slice(0, 2000);
 
-  const encodedMessage = encodeURIComponent(whatsappMessage);
-  const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+  if (!digits || !message) return;
+
+  const url = `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank", "noopener,noreferrer");
 }
 
 whatsappButtons.forEach(function (button) {
+  button.setAttribute("rel", "noopener noreferrer");
   button.addEventListener("click", function (event) {
     event.preventDefault();
     openWhatsApp();
