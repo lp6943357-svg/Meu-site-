@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>INK STUDIO — Tatuagem autoral</title>
+  <meta name="description" content="Portfólio, estilos, avaliações e contato de um tatuador profissional.">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta property="og:title" content="INK STUDIO — Tatuagem autoral">
+  <meta property="og:description" content="Conheça o trabalho, veja o portfólio e fale com o tatuador.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#inicio" aria-label="Ink Studio início"><span>INK</span> / STUDIO</a>
+      <nav class="nav" id="nav" aria-label="Navegação principal">
+        <a href="#portfolio">Portfólio</a><a href="#estilos">Estilos</a><a href="#sobre">Sobre</a><a href="#avaliacoes">Avaliações</a><a href="#contato">Contato</a>
+      </nav>
+      <a class="button button-small" href="#contato">Agendar</a>
+      <button class="menu" id="menu" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-noise"></div><div class="hero-line"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <p class="kicker">TATUAGEM AUTORAL · BELO HORIZONTE</p>
+          <h1>Arte que<br><em>fica na pele.</em></h1>
+          <p class="hero-text">Projetos pensados para você, do primeiro traço ao último detalhe.</p>
+          <div class="actions"><a class="button" href="#portfolio">Ver portfólio</a><a class="text-button" href="#contato">Quero conversar <span>↗</span></a></div>
+          <div class="mini-stats"><div><strong>5.0</strong><span>avaliação</span></div><div><strong>+8</strong><span>anos de prática</span></div><div><strong>100%</strong><span>autoral</span></div></div>
+        </div>
+        <div class="hero-art reveal" aria-label="Área de destaque para foto principal">
+          <div class="photo-placeholder"><span>FOTO PRINCIPAL</span><small>adicione sua imagem em /images/hero.jpg</small></div>
+          <div class="stamp">EST.<br>2018</div><div class="vertical">TATTOO · ART · IDENTITY</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio section" id="portfolio">
+      <div class="container">
+        <div class="section-head reveal"><div><p class="kicker">01 / PORTFÓLIO</p><h2>Trabalhos recentes.</h2></div><p>Seu melhor trabalho precisa aparecer primeiro. Organize aqui as tatuagens que representam seu estilo.</p></div>
+        <div class="filters" role="tablist" aria-label="Filtrar portfólio"><button class="active" data-filter="all">Todos</button><button data-filter="blackwork">Blackwork</button><button data-filter="fine">Fine line</button><button data-filter="realism">Realismo</button><button data-filter="oldschool">Old school</button></div>
+        <div class="gallery">
+          <article class="work tall" data-style="blackwork"><img src="images/tattoo-01.jpg" alt="Tatuagem blackwork" loading="lazy"><div class="work-fallback">FOTO 01</div><span>BLACKWORK</span></article>
+          <article class="work" data-style="fine"><img src="images/tattoo-02.jpg" alt="Tatuagem fine line" loading="lazy"><div class="work-fallback">FOTO 02</div><span>FINE LINE</span></article>
+          <article class="work" data-style="realism"><img src="images/tattoo-03.jpg" alt="Tatuagem realista" loading="lazy"><div class="work-fallback">FOTO 03</div><span>REALISMO</span></article>
+          <article class="work" data-style="oldschool"><img src="images/tattoo-04.jpg" alt="Tatuagem old school" loading="lazy"><div class="work-fallback">FOTO 04</div><span>OLD SCHOOL</span></article>
+          <article class="work wide" data-style="blackwork"><img src="images/tattoo-05.jpg" alt="Tatuagem blackwork" loading="lazy"><div class="work-fallback">FOTO 05</div><span>BLACKWORK</span></article>
+          <article class="work" data-style="fine"><img src="images/tattoo-06.jpg" alt="Tatuagem fine line" loading="lazy"><div class="work-fallback">FOTO 06</div><span>FINE LINE</span></article>
+          <article class="work" data-style="realism"><img src="images/tattoo-07.jpg" alt="Tatuagem realista" loading="lazy"><div class="work-fallback">FOTO 07</div><span>REALISMO</span></article>
+          <article class="work tall" data-style="oldschool"><img src="images/tattoo-08.jpg" alt="Tatuagem old school" loading="lazy"><div class="work-fallback">FOTO 08</div><span>OLD SCHOOL</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="styles section" id="estilos">
+      <div class="container"><div class="section-head reveal"><div><p class="kicker">02 / ESPECIALIDADES</p><h2>Seu estilo,<br>seu projeto.</h2></div><p>Deixe claro o que o tatuador domina. Isso ajuda o cliente a chegar já com uma ideia do que esperar.</p></div>
+        <div class="style-grid">
+          <article class="style-card reveal"><span>01</span><h3>Blackwork</h3><p>Contraste forte, linhas marcantes e composição gráfica.</p><a href="#contato">Consultar →</a></article>
+          <article class="style-card reveal"><span>02</span><h3>Fine line</h3><p>Traços delicados para projetos minimalistas e precisos.</p><a href="#contato">Consultar →</a></article>
+          <article class="style-card reveal"><span>03</span><h3>Realismo</h3><p>Sombras, textura e profundidade para projetos detalhados.</p><a href="#contato">Consultar →</a></article>
+          <article class="style-card reveal"><span>04</span><h3>Old school</h3><p>Referências clássicas, cores fortes e desenho atemporal.</p><a href="#contato">Consultar →</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about section" id="sobre"><div class="container about-grid">
+      <div class="about-portrait reveal"><div class="photo-placeholder"><span>FOTO DO TATUADOR</span><small>adicione sua imagem em /images/artist.jpg</small></div></div>
+      <div class="about-copy reveal"><p class="kicker">03 / O ARTISTA</p><h2>Não é só tatuar.<br>É criar junto.</h2><p>Conte aqui a história do tatuador, sua experiência, referências e a forma como trabalha. O objetivo é fazer o cliente conhecer a pessoa por trás das agulhas antes de entrar em contato.</p><div class="about-list"><div><strong>01</strong><span>Atendimento personalizado</span></div><div><strong>02</strong><span>Projeto exclusivo para cada cliente</span></div><div><strong>03</strong><span>Ambiente profissional e acolhedor</span></div></div></div>
+    </div></section>
+
+    <section class="reviews section" id="avaliacoes"><div class="container"><div class="section-head reveal"><div><p class="kicker">04 / AVALIAÇÕES</p><h2>Quem já tatuou,<br>conta.</h2></div><p>Bloco preparado para avaliações reais. Substitua os exemplos pelos depoimentos verdadeiros do profissional.</p></div>
+      <div class="review-grid">
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“O projeto ficou exatamente como eu imaginava. Atendimento muito cuidadoso do começo ao fim.”</p><footer><strong>Cliente</strong><span>Avaliação demonstrativa</span></footer></article>
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“Traço impecável e muita atenção aos detalhes. Com certeza faria outra tattoo aqui.”</p><footer><strong>Cliente</strong><span>Avaliação demonstrativa</span></footer></article>
+        <article class="review reveal"><div class="stars">★★★★★</div><p>“Desde a ideia inicial até o resultado final, tudo foi muito profissional.”</p><footer><strong>Cliente</strong><span>Avaliação demonstrativa</span></footer></article>
+      </div>
+    </div></section>
+
+    <section class="contact section" id="contato"><div class="container contact-grid">
+      <div class="contact-copy reveal"><p class="kicker">05 / CONTATO</p><h2>Vamos tirar<br>sua ideia do papel?</h2><p>Escolha um canal e envie sua referência. O atendimento pode continuar direto pelo WhatsApp ou Instagram.</p><div class="contact-buttons"><a class="button" href="https://wa.me/5531999999999" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><a class="outline-button" href="https://instagram.com/seuinstagram" target="_blank" rel="noopener noreferrer">Instagram ↗</a></div></div>
+      <div class="contact-card reveal"><div class="contact-row"><span>TELEFONE</span><strong>(31) 99999-9999</strong></div><div class="contact-row"><span>ENDEREÇO</span><strong>Rua do Estúdio, 000<br>Belo Horizonte — MG</strong></div><div class="contact-row"><span>HORÁRIOS</span><strong>Seg — Sáb<br>10:00 — 20:00</strong></div><div class="contact-row"><span>INSTAGRAM</span><strong>@seuinstagram</strong></div></div>
+    </div></section>
+  </main>
+
+  <footer class="footer"><div class="container footer-inner"><div class="brand"><span>INK</span> / STUDIO</div><p>© 2026 Ink Studio. Todos os direitos reservados.</p><a href="#inicio">Voltar ao topo ↑</a></div></footer>
+  <script src="script.js"></script>
+</body>
+</html>
