@@ -4,7 +4,7 @@
 
   if (!window.gsap || !window.ScrollTrigger) return;
 
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);\n  if (window.ScrollToPlugin) gsap.registerPlugin(window.ScrollToPlugin);
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduceMotion) {
