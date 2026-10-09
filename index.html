@@ -40,5 +40,47 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollToPlugin.min.js"></script>
   <script src="gsap-animations.js"></script>
   <script src="script.js"></script>
+
+  <script>
+  (() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !window.gsap) return;
+    const gsap = window.gsap;
+    if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
+
+    // Subtle depth: foreground media and decorative backgrounds move at different rates.
+    const heroSections = document.querySelectorAll('.hero, .hero-section, [data-parallax-section]');
+    heroSections.forEach((section) => {
+      const media = section.querySelector('.hero-art, .hero-visual, .hero-image, .hero-media, .hero-visual img, .hero-art img, [data-parallax]');
+      const decor = section.querySelector('.hero-glow, .hero-bg, .hero-background, .hero-ring, .hero-orb, [data-parallax-bg]');
+      if (window.ScrollTrigger && media) {
+        gsap.to(media, {
+          yPercent: 10, ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: 0.7 }
+        });
+      }
+      if (window.ScrollTrigger && decor) {
+        gsap.to(decor, {
+          yPercent: -16, scale: 1.04, ease: 'none',
+          scrollTrigger: { trigger: section, start: 'top bottom', end: 'bottom top', scrub: 1 }
+        });
+      }
+    });
+
+    // Reveal content gently as it enters the viewport; avoid hiding content if GSAP is unavailable.
+    if (window.ScrollTrigger) {
+      const revealItems = document.querySelectorAll('main section:not(.hero) h2, main section:not(.hero) .card, main section:not(.hero) .service-card, main section:not(.hero) .feature, main section:not(.hero) .reveal');
+      revealItems.forEach((item) => {
+        if (item.dataset.motionReady) return;
+        item.dataset.motionReady = 'true';
+        gsap.fromTo(item, { y: 22, autoAlpha: 0 }, {
+          y: 0, autoAlpha: 1, duration: 0.75, ease: 'power2.out',
+          scrollTrigger: { trigger: item, start: 'top 88%', once: true }
+        });
+      });
+    }
+  })();
+  </script>
+
 </body>
 </html>
