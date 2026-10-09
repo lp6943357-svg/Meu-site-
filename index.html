@@ -82,5 +82,53 @@
   })();
   </script>
 
+
+  <script>
+  (() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !window.gsap || !window.ScrollTrigger) return;
+    const gsap = window.gsap;
+    gsap.registerPlugin(window.ScrollTrigger);
+
+    // Parallax mais perceptível: o desenho principal e as luzes têm velocidades distintas.
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      const art = hero.querySelector('.hero-art');
+      const glow = hero.querySelector('.hero-glow');
+      const rings = hero.querySelectorAll('.hero-ring');
+      if (art) gsap.to(art, {
+        y: 150, rotate: 5, ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: 0.8 }
+      });
+      if (glow) gsap.to(glow, {
+        y: -190, scale: 1.35, ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top bottom', end: 'bottom top', scrub: 1 }
+      });
+      rings.forEach((ring, i) => gsap.to(ring, {
+        y: i === 0 ? -105 : 85,
+        rotate: i === 0 ? 32 : -24,
+        ease: 'none',
+        scrollTrigger: { trigger: hero, start: 'top bottom', end: 'bottom top', scrub: 1.2 }
+      }));
+    }
+
+    // Movimento suave com o cursor em telas com mouse; desativado em dispositivos touch.
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const art = document.querySelector('.hero-art');
+      if (art) {
+        hero?.addEventListener('pointermove', (event) => {
+          const rect = hero.getBoundingClientRect();
+          const x = (event.clientX - rect.left) / rect.width - 0.5;
+          const y = (event.clientY - rect.top) / rect.height - 0.5;
+          gsap.to(art, { x: x * 22, rotationY: x * 10, rotationX: -y * 8, duration: 0.6, ease: 'power2.out', overwrite: 'auto' });
+        });
+        hero?.addEventListener('pointerleave', () => {
+          gsap.to(art, { x: 0, rotationY: 0, rotationX: 0, duration: 0.7, ease: 'power2.out', overwrite: 'auto' });
+        });
+      }
+    }
+  })();
+  </script>
+
 </body>
 </html>
