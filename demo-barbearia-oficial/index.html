@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151411">
+  <meta name="description" content="Conceito de site para a Barbearia Oficial, no bairro Itapoã, Belo Horizonte.">
+  <meta property="og:title" content="Barbearia Oficial — Seu estilo, sua assinatura">
+  <meta property="og:description" content="Uma experiência de barbearia com personalidade. Conceito demonstrativo.">
+  <title>Barbearia Oficial — Seu estilo, sua assinatura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="demo-note"><span></span> Conceito demonstrativo de website · Barbearia Oficial</div>
+  <header class="header" id="header">
+    <a class="brand" href="#inicio" aria-label="Barbearia Oficial, início">
+      <span class="brand-mark">BO<span>.</span></span>
+      <span class="brand-copy"><strong>BARBEARIA</strong><small>OFICIAL · BELO HORIZONTE</small></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false"><i></i><i></i></button>
+    <nav class="nav" id="nav">
+      <a href="#conceito">A barbearia</a><a href="#servicos">Serviços</a><a href="#experiencia">Experiência</a><a href="#visite">Localização</a>
+      <a class="nav-cta" href="#visite">Encontre a gente <span>↗</span></a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-image parallax" data-speed="0.12" role="img" aria-label="Interior de barbearia com cadeira clássica"></div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow hero-eyebrow"><span></span> ITAPOÃ · BELO HORIZONTE</p>
+        <h1 class="hero-title">Seu estilo.<br><em>Sua assinatura.</em></h1>
+        <p class="hero-description">Mais do que um corte: um momento seu, com atenção aos detalhes e personalidade em cada acabamento.</p>
+        <div class="hero-actions"><a class="button button-gold" href="#servicos">Conheça os serviços <span>↘</span></a><a class="text-link" href="#visite">Como chegar <span>↗</span></a></div>
+      </div>
+      <div class="hero-bottom"><span>PRECISÃO NO CORTE. PRESENÇA NO ESTILO.</span><span class="scroll-cue">ROLE PARA EXPLORAR <b>↓</b></span></div>
+      <div class="hero-index">01 <span>/</span> 04</div>
+    </section>
+    <section class="intro section" id="conceito">
+      <div class="intro-aside reveal"><span class="section-index">01 — NOSSA ESSÊNCIA</span><span class="vertical-label">CUIDADO · ESTILO · IDENTIDADE</span></div>
+      <div class="intro-main">
+        <p class="eyebrow reveal">O DETALHE FAZ A DIFERENÇA</p>
+        <h2 class="display reveal">Não é só sobre<br>o cabelo. É sobre <em>você.</em></h2>
+        <div class="intro-bottom reveal"><p>Um espaço para renovar o visual, cuidar de si e sair com a confiança renovada. A sua próxima versão começa nos detalhes.</p><span class="round-stamp">ESTILO<br>SEM<br>ATALHOS <b>✳</b></span></div>
+      </div>
+    </section>
+    <section class="visual-break">
+      <div class="visual-break-image parallax" data-speed="0.16"></div><div class="visual-break-overlay"></div>
+      <p class="visual-break-caption reveal">A arte está no acabamento.</p><span class="visual-break-number">BO / 2026</span>
+    </section>
+    <section class="services section" id="servicos">
+      <div class="section-heading"><div><p class="eyebrow reveal">O QUE FAZEMOS</p><h2 class="display reveal">Seu visual,<br><em>bem cuidado.</em></h2></div><p class="heading-note reveal">Cada detalhe importa.<br>Escolha o cuidado que combina com você.</p></div>
+      <div class="service-grid">
+        <article class="service-card reveal"><div class="service-image service-image-one parallax" data-speed="0.05"></div><div class="service-meta"><span>01 / ESSENCIAL</span><span>↗</span></div><h3>Corte masculino</h3><p>Do clássico ao contemporâneo, com atenção ao formato e ao acabamento.</p></article>
+        <article class="service-card reveal"><div class="service-image service-image-two parallax" data-speed="0.05"></div><div class="service-meta"><span>02 / PRECISÃO</span><span>↗</span></div><h3>Barba & acabamento</h3><p>Contornos alinhados e cuidado nos detalhes para completar seu estilo.</p></article>
+        <article class="service-card reveal"><div class="service-image service-image-three parallax" data-speed="0.05"></div><div class="service-meta"><span>03 / PERSONALIDADE</span><span>↗</span></div><h3>Seu próximo visual</h3><p>Converse com a equipe e encontre a opção que combina com você.</p></article>
+      </div>
+      <p class="disclaimer">Serviços e descrições apresentados como proposta visual. Confirmar a lista definitiva com a barbearia.</p>
+    </section>
+    <section class="manifesto" id="experiencia">
+      <div class="manifesto-image parallax" data-speed="0.1"></div><div class="manifesto-content"><p class="eyebrow reveal">O SEU TEMPO</p><h2 class="display reveal">Sente na cadeira.<br><em>O resto é com a gente.</em></h2><p class="reveal">Um bom corte muda mais do que o espelho mostra. É confiança, presença e a sensação de estar pronto para o que vem.</p><a class="button button-outline reveal" href="#visite">Venha conhecer <span>↗</span></a></div>
+    </section>
+    <section class="visit section" id="visite">
+      <div class="visit-copy"><p class="eyebrow reveal">VAMOS NOS ENCONTRAR?</p><h2 class="display reveal">Seu próximo<br>corte começa <em>aqui.</em></h2><p class="visit-description reveal">Passe pela Barbearia Oficial, no bairro Itapoã, em Belo Horizonte. Confira a rota e entre em contato para confirmar os detalhes do atendimento.</p><div class="visit-details reveal"><div><span class="detail-label">ENDEREÇO</span><p>Av. Gen. Olímpio Mourão Filho, 72 — Loja 03<br>Itapoã, Belo Horizonte — MG</p></div><div><span class="detail-label">TELEFONE</span><p><a href="tel:+553136561797">(31) 3656-1797</a></p></div></div><div class="visit-actions reveal"><a class="button button-gold" href="https://www.google.com/maps/search/?api=1&query=Av.+Gen.+Olimpio+Mourao+Filho+72+Itapoa+Belo+Horizonte" target="_blank" rel="noopener">Abrir rota no Maps <span>↗</span></a><a class="text-link" href="tel:+553136561797">Ligar para a barbearia <span>↗</span></a></div><p class="disclaimer">Endereço e telefone baseados em diretório comercial; confirmar com o estabelecimento antes da publicação definitiva.</p></div>
+      <div class="visit-visual reveal"><div class="visit-photo"></div><div class="visit-sticker">SEU ESTILO<br>COMEÇA AQUI <span>✳</span></div><span class="visit-coordinate">19°50' S · BELO HORIZONTE</span></div>
+    </section>
+  </main>
+  <footer class="footer"><a class="brand footer-brand" href="#inicio"><span class="brand-mark">BO<span>.</span></span><span class="brand-copy"><strong>BARBEARIA</strong><small>OFICIAL · BELO HORIZONTE</small></span></a><span class="footer-note">PRESENÇA EM CADA DETALHE.</span><a href="#inicio" class="back-top">VOLTAR AO TOPO ↑</a><p class="footer-demo">Demonstração de conceito criada para apresentação comercial · 2026</p></footer>
+</body>
+</html>
